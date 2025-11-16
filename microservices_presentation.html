@@ -1,0 +1,3382 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a Microservicios</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            height: 85vh;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            position: relative;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide-header {
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #4a5568;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 1.3em;
+            font-weight: 400;
+        }
+
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 20px;
+        }
+
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #667eea;
+            border-radius: 10px;
+        }
+
+        .principle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .principle-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .principle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .principle-card h3 {
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .principle-card p {
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+
+        .drawback-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .drawback-item {
+            background: #f7fafc;
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .drawback-item:hover {
+            background: #edf2f7;
+            transform: translateX(10px);
+        }
+
+        .drawback-item h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .drawback-item p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .comparison-box {
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .monolith-box {
+            background: linear-gradient(135deg, #fc5c7d 0%, #6a82fb 100%);
+            color: white;
+        }
+
+        .micro-box {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .comparison-box h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .comparison-box ul {
+            list-style: none;
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .comparison-box li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .best-practices {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .practice-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 12px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .practice-item:hover {
+            transform: scale(1.05);
+        }
+
+        .practice-icon {
+            font-size: 2em;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            color: #667eea;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd89b 0%, #19547b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        p {
+            color: #4a5568;
+            line-height: 1.8;
+            font-size: 1.15em;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            margin-left: 30px;
+            color: #4a5568;
+            line-height: 1.8;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .intro-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 5em;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Portada -->
+        <div class="slide active">
+            <div class="intro-content">
+                <div class="logo">🔷</div>
+                <h1>Introducción a Microservicios</h1>
+                <p class="subtitle">Arquitectura Moderna para Aplicaciones Escalables</p>
+                <p style="margin-top: 40px; color: #718096;">Capacitación Técnica Profesional</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: ¿Qué son los Microservicios? -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>¿Qué son los Microservicios?</h2>
+            </div>
+            <div class="content">
+                <p><strong>Microservicios</strong> es un enfoque arquitectónico de software donde las aplicaciones se
+                    estructuran como una colección de servicios más pequeños, con responsabilidad única, débilmente
+                    acoplados e independientemente desplegables.</p>
+
+                <h3 style="margin-top: 30px;">Características Clave:</h3>
+                <ul>
+                    <li><strong>Responsabilidad única:</strong> Cada servicio se dedica a realizar una función
+                        específica</li>
+                    <li><strong>Límites claros:</strong> Opera con fronteras bien definidas</li>
+                    <li><strong>Encapsulación:</strong> Posee tanto su funcionalidad como su almacén de datos</li>
+                    <li><strong>Aislamiento:</strong> La lógica y los datos no deben filtrarse fuera del servicio</li>
+                </ul>
+
+                <div
+                    style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; text-align: center;">
+                    <h3 style="color: white;">Principio Fundamental</h3>
+                    <p style="color: white; font-size: 1.2em;">"Cada microservicio debe ser independiente y autónomo"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Arquitectura Monolítica -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Arquitectura Monolítica</h2>
+            </div>
+            <div class="content">
+                <p>La arquitectura monolítica es un enfoque en el desarrollo de software donde la aplicación se
+                    construye como una <strong>unidad única y estrechamente integrada</strong>.</p>
+
+                <h3 style="margin-top: 30px;">Características:</h3>
+                <ul>
+                    <li>Todos los componentes y funciones están fuertemente acoplados</li>
+                    <li>UI, lógica de negocio y acceso a datos en un solo proceso</li>
+                    <li>Ejecuta en una única instancia de aplicación</li>
+                    <li>Utiliza un único almacén de datos</li>
+                </ul>
+
+                <div style="margin-top: 40px; text-align: center;">
+                    <div
+                        style="display: inline-block; padding: 40px; background: #f7fafc; border-radius: 15px; border: 3px solid #fc5c7d;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">📦</div>
+                        <h3>Aplicación Monolítica</h3>
+                        <p style="margin-top: 10px;">Una única unidad desplegable que contiene toda la funcionalidad</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Desventajas del Monolito -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Desventajas de la Arquitectura Monolítica</h2>
+            </div>
+            <div class="content">
+                <div class="drawback-list">
+                    <div class="drawback-item">
+                        <h3>1. Gestión del Código Fuente</h3>
+                        <p>Administrar una base de código grande y estrechamente integrada puede ser desafiante,
+                            generando dificultades en colaboración, pruebas y control de versiones.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>2. Gestión de Equipos</h3>
+                        <p>A medida que los equipos crecen, la gestión se vuelve compleja, resultando en dificultades de
+                            control de versiones, comunicación y gestión de proyectos.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>3. Problemas de Mantenimiento</h3>
+                        <p>Los cambios son complicados y riesgosos. Una pequeña modificación puede afectar otras partes,
+                            requiriendo pruebas exhaustivas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Más Desventajas -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Desventajas del Monolito (continuación)</h2>
+            </div>
+            <div class="content">
+                <div class="drawback-list">
+                    <div class="drawback-item">
+                        <h3>4. Problemas de Despliegue</h3>
+                        <p>Las actualizaciones causan tiempo de inactividad, lanzamientos complejos, procesos intensivos
+                            en recursos y ciclos de despliegue más largos.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>5. Problemas de Escalabilidad</h3>
+                        <p>Difícil de escalar. Debes escalar la aplicación completa en lugar de solo las partes
+                            específicas que lo necesitan. Esto es ineficiente y costoso.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>6. Stack Tecnológico</h3>
+                        <p>Limitado a una única pila tecnológica o lenguaje de programación para toda la aplicación,
+                            dificultando elegir la mejor herramienta para cada tarea específica.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Comparación -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Monolito vs Microservicios</h2>
+            </div>
+            <div class="content">
+                <div class="comparison">
+                    <div class="comparison-box monolith-box">
+                        <h3>🏢 Monolito</h3>
+                        <ul>
+                            <li>✗ Acoplamiento fuerte</li>
+                            <li>✗ Despliegue completo</li>
+                            <li>✗ Un solo stack tecnológico</li>
+                            <li>✗ Escalado vertical</li>
+                            <li>✗ Riesgo alto en cambios</li>
+                            <li>✗ Base de datos única</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box micro-box">
+                        <h3>🔷 Microservicios</h3>
+                        <ul>
+                            <li>✓ Bajo acoplamiento</li>
+                            <li>✓ Despliegue independiente</li>
+                            <li>✓ Stack tecnológico flexible</li>
+                            <li>✓ Escalado horizontal</li>
+                            <li>✓ Cambios aislados</li>
+                            <li>✓ Base de datos por servicio</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Principios de Diseño 1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Principios de Diseño de Microservicios</h2>
+            </div>
+            <div class="content">
+                <p style="text-align: center; font-size: 1.3em; margin-bottom: 30px;">
+                    <strong class="highlight">La agilidad es la fuerza impulsora subyacente de los
+                        microservicios</strong>, con 'independiente y autónomo' como principio central de diseño.
+                </p>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>🚀 1. Agilidad</h3>
+                        <p>Responder rápidamente a requisitos cambiantes y permitir desarrollo, despliegue y adaptación
+                            rápida a cambios de manera dinámica y flexible.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🧩 2. Descomposición</h3>
+                        <p>La aplicación se descompone en servicios más pequeños y manejables, cada uno enfocado en una
+                            función de negocio específica (SRP).</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔓 3. Independencia</h3>
+                        <p>Diseñados para ser desplegables independientemente. Los cambios en un microservicio no deben
+                            requerir cambios en otros.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⚡ 4. Autonomía</h3>
+                        <p>Cada equipo tiene alto grado de autonomía para elegir el stack tecnológico, base de datos y
+                            estrategias de despliegue que mejor se adapten.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Principios de Diseño 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Principios de Diseño (continuación)</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>🔌 5. Comunicación basada en API</h3>
+                        <p>Los servicios se comunican a través de APIs RESTful bien definidas, a menudo sobre protocolos
+                            ligeros como HTTP o gRPC.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📈 6. Escalabilidad</h3>
+                        <p>Permiten escalabilidad horizontal. Puedes escalar servicios individuales independientemente
+                            según sus demandas específicas de rendimiento y recursos.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🛡️ 7. Resiliencia</h3>
+                        <p>Capacidad de manejar fallos con gracia. El fallo de un servicio no debe derribar toda la
+                            aplicación. Se emplean técnicas como circuit breakers y reintentos.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🧪 8. Testing</h3>
+                        <p>Cada servicio puede ser probado individualmente, sin afectar otros servicios, facilitando la
+                            calidad y la detección temprana de errores.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Mejores Prácticas -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Mejores Prácticas de Microservicios</h2>
+            </div>
+            <div class="content">
+                <p style="margin-bottom: 30px;">Mantén siempre en mente: <strong>SRP, Independencia, Aislamiento,
+                        Autonomía y Bajo Acoplamiento</strong></p>
+
+                <div class="best-practices">
+                    <div class="practice-item">
+                        <div class="practice-icon">📝</div>
+                        <div>
+                            <strong>Logging, Tracing y Monitoring</strong>
+                            <p style="font-size: 0.95em; margin-top: 5px;">Habilitar desde el inicio de la
+                                implementación</p>
+                        </div>
+                    </div>
+
+                    <div class="practice-item">
+                        <div class="practice-icon">🛡️</div>
+                        <div>
+                            <strong>Resiliencia y Tolerancia a Fallos</strong>
+                            <p style="font-size: 0.95em; margin-top: 5px;">Agregar desde el principio de la
+                                implementación</p>
+                        </div>
+                    </div>
+
+                    <div class="practice-item">
+                        <div class="practice-icon">🔄</div>
+                        <div>
+                            <strong>Versionamiento</strong>
+                            <p style="font-size: 0.95em; margin-top: 5px;">Habilitar desde el inicio para gestionar
+                                cambios</p>
+                        </div>
+                    </div>
+
+                    <div class="practice-item">
+                        <div class="practice-icon">↩️</div>
+                        <div>
+                            <strong>Compatibilidad Retroactiva</strong>
+                            <p style="font-size: 0.95em; margin-top: 5px;">Asegurar desde el principio de la
+                                implementación</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 40px; padding: 25px; background: #f7fafc; border-radius: 15px; border-left: 5px solid #667eea;">
+                    <h3>💡 Recuerda</h3>
+                    <p>Implementar estas prácticas desde el inicio evita refactorizaciones costosas y garantiza una
+                        arquitectura robusta y mantenible.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Arquitectura eCommerce - Portada -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">🏗️</div>
+                <h1>Arquitectura eCommerce</h1>
+                <p class="subtitle">Sistema de Microservicios Completo</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Ejemplo Práctico de Arquitectura de
+                    Microservicios</p>
+            </div>
+        </div>
+
+        <!-- Slide: Arquitectura eCommerce - Diagrama Completo -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Arquitectura eCommerce - Vista General</h2>
+            </div>
+            <div class="content" style="overflow-y: auto;">
+                <div style="display: grid; grid-template-columns: 250px 1fr 200px; gap: 20px; margin-bottom: 20px;">
+
+                    <!-- Client Apps -->
+                    <div style="background: #f7fafc; border: 2px dashed #cbd5e0; border-radius: 12px; padding: 15px;">
+                        <h3 style="text-align: center; color: #667eea; margin-bottom: 15px; font-size: 1em;">Client Apps
+                        </h3>
+
+                        <div
+                            style="background: white; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 10px; text-align: center;">
+                            <div style="font-size: 1.8em; margin-bottom: 5px;">📱</div>
+                            <div style="font-weight: 700; font-size: 0.85em; margin-bottom: 3px;">Mobile App</div>
+                            <div style="font-size: 0.7em; color: #718096;">Xamarin.Forms</div>
+                        </div>
+
+                        <div
+                            style="background: white; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 10px; text-align: center;">
+                            <div style="font-size: 1.8em; margin-bottom: 5px;">🌐</div>
+                            <div style="font-weight: 700; font-size: 0.85em; margin-bottom: 3px;">Web MVC</div>
+                            <div style="font-size: 0.7em; color: #718096;">ASP.NET Core</div>
+                        </div>
+
+                        <div
+                            style="background: white; border: 2px solid #e2e8f0; border-radius: 8px; padding: 12px; text-align: center;">
+                            <div style="font-size: 1.8em; margin-bottom: 5px;">⚡</div>
+                            <div style="font-weight: 700; font-size: 0.85em; margin-bottom: 3px;">SPA</div>
+                            <div style="font-size: 0.7em; color: #718096;">Angular/React</div>
+                        </div>
+                    </div>
+
+                    <!-- Docker Host -->
+                    <div style="background: #e6f7ff; border: 2px dashed #0db7ed; border-radius: 12px; padding: 15px;">
+                        <div style="text-align: center; font-size: 2em; color: #0db7ed; margin-bottom: 10px;">🐳 Docker
+                            Host</div>
+
+                        <!-- API Gateway -->
+                        <div
+                            style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 15px;">
+                            <div style="font-size: 1.5em; margin-bottom: 5px;">🛡️</div>
+                            <div style="font-weight: 700; margin-bottom: 5px;">API Gateway (Ocelot)</div>
+                            <div style="font-size: 0.75em; opacity: 0.95;">Rate Limiting · JWT · Load Balancing</div>
+                        </div>
+
+                        <!-- Communication -->
+                        <div
+                            style="text-align: center; margin-bottom: 15px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+                            <span
+                                style="background: #4facfe; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.7em; font-weight: 600;">🔄
+                                Sync: HTTP</span>
+                            <span
+                                style="background: #fa709a; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.7em; font-weight: 600;">📨
+                                Async: RabbitMQ</span>
+                        </div>
+
+                        <!-- Microservices Grid -->
+                        <div
+                            style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 15px;">
+
+                            <!-- Users Service -->
+                            <div
+                                style="background: linear-gradient(135deg, #43e97b20 0%, #38f9d720 100%); border: 2px solid #43e97b; border-radius: 10px; padding: 12px;">
+                                <div
+                                    style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0;">
+                                    <div style="font-size: 1.5em;">👤</div>
+                                    <div>
+                                        <div style="font-weight: 700; font-size: 0.85em;">Users</div>
+                                        <div style="font-size: 0.65em; color: #718096;">Usuarios</div>
+                                    </div>
+                                </div>
+                                <div style="font-size: 0.7em; margin-bottom: 4px;">
+                                    <span
+                                        style="background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 3px;">VSA
+                                        + CQRS</span>
+                                </div>
+                                <div style="font-size: 0.7em; margin-bottom: 4px;">
+                                    <span
+                                        style="background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 3px;">EF
+                                        Core</span>
+                                </div>
+                                <div style="text-align: center; font-size: 1.3em; margin-top: 8px;">🐘</div>
+                                <div style="text-align: center; font-size: 0.65em; color: #718096;">PostgreSQL</div>
+                            </div>
+
+                            <!-- Products Service -->
+                            <div
+                                style="background: linear-gradient(135deg, #fa709a20 0%, #fee14020 100%); border: 2px solid #fa709a; border-radius: 10px; padding: 12px;">
+                                <div
+                                    style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0;">
+                                    <div style="font-size: 1.5em;">📦</div>
+                                    <div>
+                                        <div style="font-weight: 700; font-size: 0.85em;">Products</div>
+                                        <div style="font-size: 0.65em; color: #718096;">Productos</div>
+                                    </div>
+                                </div>
+                                <div style="font-size: 0.7em; margin-bottom: 4px;">
+                                    <span
+                                        style="background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 3px;">Clean
+                                        Arch</span>
+                                </div>
+                                <div style="font-size: 0.7em; margin-bottom: 4px;">
+                                    <span
+                                        style="background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 3px;">EF
+                                        + Dapper</span>
+                                </div>
+                                <div style="text-align: center; font-size: 1.3em; margin-top: 8px;">🐬</div>
+                                <div style="text-align: center; font-size: 0.65em; color: #718096;">MySQL</div>
+                            </div>
+
+                            <!-- Orders Service -->
+                            <div
+                                style="background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%); border: 2px solid #667eea; border-radius: 10px; padding: 12px;">
+                                <div
+                                    style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0;">
+                                    <div style="font-size: 1.5em;">🛒</div>
+                                    <div>
+                                        <div style="font-weight: 700; font-size: 0.85em;">Orders</div>
+                                        <div style="font-size: 0.65em; color: #718096;">Pedidos</div>
+                                    </div>
+                                </div>
+                                <div style="font-size: 0.7em; margin-bottom: 4px;">
+                                    <span
+                                        style="background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 3px;">Clean
+                                        Arch</span>
+                                </div>
+                                <div style="font-size: 0.7em; margin-bottom: 4px;">
+                                    <span
+                                        style="background: white; padding: 2px 6px; border-radius: 4px; border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 3px;">Event-Driven</span>
+                                </div>
+                                <div style="text-align: center; font-size: 1.3em; margin-top: 8px;">🍃</div>
+                                <div style="text-align: center; font-size: 0.65em; color: #718096;">MongoDB</div>
+                            </div>
+                        </div>
+
+                        <!-- Infrastructure -->
+                        <div style="text-align: center; font-size: 1.2em; color: #667eea; margin: 10px 0;">↓</div>
+                        <h4 style="text-align: center; color: #667eea; margin-bottom: 10px; font-size: 0.9em;">🛠️
+                            Infrastructure</h4>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                            <div
+                                style="background: white; border: 2px solid #ff9a56; border-radius: 8px; padding: 10px; text-align: center;">
+                                <div style="font-size: 1.3em; margin-bottom: 3px;">🔴</div>
+                                <div style="font-weight: 700; font-size: 0.75em;">Redis</div>
+                                <div style="font-size: 0.65em; color: #718096;">Cache</div>
+                            </div>
+                            <div
+                                style="background: white; border: 2px solid #ff9a56; border-radius: 8px; padding: 10px; text-align: center;">
+                                <div style="font-size: 1.3em; margin-bottom: 3px;">🐰</div>
+                                <div style="font-weight: 700; font-size: 0.75em;">RabbitMQ</div>
+                                <div style="font-size: 0.65em; color: #718096;">Messaging</div>
+                            </div>
+                            <div
+                                style="background: white; border: 2px solid #ff9a56; border-radius: 8px; padding: 10px; text-align: center;">
+                                <div style="font-size: 1.3em; margin-bottom: 3px;">🛡️</div>
+                                <div style="font-weight: 700; font-size: 0.75em;">Polly</div>
+                                <div style="font-size: 0.65em; color: #718096;">Resiliencia</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Bus -->
+                    <div style="background: #f7fafc; border: 2px dashed #cbd5e0; border-radius: 12px; padding: 15px;">
+                        <h3 style="text-align: center; color: #667eea; margin-bottom: 15px; font-size: 0.9em;">Event Bus
+                        </h3>
+
+                        <div
+                            style="background: linear-gradient(135deg, #ff6600 0%, #ff4400 100%); color: white; border-radius: 8px; padding: 12px; margin-bottom: 10px; text-align: center;">
+                            <div style="font-size: 1.8em; margin-bottom: 5px;">🐰</div>
+                            <div style="font-weight: 700; font-size: 0.85em; margin-bottom: 3px;">RabbitMQ</div>
+                            <div style="font-size: 0.7em;">Message Broker</div>
+                        </div>
+
+                        <div
+                            style="text-align: center; color: #718096; font-weight: 600; margin: 10px 0; font-size: 0.8em;">
+                            or</div>
+
+                        <div
+                            style="background: linear-gradient(135deg, #0078d4 0%, #005a9e 100%); color: white; border-radius: 8px; padding: 12px; text-align: center;">
+                            <div style="font-size: 1.8em; margin-bottom: 5px;">☁️</div>
+                            <div style="font-weight: 700; font-size: 0.85em; margin-bottom: 3px;">Azure Service Bus
+                            </div>
+                            <div style="font-size: 0.7em;">Cloud Messaging</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CI/CD -->
+                <div
+                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 1.2em; font-weight: 700; margin-bottom: 10px;">🚀 CI/CD Pipeline - Azure
+                        DevOps</div>
+                    <div style="display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; font-size: 0.85em;">
+                        <div style="background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 6px;">✓ Build
+                            Pipelines</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 6px;">✓ Testing
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 6px;">✓ Docker
+                            Integration</div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 8px 15px; border-radius: 6px;">✓
+                            Continuous Deployment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Client Apps -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Client Applications</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.1em; margin-bottom: 30px;">Múltiples tipos de clientes pueden consumir los
+                    microservicios a través del API Gateway.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px;">
+                    <div
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 3.5em; margin-bottom: 15px;">📱</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Mobile App</h3>
+                        <p style="color: white; margin-bottom: 10px; font-size: 0.95em;">Aplicación móvil
+                            multiplataforma</p>
+                        <div
+                            style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 15px;">
+                            <strong>Xamarin.Forms / C#</strong><br />
+                            <span style="font-size: 0.85em;">iOS · Android · Windows</span>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 3.5em; margin-bottom: 15px;">🌐</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Web MVC</h3>
+                        <p style="color: white; margin-bottom: 10px; font-size: 0.95em;">Aplicación web tradicional</p>
+                        <div
+                            style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 15px;">
+                            <strong>ASP.NET Core MVC</strong><br />
+                            <span style="font-size: 0.85em;">Razor Pages · HTML</span>
+                        </div>
+                    </div>
+
+                    <div
+                        style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; padding: 30px; border-radius: 15px; text-align: center;">
+                        <div style="font-size: 3.5em; margin-bottom: 15px;">⚡</div>
+                        <h3 style="color: white; margin-bottom: 15px;">SPA</h3>
+                        <p style="color: white; margin-bottom: 10px; font-size: 0.95em;">Single Page Application</p>
+                        <div
+                            style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 15px;">
+                            <strong>TypeScript</strong><br />
+                            <span style="font-size: 0.85em;">Angular · React · Vue</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 30px; background: #f7fafc; padding: 25px; border-radius: 15px; border-left: 5px solid #667eea;">
+                    <h3>💡 Backend for Frontend (BFF)</h3>
+                    <p>El API Gateway actúa como un patrón BFF, proporcionando endpoints optimizados para cada tipo de
+                        cliente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: API Gateway -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>API Gateway con Ocelot</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;"><strong>Ocelot</strong> es un API Gateway ligero y de
+                    código abierto para .NET que proporciona un punto de entrada único para todos los microservicios.
+                </p>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>🔀 Enrutamiento</h3>
+                        <p>Redirige requests a microservicios específicos basándose en rutas configuradas</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⏱️ Rate Limiting</h3>
+                        <p>Limita el número de requests por cliente para prevenir abuso</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔐 Autenticación JWT</h3>
+                        <p>Valida tokens JWT antes de permitir acceso a los microservicios</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⚖️ Load Balancing</h3>
+                        <p>Distribuye el tráfico entre múltiples instancias de un servicio</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🛡️ Autorización</h3>
+                        <p>Verifica permisos y roles antes de procesar requests</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔄 Circuit Breaker</h3>
+                        <p>Maneja fallos de servicios downstream gracefully</p>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 25px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 10px;">✨ Ventaja Principal</h3>
+                    <p style="color: white;">Los clientes no necesitan conocer la ubicación de cada microservicio - todo
+                        pasa por un único punto de entrada.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Comunicación entre Microservicios -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Comunicación entre Microservicios</h2>
+            </div>
+            <div class="content">
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔄 Síncrona (HTTP)</h3>
+                        <ul>
+                            <li>✓ Request-Response inmediato</li>
+                            <li>✓ Fácil de implementar</li>
+                            <li>✓ HttpClient en .NET</li>
+                            <li>✗ Acoplamiento temporal</li>
+                            <li>✗ Servicio debe estar disponible</li>
+                            <li>✓ Ideal para: Consultas</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📨 Asíncrona (RabbitMQ)</h3>
+                        <ul>
+                            <li>✓ Desacoplamiento temporal</li>
+                            <li>✓ Alta escalabilidad</li>
+                            <li>✓ Tolerancia a fallos</li>
+                            <li>✓ Event-Driven</li>
+                            <li>✗ Mayor complejidad</li>
+                            <li>✓ Ideal para: Eventos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 20px;">Ejemplos de Uso:</h3>
+                <div class="drawback-list">
+                    <div class="drawback-item">
+                        <h3>🔄 HTTP (Síncrona)</h3>
+                        <p><strong>Orders Service → Products Service:</strong> Validar disponibilidad de producto antes
+                            de crear orden.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>📨 RabbitMQ (Asíncrona)</h3>
+                        <p><strong>Orders Service publica evento "OrderCreated":</strong> Inventory Service actualiza
+                            stock, Email Service envía confirmación.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Detalles de Microservicios -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Microservicios del Sistema eCommerce</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+
+                    <!-- Users Service -->
+                    <div
+                        style="background: linear-gradient(135deg, #43e97b20 0%, #38f9d720 100%); border: 2px solid #43e97b; border-radius: 12px; padding: 20px;">
+                        <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">👤</div>
+                        <h3 style="color: #43e97b; text-align: center; margin-bottom: 15px;">Users Service</h3>
+
+                        <div style="background: white; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                            <strong>Arquitectura:</strong><br />
+                            <span style="font-size: 0.9em;">Vertical Slice + CQRS</span>
+                        </div>
+
+                        <div style="background: white; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                            <strong>Tecnologías:</strong><br />
+                            <span style="font-size: 0.9em;">EF Core, Mapster</span>
+                        </div>
+
+                        <div style="background: white; padding: 12px; border-radius: 8px;">
+                            <strong>Base de Datos:</strong><br />
+                            <span style="font-size: 0.9em;">🐘 PostgreSQL</span>
+                        </div>
+                    </div>
+
+                    <!-- Products Service -->
+                    <div
+                        style="background: linear-gradient(135deg, #fa709a20 0%, #fee14020 100%); border: 2px solid #fa709a; border-radius: 12px; padding: 20px;">
+                        <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">📦</div>
+                        <h3 style="color: #fa709a; text-align: center; margin-bottom: 15px;">Products Service</h3>
+
+                        <div style="background: white; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                            <strong>Arquitectura:</strong><br />
+                            <span style="font-size: 0.9em;">Clean Architecture</span>
+                        </div>
+
+                        <div style="background: white; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                            <strong>Tecnologías:</strong><br />
+                            <span style="font-size: 0.9em;">EF Core + Dapper</span>
+                        </div>
+
+                        <div style="background: white; padding: 12px; border-radius: 8px;">
+                            <strong>Base de Datos:</strong><br />
+                            <span style="font-size: 0.9em;">🐬 MySQL</span>
+                        </div>
+                    </div>
+
+                    <!-- Orders Service -->
+                    <div
+                        style="background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%); border: 2px solid #667eea; border-radius: 12px; padding: 20px;">
+                        <div style="text-align: center; font-size: 2.5em; margin-bottom: 10px;">🛒</div>
+                        <h3 style="color: #667eea; text-align: center; margin-bottom: 15px;">Orders Service</h3>
+
+                        <div style="background: white; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                            <strong>Arquitectura:</strong><br />
+                            <span style="font-size: 0.9em;">Clean Architecture</span>
+                        </div>
+
+                        <div style="background: white; padding: 12px; border-radius: 8px; margin-bottom: 10px;">
+                            <strong>Tecnologías:</strong><br />
+                            <span style="font-size: 0.9em;">Event-Driven, MongoDB Driver</span>
+                        </div>
+
+                        <div style="background: white; padding: 12px; border-radius: 8px;">
+                            <strong>Base de Datos:</strong><br />
+                            <span style="font-size: 0.9em;">🍃 MongoDB (NoSQL)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 25px; background: #f7fafc; padding: 20px; border-radius: 12px; border-left: 5px solid #667eea;">
+                    <h3>💡 Database per Service</h3>
+                    <p>Cada microservicio tiene su propia base de datos, permitiendo independencia total y elección de
+                        la mejor tecnología para cada caso de uso.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Infrastructure Components -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Componentes de Infraestructura</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);">
+                        <h3>🔴 Redis Cache</h3>
+                        <p style="color: white;">In-memory data store para caché distribuido. Mejora el rendimiento
+                            almacenando datos frecuentemente accedidos.</p>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
+                            <strong style="color: white;">Usos:</strong><br />
+                            <span style="color: white; font-size: 0.9em;">Session storage, Cache de consultas, Rate
+                                limiting</span>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #ff6600 0%, #ff4400 100%);">
+                        <h3>🐰 RabbitMQ</h3>
+                        <p style="color: white;">Message broker para comunicación asíncrona entre microservicios
+                            mediante colas de mensajes.</p>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
+                            <strong style="color: white;">Usos:</strong><br />
+                            <span style="color: white; font-size: 0.9em;">Event-Driven, Pub/Sub, Desacoplamiento</span>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);">
+                        <h3>🛡️ Polly</h3>
+                        <p style="color: white;">Biblioteca .NET para resiliencia y manejo de fallos transitorios en
+                            llamadas HTTP.</p>
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.3);">
+                            <strong style="color: white;">Patrones:</strong><br />
+                            <span style="color: white; font-size: 0.9em;">Retry, Circuit Breaker, Timeout,
+                                Fallback</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 30px; background: linear-gradient(135deg, #ff9a56 0%, #ffeaa7 100%); padding: 25px; border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 15px;">✨ Beneficios de esta Infraestructura</h3>
+                    <ul style="color: white; font-size: 0.95em;">
+                        <li><strong>Redis:</strong> Reduce latencia y carga en bases de datos</li>
+                        <li><strong>RabbitMQ:</strong> Permite escalabilidad y tolerancia a fallos</li>
+                        <li><strong>Polly:</strong> Mejora la resiliencia del sistema completo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Sección 2 - Portada -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">👤</div>
+                <h1>Creando el Primer Microservicio</h1>
+                <p class="subtitle">Microservicio de Usuarios con Vertical Slice Architecture</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 2: Implementación Práctica</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Vertical Slice Architecture -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Vertical Slice Architecture</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;"><strong>Vertical Slice Architecture</strong> organiza
+                    el código por características (features) en lugar de capas técnicas, donde cada slice contiene toda
+                    la lógica necesaria para una funcionalidad completa.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                    <div style="background: #fff5f5; padding: 25px; border-radius: 15px; border: 2px solid #fc5c7d;">
+                        <h3 style="color: #fc5c7d; margin-bottom: 15px;">❌ Clean Architecture</h3>
+                        <p style="font-size: 0.95em; margin-bottom: 15px;">Organizado por capas técnicas:</p>
+                        <ul style="font-size: 0.95em;">
+                            <li>📁 Controllers/</li>
+                            <li>📁 Services/</li>
+                            <li>📁 Repositories/</li>
+                            <li>📁 Models/</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: #f0fff4; padding: 25px; border-radius: 15px; border: 2px solid #43e97b;">
+                        <h3 style="color: #43e97b; margin-bottom: 15px;">✅ Vertical Slice</h3>
+                        <p style="font-size: 0.95em; margin-bottom: 15px;">Organizado por características:</p>
+                        <ul style="font-size: 0.95em;">
+                            <li>📁 Features/</li>
+                            <li>&nbsp;&nbsp;📁 CreateUser/</li>
+                            <li>&nbsp;&nbsp;📁 GetUserById/</li>
+                            <li>&nbsp;&nbsp;📁 UpdateUser/</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>🎯 Feature-First</h3>
+                        <p>Cada característica es un slice vertical independiente con todo lo necesario</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔓 Bajo Acoplamiento</h3>
+                        <p>Los slices son independientes, reduciendo dependencias entre características</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🚀 Alta Cohesión</h3>
+                        <p>Todo lo relacionado con una feature está junto, facilitando el mantenimiento</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⚡ Desarrollo Ágil</h3>
+                        <p>Los equipos pueden trabajar en diferentes slices sin conflictos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: CQRS Pattern -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>CQRS - Command Query Responsibility Segregation</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;"><strong>CQRS</strong> es un patrón que separa las
+                    operaciones de lectura (Queries) de las operaciones de escritura (Commands), optimizando cada una
+                    para su propósito específico.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                    <div
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white; text-align: center;">
+                        <div style="font-size: 3em; margin-bottom: 15px;">✍️</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Commands</h3>
+                        <p style="color: white; margin-bottom: 15px;">Modifican el estado del sistema</p>
+                        <ul style="color: white; text-align: left; font-size: 0.95em;">
+                            <li>Create</li>
+                            <li>Update</li>
+                            <li>Delete</li>
+                        </ul>
+                    </div>
+
+                    <div
+                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; color: white; text-align: center;">
+                        <div style="font-size: 3em; margin-bottom: 15px;">🔍</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Queries</h3>
+                        <p style="color: white; margin-bottom: 15px;">Solo leen datos, no modifican</p>
+                        <ul style="color: white; text-align: left; font-size: 0.95em;">
+                            <li>Get by ID</li>
+                            <li>Get List</li>
+                            <li>Search</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>🎯 Separación Clara</h3>
+                        <p>Responsabilidades bien definidas entre lectura y escritura</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⚡ Optimización</h3>
+                        <p>Cada lado puede optimizarse independientemente</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📈 Escalabilidad</h3>
+                        <p>Escalar lecturas y escrituras por separado</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🧪 Testeable</h3>
+                        <p>Cada handler es una unidad testeable independiente</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Abstracciones CQRS -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Abstracciones CQRS - Interfaces Base</h2>
+            </div>
+            <div class="content">
+                <h3 style="margin-bottom: 20px;">📦 Interfaces de Request</h3>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 8px; overflow-x: auto; font-size: 0.9em;">public interface IRequest&lt;out TResponse&gt; { }
+
+public interface ICommand&lt;out TResponse&gt; : IRequest&lt;TResponse&gt; { }
+
+public interface IQuery&lt;out TResponse&gt; : IRequest&lt;TResponse&gt; { }</pre>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h3 style="margin-bottom: 15px;">✍️ Command Handler</h3>
+                        <div style="background: #f7fafc; padding: 20px; border-radius: 12px;">
+                            <pre
+                                style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.85em;">public interface ICommandHandler&lt;
+    in TCommand, TResponse&gt; 
+    where TCommand : ICommand&lt;TResponse&gt;
+{
+    Task&lt;BaseResponse&lt;TResponse&gt;&gt; Handle(
+        TCommand command, 
+        CancellationToken cancellationToken);
+}</pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 15px;">🔍 Query Handler</h3>
+                        <div style="background: #f7fafc; padding: 20px; border-radius: 12px;">
+                            <pre
+                                style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.85em;">public interface IQueryHandler&lt;
+    in TQuery, TResponse&gt; 
+    where TQuery : IQuery&lt;TResponse&gt;
+{
+    Task&lt;BaseResponse&lt;TResponse&gt;&gt; Handle(
+        TQuery query, 
+        CancellationToken cancellationToken);
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 25px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white;">
+                    <strong>💡 Principio:</strong> Estas interfaces genéricas permiten implementar CQRS de forma nativa
+                    sin dependencias externas como MediatR.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Dispatcher -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Dispatcher - Enrutador de Requests</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.1em; margin-bottom: 20px;">El <strong>Dispatcher</strong> es responsable de
+                    recibir un request y enrutarlo al handler correspondiente (Command o Query).</p>
+
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+                    <h3 style="margin-bottom: 15px;">🔌 Interface IDispatcher</h3>
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.85em;">public interface IDispatcher
+{
+    Task&lt;BaseResponse&lt;TResponse&gt;&gt; Dispatch&lt;TRequest, TResponse&gt;(
+        TRequest request, 
+        CancellationToken cancellationToken) 
+        where TRequest : IRequest&lt;TResponse&gt;;
+}</pre>
+                </div>
+
+                <h3 style="margin-bottom: 15px;">⚙️ Implementación del Dispatcher</h3>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px;">
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.8em; line-height: 1.5;">public class Dispatcher(IServiceProvider serviceProvider) : IDispatcher
+{
+    public async Task&lt;BaseResponse&lt;TResponse&gt;&gt; Dispatch&lt;TRequest, TResponse&gt;(
+        TRequest request, CancellationToken cancellationToken) 
+        where TRequest : IRequest&lt;TResponse&gt;
+    {
+        try
+        {
+            // Si es un Command, busca ICommandHandler
+            if (request is ICommand&lt;TResponse&gt;)
+            {
+                var handlerType = typeof(ICommandHandler&lt;,&gt;)
+                    .MakeGenericType(request.GetType(), typeof(TResponse));
+                dynamic handler = serviceProvider.GetRequiredService(handlerType);
+                return await handler.Handle((dynamic)request, cancellationToken);
+            }
+            // Si es un Query, busca IQueryHandler
+            if (request is IQuery&lt;TResponse&gt;)
+            {
+                var handlerType = typeof(IQueryHandler&lt;,&gt;)
+                    .MakeGenericType(request.GetType(), typeof(TResponse));
+                dynamic handler = serviceProvider.GetRequiredService(handlerType);
+                return await handler.Handle((dynamic)request, cancellationToken);
+            }
+            throw new InvalidOperationException("Tipo de solicitud no compatible.");
+        }
+        catch (Exception ex) { /* Manejo de errores */ }
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: HandlerExecutor -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>HandlerExecutor - Validación y Manejo de Errores</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.1em; margin-bottom: 20px;">El <strong>HandlerExecutor</strong> es una clase
+                    auxiliar que centraliza la validación y el manejo de errores para todos los handlers.</p>
+
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.78em; line-height: 1.5;">public class HandlerExecutor(
+    IValidationService validationService, 
+    ILogger&lt;HandlerExecutor&gt; logger)
+{
+    public async Task&lt;BaseResponse&lt;T&gt;&gt; ExecuteAsync&lt;TRequest, T&gt;(
+        TRequest request,
+        Func&lt;Task&lt;BaseResponse&lt;T&gt;&gt;&gt; action,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            // 1. Valida el request antes de ejecutarlo
+            await validationService.ValidateAsync(request, cancellationToken);
+            
+            // 2. Ejecuta la acción si la validación fue exitosa
+            return await action();
+        }
+        catch (ValidationException ex)
+        {
+            // Maneja errores de validación
+            logger.LogWarning("Validation failed: {@Errors}", ex.Errors);
+            return new BaseResponse&lt;T&gt;
+            {
+                IsSuccess = false,
+                Message = "Errores de validación",
+                Errors = ex.Errors
+            };
+        }
+        catch (Exception ex)
+        {
+            // Maneja errores inesperados
+            logger.LogError(ex, "Unhandled exception");
+            return new BaseResponse&lt;T&gt;
+            {
+                IsSuccess = false,
+                Message = "Ocurrió un error inesperado",
+                Errors = [new() { ErrorMessage = ex.Message }]
+            };
+        }
+    }
+}</pre>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>✅ Validación Centralizada</h3>
+                        <p>Un solo lugar para validar requests con FluentValidation</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🛡️ Manejo de Errores</h3>
+                        <p>Captura y maneja excepciones de forma consistente</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📝 Logging Automático</h3>
+                        <p>Registra errores y validaciones fallidas</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔄 Reutilizable</h3>
+                        <p>Todos los handlers pueden usar esta funcionalidad</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Estructura de Carpetas -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Estructura de Vertical Slice + CQRS</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h3 style="color: #667eea; margin-bottom: 20px;">📁 Estructura del Proyecto</h3>
+                        <div
+                            style="background: #f7fafc; padding: 25px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 0.85em;">
+                            📁 <strong>Abstractions/</strong><br />
+                            &nbsp;&nbsp;📁 Messaging/<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 IRequest.cs<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 ICommand.cs<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 IQuery.cs<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 ICommandHandler.cs<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 IQueryHandler.cs<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 IDispatcher.cs<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 Dispatcher.cs<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 HandlerExecutor.cs<br />
+                            <br />
+                            📁 <strong>Database/</strong><br />
+                            &nbsp;&nbsp;📁 Migrations/<br />
+                            &nbsp;&nbsp;📄 ApplicationDbContext.cs<br />
+                            <br />
+                            📁 <strong>Entities/</strong><br />
+                            &nbsp;&nbsp;📄 User.cs<br />
+                            <br />
+                            📁 <strong>Features/</strong><br />
+                            &nbsp;&nbsp;📁 Auth/<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 Login.cs<br />
+                            &nbsp;&nbsp;📁 Users/<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;📄 CreateUser.cs
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #667eea; margin-bottom: 20px;">📄 Ejemplo: Login.cs</h3>
+                        <div
+                            style="background: #f7fafc; padding: 25px; border-radius: 12px; font-family: 'Courier New', monospace; font-size: 0.8em; line-height: 1.6;">
+                            <strong>public class Login</strong><br />
+                            {<br />
+                            &nbsp;&nbsp;#region Query<br />
+                            &nbsp;&nbsp;public sealed class Query<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;: IQuery&lt;AuthResponse&gt; { }<br />
+                            &nbsp;&nbsp;#endregion<br />
+                            <br />
+                            &nbsp;&nbsp;#region Validator<br />
+                            &nbsp;&nbsp;public class Validator<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;: AbstractValidator&lt;Query&gt; { }<br />
+                            &nbsp;&nbsp;#endregion<br />
+                            <br />
+                            &nbsp;&nbsp;#region Handler<br />
+                            &nbsp;&nbsp;internal sealed class Handler<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;: IQueryHandler&lt;Query, ...&gt; { }<br />
+                            &nbsp;&nbsp;#endregion<br />
+                            <br />
+                            &nbsp;&nbsp;#region Endpoint<br />
+                            &nbsp;&nbsp;public class LoginEndpoint<br />
+                            &nbsp;&nbsp;&nbsp;&nbsp;: ICarterModule { }<br />
+                            &nbsp;&nbsp;#endregion<br />
+                            }
+                        </div>
+
+                        <div
+                            style="margin-top: 20px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 20px; border-radius: 12px; color: white;">
+                            <strong>💡 Todo en un Solo Archivo:</strong><br />
+                            <span style="font-size: 0.95em;">Query/Command, Validator, Handler y Endpoint juntos en un
+                                único archivo por característica.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: PostgreSQL -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>PostgreSQL - Base de Datos</h2>
+            </div>
+            <div class="content">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">🐘</div>
+                    <p style="font-size: 1.2em;"><strong>PostgreSQL (Postgres)</strong> es un RDBMS de código abierto,
+                        multiplataforma, diseñado para manejar cargas de trabajo de alto rendimiento.</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>💰 Costo Efectivo</h3>
+                        <p>Sin costos de licenciamiento - completamente gratuito y de código abierto</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🖥️ Multiplataforma</h3>
+                        <p>Soporte para Linux, Windows, macOS y hosting en la nube</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📦 Soporte JSON</h3>
+                        <p>Soporte nativo para JSON y características NoSQL integradas</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔒 Confiabilidad</h3>
+                        <p>ACID compliant, integridad referencial y transacciones robustas</p>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 10px;">📦 NuGet Package</h3>
+                    <p style="color: white; font-size: 1.1em;"><strong>Npgsql</strong> - Proveedor de datos administrado
+                        para PostgreSQL, permitiendo que aplicaciones .NET se conecten e interactúen con bases de datos
+                        PostgreSQL. Soporta Entity Framework Core.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Entity Framework Core -->
+        <!-- <div class="slide">
+            <div class="slide-header">
+                <h2>PostgreSQL - Base de Datos</h2>
+            </div>
+            <div class="content">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">🐘</div>
+                    <p style="font-size: 1.2em;"><strong>PostgreSQL (Postgres)</strong> es un RDBMS de código abierto, multiplataforma, diseñado para manejar cargas de trabajo de alto rendimiento.</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>💰 Costo Efectivo</h3>
+                        <p>Sin costos de licenciamiento - completamente gratuito y de código abierto</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <h3>🖥️ Multiplataforma</h3>
+                        <p>Soporte para Linux, Windows, macOS y hosting en la nube</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <h3>📦 Soporte JSON</h3>
+                        <p>Soporte nativo para JSON y características NoSQL integradas</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <h3>🔒 Confiabilidad</h3>
+                        <p>ACID compliant, integridad referencial y transacciones robustas</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 10px;">📦 NuGet Package</h3>
+                    <p style="color: white; font-size: 1.1em;"><strong>Npgsql</strong> - Proveedor de datos administrado para PostgreSQL, permitiendo que aplicaciones .NET se conecten e interactúen con bases de datos PostgreSQL. Soporta Entity Framework Core.</p>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Slide 13: Entity Framework Core -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Entity Framework Core</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;">EF Core es un ORM (Object-Relational Mapper) moderno,
+                    liviano y extensible para .NET que permite trabajar con bases de datos usando objetos .NET.</p>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>🎯 LINQ Support</h3>
+                        <p>Consultas fuertemente tipadas usando LINQ para manipular datos de forma intuitiva</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📊 Change Tracking</h3>
+                        <p>Seguimiento automático de cambios en entidades para actualizaciones eficientes</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔄 Migrations</h3>
+                        <p>Sistema de migraciones para evolucionar el esquema de base de datos</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🚀 Code First</h3>
+                        <p>Define modelos en código y genera automáticamente el esquema de BD</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Principales Características:</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div
+                        style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <strong>✓ Lazy/Eager Loading</strong><br />
+                        <span style="font-size: 0.95em; color: #4a5568;">Carga diferida o anticipada de datos
+                            relacionados</span>
+                    </div>
+                    <div
+                        style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <strong>✓ Transacciones</strong><br />
+                        <span style="font-size: 0.95em; color: #4a5568;">Soporte completo para transacciones ACID</span>
+                    </div>
+                    <div
+                        style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <strong>✓ Multiple DBs</strong><br />
+                        <span style="font-size: 0.95em; color: #4a5568;">Soporta SQL Server, PostgreSQL, MySQL,
+                            SQLite</span>
+                    </div>
+                    <div
+                        style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <strong>✓ Raw SQL</strong><br />
+                        <span style="font-size: 0.95em; color: #4a5568;">Posibilidad de ejecutar SQL raw cuando sea
+                            necesario</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: EF Core Methods -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Entity Framework Core - Métodos Principales</h2>
+            </div>
+            <div class="content">
+                <div class="drawback-list">
+                    <div class="drawback-item">
+                        <h3>🔍 ToListAsync() / FirstOrDefaultAsync()</h3>
+                        <p><strong>Consultas (SELECT):</strong> Ejecuta consultas LINQ y retorna resultados como objetos
+                            fuertemente tipados.</p>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; margin-top: 10px; overflow-x: auto;">
+var users = await context.Users.ToListAsync();
+var user = await context.Users.FirstOrDefaultAsync(u => u.Id == id);</pre>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>➕ AddAsync() / SaveChangesAsync()</h3>
+                        <p><strong>Inserción (INSERT):</strong> Agrega nuevas entidades al contexto y las persiste en la
+                            base de datos.</p>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; margin-top: 10px; overflow-x: auto;">
+await context.Users.AddAsync(newUser);
+await context.SaveChangesAsync();</pre>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>✏️ Update() / SaveChangesAsync()</h3>
+                        <p><strong>Actualización (UPDATE):</strong> Marca entidades como modificadas y guarda los
+                            cambios.</p>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; margin-top: 10px; overflow-x: auto;">
+context.Users.Update(user);
+await context.SaveChangesAsync();</pre>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>🗑️ Remove() / SaveChangesAsync()</h3>
+                        <p><strong>Eliminación (DELETE):</strong> Marca entidades para eliminación y ejecuta el cambio.
+                        </p>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; margin-top: 10px; overflow-x: auto;">
+context.Users.Remove(user);
+await context.SaveChangesAsync();</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Mapster -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Mapster - Object Mapping</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;"><strong>Mapster</strong> es una biblioteca de mapeo de
+                    objetos ultra-rápida y eficiente para .NET que simplifica la conversión entre diferentes tipos de
+                    objetos.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                    <div style="background: #fff5f5; padding: 25px; border-radius: 15px; border: 2px solid #fc5c7d;">
+                        <h3 style="color: #fc5c7d; margin-bottom: 15px;">❌ Sin Mapster</h3>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; font-size: 0.9em; overflow-x: auto;">
+var dto = new UserDto
+{
+    Id = user.Id,
+    Name = user.Name,
+    Email = user.Email,
+    Age = user.Age
+    // ... más propiedades
+};</pre>
+                    </div>
+
+                    <div style="background: #f0fff4; padding: 25px; border-radius: 15px; border: 2px solid #43e97b;">
+                        <h3 style="color: #43e97b; margin-bottom: 15px;">✅ Con Mapster</h3>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; font-size: 0.9em; overflow-x: auto;">
+var dto = user.Adapt&lt;UserDto&gt;();
+
+// O con configuración
+var dto = user.Adapt&lt;User, UserDto&gt;();</pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>⚡ Ultra Rápido</h3>
+                        <p>Hasta 5x más rápido que AutoMapper gracias a la generación de código en tiempo de compilación
+                        </p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🎯 Zero Configuration</h3>
+                        <p>Mapeo automático de propiedades con nombres similares sin configuración adicional</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔧 Flexible</h3>
+                        <p>Soporta configuraciones personalizadas, mapeos complejos y transformaciones</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📦 Ligero</h3>
+                        <p>Biblioteca pequeña con mínimas dependencias y alta performance</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 16: Fluent Validation -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>FluentValidation</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;">FluentValidation es una biblioteca popular para .NET
+                    que proporciona un mecanismo fluido para definir validaciones de modelos de forma clara y expresiva.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                    <div style="background: #fff5f5; padding: 25px; border-radius: 15px;">
+                        <h3 style="color: #fc5c7d; margin-bottom: 15px;">Data Annotations</h3>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; font-size: 0.85em; overflow-x: auto;">
+public class User
+{
+  [Required(ErrorMessage = "Name required")]
+  [StringLength(50, MinimumLength = 2)]
+  public string Name { get; set; }
+  
+  [EmailAddress]
+  public string Email { get; set; }
+}</pre>
+                    </div>
+
+                    <div style="background: #f0fff4; padding: 25px; border-radius: 15px;">
+                        <h3 style="color: #43e97b; margin-bottom: 15px;">FluentValidation ✓</h3>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; font-size: 0.85em; overflow-x: auto;">
+public class UserValidator 
+  : AbstractValidator&lt;User&gt;
+{
+  public UserValidator()
+  {
+    RuleFor(x => x.Name)
+      .NotEmpty().Length(2, 50);
+    RuleFor(x => x.Email)
+      .EmailAddress();
+  }
+}</pre>
+                    </div>
+                </div>
+
+                <div
+                    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 15px;">💡 Ventajas de FluentValidation</h3>
+                    <ul style="color: white;">
+                        <li>Separación de responsabilidades - validación fuera del modelo</li>
+                        <li>Reutilizable y testeable</li>
+                        <li>Validaciones complejas y personalizadas</li>
+                        <li>Mensajes de error más expresivos</li>
+                        <li>Validación asíncrona</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 17: Validators -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Validadores Comunes de FluentValidation</h2>
+            </div>
+            <div class="content" style="columns: 2; column-gap: 30px;">
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">NotNull()</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Asegura que el valor no sea null</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">NotEmpty()</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">No vacío, null o valor por defecto</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">Length(min, max)</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Longitud entre mínimo y máximo</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">EmailAddress()</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Formato de email válido</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">InclusiveBetween()</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Valor entre min y max (inclusivo)</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">Equal() / NotEqual()</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Valor igual o diferente al especificado</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">Matches(regex)</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Coincide con expresión regular</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">IsInEnum()</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Valor válido del enum</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">Must(lambda)</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Validación personalizada</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">MinimumLength()</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Longitud mínima requerida</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">MaximumLength()</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Longitud máxima permitida</span>
+                </div>
+
+                <div
+                    style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                    <strong style="color: #667eea;">ExclusiveBetween()</strong><br />
+                    <span style="font-size: 0.9em; color: #4a5568;">Valor entre min y max (exclusivo)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Git & GitHub -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Git y GitHub</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                    <div
+                        style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; color: white; text-align: center;">
+                        <div style="font-size: 3em; margin-bottom: 15px;">🔀</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Git</h3>
+                        <p style="color: white;">Sistema de control de versiones distribuido para rastrear cambios en el
+                            código fuente durante el desarrollo de software.</p>
+                    </div>
+
+                    <div
+                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; color: white; text-align: center;">
+                        <div style="font-size: 3em; margin-bottom: 15px;">☁️</div>
+                        <h3 style="color: white; margin-bottom: 15px;">GitHub</h3>
+                        <p style="color: white;">Plataforma de hosting basada en la nube que permite alojar repositorios
+                            Git (públicos o privados) en servidores remotos.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 20px;">Conceptos Clave:</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                    <div style="background: #f7fafc; padding: 20px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">📦</div>
+                        <strong>Repository</strong>
+                        <p style="font-size: 0.9em; margin-top: 10px; color: #4a5568;">Almacén de código con historial
+                            completo</p>
+                    </div>
+
+                    <div style="background: #f7fafc; padding: 20px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">💾</div>
+                        <strong>Commit</strong>
+                        <p style="font-size: 0.9em; margin-top: 10px; color: #4a5568;">Snapshot del estado del código en
+                            un punto específico</p>
+                    </div>
+
+                    <div style="background: #f7fafc; padding: 20px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 2em; margin-bottom: 10px;">🌿</div>
+                        <strong>Branch</strong>
+                        <p style="font-size: 0.9em; margin-top: 10px; color: #4a5568;">Línea de desarrollo independiente
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 10px;">✨ Beneficios del Control de Versiones</h3>
+                    <p style="color: white;">Permite que múltiples desarrolladores contribuyan al código de manera
+                        eficiente sin interferir con el trabajo de otros, manteniendo un historial completo de cambios.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: Swagger -->
+        <!-- <div class="slide">
+            <div class="slide-header">
+                <h2>Swagger / OpenAPI</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;"><strong>Swagger</strong> es un conjunto de herramientas de código abierto que ayuda a los desarrolladores a generar UI interactiva para documentar y probar servicios RESTful.</p>
+
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="display: inline-flex; gap: 40px; align-items: center;">
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white; width: 250px;">
+                            <h3 style="color: white;">Swashbuckle</h3>
+                            <p style="color: white; font-size: 0.95em; margin-top: 10px;">Framework para ASP.NET Core</p>
+                        </div>
+                        <div style="font-size: 2em;">➜</div>
+                        <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 15px; color: white; width: 250px;">
+                            <h3 style="color: white;">Swagger</h3>
+                            <p style="color: white; font-size: 0.95em; margin-top: 10px;">Herramientas para UI y testing</p>
+                        </div>
+                        <div style="font-size: 2em;">➜</div>
+                        <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 25px; border-radius: 15px; color: white; width: 250px;">
+                            <h3 style="color: white;">OpenAPI</h3>
+                            <p style="color: white; font-size: 0.95em; margin-top: 10px;">Especificación en JSON</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>📚 Documentación</h3>
+                        <p>Genera documentación automática de APIs basada en el código y anotaciones</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <h3>🧪 Testing Interactivo</h3>
+                        <p>Permite probar endpoints directamente desde la interfaz web</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <h3>🎯 UI Intuitiva</h3>
+                        <p>Interfaz visual clara para explorar y entender la API</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <h3>🔄 Siempre Actualizada</h3>
+                        <p>La documentación se actualiza automáticamente con los cambios en el código</p>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Slide 20: API Versioning -->
+        <!-- <div class="slide">
+            <div class="slide-header">
+                <h2>API Versioning</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;">El versionamiento de APIs es la práctica de gestionar transparentemente cambios en tu API, donde el cliente solicita una versión específica de la API y el servidor ejecuta el código correspondiente a esa versión.</p>
+
+                <div style="text-align: center; margin: 40px 0;">
+                    <div style="display: inline-flex; align-items: center; gap: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px 50px; border-radius: 20px; color: white;">
+                        <div>
+                            <div style="font-size: 2em; margin-bottom: 10px;">📱</div>
+                            <strong>Cliente</strong>
+                            <p style="font-size: 0.9em; margin-top: 5px;">Solicita v1.0</p>
+                        </div>
+                        <div style="font-size: 3em;">→</div>
+                        <div>
+                            <div style="font-size: 2em; margin-bottom: 10px;">🖥️</div>
+                            <strong>Servidor</strong>
+                            <p style="font-size: 0.9em; margin-top: 5px;">Ejecuta v1.0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 20px;">Estrategias de Versionamiento:</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div style="background: #f7fafc; padding: 25px; border-radius: 12px; border-left: 5px solid #667eea;">
+                        <strong style="color: #667eea; font-size: 1.1em;">URL Path</strong>
+                        <pre style="background: #2d3748; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 10px; font-size: 0.9em;">api/v1/users
+api/v2/users</pre>
+                    </div>
+                    
+                    <div style="background: #f7fafc; padding: 25px; border-radius: 12px; border-left: 5px solid #667eea;">
+                        <strong style="color: #667eea; font-size: 1.1em;">Query String</strong>
+                        <pre style="background: #2d3748; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 10px; font-size: 0.9em;">api/users?version=1.0
+api/users?version=2.0</pre>
+                    </div>
+                    
+                    <div style="background: #f7fafc; padding: 25px; border-radius: 12px; border-left: 5px solid #667eea;">
+                        <strong style="color: #667eea; font-size: 1.1em;">Header</strong>
+                        <pre style="background: #2d3748; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 10px; font-size: 0.9em;">api/users
+Header: api-version: 1.0</pre>
+                    </div>
+                    
+                    <div style="background: #f7fafc; padding: 25px; border-radius: 12px; border-left: 5px solid #667eea;">
+                        <strong style="color: #667eea; font-size: 1.1em;">Media Type</strong>
+                        <pre style="background: #2d3748; color: #e2e8f0; padding: 12px; border-radius: 8px; margin-top: 10px; font-size: 0.9em;">Accept: 
+  application/vnd.api.v1+json</pre>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 10px;">💡 Beneficio Principal</h3>
+                    <p style="color: white;">Permite evolucionar la API sin romper clientes existentes, manteniendo múltiples versiones en producción simultáneamente.</p>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Slide 21: Arquitectura del Microservicio -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Arquitectura: Users Microservice con VSA + CQRS</h2>
+            </div>
+            <div class="content">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h3 style="color: #667eea; margin-bottom: 20px;">Flujo de Datos en Vertical Slice + CQRS</h3>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div
+                            style="flex: 1; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🎮</div>
+                            <strong style="font-size: 1.3em;">Controller/Endpoint</strong>
+                            <p style="margin-top: 10px; font-size: 0.95em;">Recibe request HTTP</p>
+                        </div>
+                        <div style="font-size: 2em; color: #667eea;">↓</div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div
+                            style="flex: 1; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🔀</div>
+                            <strong style="font-size: 1.3em;">Dispatcher</strong>
+                            <p style="margin-top: 10px; font-size: 0.95em;">Enruta a Command o Query Handler</p>
+                        </div>
+                        <div style="font-size: 2em; color: #667eea;">↓</div>
+                    </div>
+
+                    <div style="display: flex; gap: 20px;">
+                        <div
+                            style="flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">✍️</div>
+                            <strong style="font-size: 1.3em;">Command Handler</strong>
+                            <p style="margin-top: 10px; font-size: 0.95em;">Escribe datos</p>
+                        </div>
+                        <div
+                            style="flex: 1; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🔍</div>
+                            <strong style="font-size: 1.3em;">Query Handler</strong>
+                            <p style="margin-top: 10px; font-size: 0.95em;">Lee datos</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div
+                            style="flex: 1; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 2em; margin-bottom: 10px;">🐘</div>
+                            <strong style="font-size: 1.3em;">PostgreSQL + EF Core</strong>
+                            <p style="margin-top: 10px; font-size: 0.95em;">Persistencia de datos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                    <div
+                        style="background: #f7fafc; padding: 15px; border-radius: 12px; border-left: 5px solid #667eea; text-align: center;">
+                        <strong>⚡ Mapster</strong>
+                        <p style="font-size: 0.9em; margin-top: 5px; color: #4a5568;">Mapping</p>
+                    </div>
+                    <div
+                        style="background: #f7fafc; padding: 15px; border-radius: 12px; border-left: 5px solid #667eea; text-align: center;">
+                        <strong>✅ FluentValidation</strong>
+                        <p style="font-size: 0.9em; margin-top: 5px; color: #4a5568;">Validación</p>
+                    </div>
+                    <div
+                        style="background: #f7fafc; padding: 15px; border-radius: 12px; border-left: 5px solid #667eea; text-align: center;">
+                        <strong>🛡️ HandlerExecutor</strong>
+                        <p style="font-size: 0.9em; margin-top: 5px; color: #4a5568;">Manejo errores</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 22: Stack Tecnológico -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Stack Tecnológico - Users Microservice</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px;">
+                    <div
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 15px;">🎯</div>
+                        <h3 style="color: white; margin-bottom: 15px;">ASP.NET Core</h3>
+                        <p style="color: white;">Framework principal para construir el microservicio</p>
+                        <ul style="margin-top: 15px; color: white; font-size: 0.95em;">
+                            <li>Minimal API Endpoints</li>
+                            <li>Dependency Injection</li>
+                        </ul>
+                    </div>
+
+                    <div
+                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 15px;">🗄️</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Entity Framework Core</h3>
+                        <p style="color: white;">ORM para acceso a datos</p>
+                        <ul style="margin-top: 15px; color: white; font-size: 0.95em;">
+                            <li>Code First Approach</li>
+                            <li>Migrations</li>
+                            <li>LINQ Queries</li>
+                        </ul>
+                    </div>
+
+                    <div
+                        style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 15px;">🐘</div>
+                        <h3 style="color: white; margin-bottom: 15px;">PostgreSQL</h3>
+                        <p style="color: white;">Base de datos relacional</p>
+                        <ul style="margin-top: 15px; color: white; font-size: 0.95em;">
+                            <li>Open Source</li>
+                            <li>ACID Compliant</li>
+                            <li>JSON Support</li>
+                        </ul>
+                    </div>
+
+                    <div
+                        style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 15px;">⚡</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Mapster</h3>
+                        <p style="color: white;">Object-to-object mapping</p>
+                        <ul style="margin-top: 15px; color: white; font-size: 0.95em;">
+                            <li>Ultra Performance</li>
+                            <li>Zero Configuration</li>
+                            <li>Lightweight</li>
+                        </ul>
+                    </div>
+
+                    <div
+                        style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 15px;">✅</div>
+                        <h3 style="color: white; margin-bottom: 15px;">FluentValidation</h3>
+                        <p style="color: white;">Validación de modelos</p>
+                        <ul style="margin-top: 15px; color: white; font-size: 0.95em;">
+                            <li>Fluent Interface</li>
+                            <li>Testeable</li>
+                            <li>Complex Rules</li>
+                        </ul>
+                    </div>
+
+                    <!-- <div style="background: linear-gradient(135deg, #ff9a56 0%, #ffeaa7 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 15px;">📚</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Swagger / OpenAPI</h3>
+                        <p style="color: white;">Documentación API</p>
+                        <ul style="margin-top: 15px; color: white; font-size: 0.95em;">
+                            <li>Auto Documentation</li>
+                            <li>Interactive Testing</li>
+                            <li>API Versioning</li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 23: NuGet Packages -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Paquetes NuGet Requeridos</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h3 style="color: #667eea; margin-bottom: 20px;">📦 Entity Framework Core</h3>
+                        <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+                            <strong>Microsoft.EntityFrameworkCore</strong>
+                            <p style="font-size: 0.9em; color: #4a5568; margin-top: 8px;">Core EF functionality</p>
+                        </div>
+                        <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+                            <strong>Microsoft.EntityFrameworkCore.Tools</strong>
+                            <p style="font-size: 0.9em; color: #4a5568; margin-top: 8px;">Tools components for
+                                migrations</p>
+                        </div>
+                        <div style="background: #f7fafc; padding: 20px; border-radius: 12px;">
+                            <strong>Npgsql.EntityFrameworkCore.PostgreSQL</strong>
+                            <p style="font-size: 0.9em; color: #4a5568; margin-top: 8px;">PostgreSQL provider for EF
+                                Core</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="color: #667eea; margin-bottom: 20px;">📦 Otras Librerías</h3>
+                        <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+                            <strong>Mapster</strong>
+                            <p style="font-size: 0.9em; color: #4a5568; margin-top: 8px;">Fast object mapping library
+                            </p>
+                        </div>
+                        <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+                            <strong>FluentValidation</strong>
+                            <p style="font-size: 0.9em; color: #4a5568; margin-top: 8px;">Validation library for .NET
+                            </p>
+                        </div>
+                        <!-- <div style="background: #f7fafc; padding: 20px; border-radius: 12px;">
+                            <strong>Swashbuckle.AspNetCore</strong>
+                            <p style="font-size: 0.9em; color: #4a5568; margin-top: 8px;">Swagger tools for ASP.NET Core</p>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 15px;">💡 Instalación</h3>
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.95em;">dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+dotnet add package Mapster
+dotnet add package FluentValidation
+</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 24: Comparación EF Core vs Dapper -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Entity Framework Core vs Dapper</h2>
+            </div>
+            <div class="content">
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>Entity Framework Core</h3>
+                        <ul>
+                            <li>✓ Full ORM con tracking</li>
+                            <li>✓ LINQ queries</li>
+                            <li>✓ Migraciones automáticas</li>
+                            <li>✓ Lazy/Eager loading</li>
+                            <li>✓ Code First approach</li>
+                            <li>✗ Menor performance</li>
+                            <li>✗ Mayor overhead</li>
+                            <li>✓ Ideal para CRUD complejo</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>Dapper</h3>
+                        <ul>
+                            <li>✓ Micro-ORM ligero</li>
+                            <li>✓ SQL raw queries</li>
+                            <li>✓ Performance superior</li>
+                            <li>✓ Control total del SQL</li>
+                            <li>✗ Sin tracking de cambios</li>
+                            <li>✗ Sin migraciones</li>
+                            <li>✗ Más código manual</li>
+                            <li>✓ Ideal para lectura intensiva</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 30px; padding: 25px; background: #f7fafc; border-radius: 15px; border-left: 5px solid #667eea;">
+                    <h3>🎯 ¿Cuándo usar cada uno?</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                        <div>
+                            <strong style="color: #4facfe;">EF Core:</strong>
+                            <p style="font-size: 0.95em; margin-top: 5px;">Aplicaciones con operaciones CRUD complejas,
+                                relaciones entre entidades, y necesidad de migraciones</p>
+                        </div>
+                        <div>
+                            <strong style="color: #fa709a;">Dapper:</strong>
+                            <p style="font-size: 0.95em; margin-top: 5px;">Aplicaciones de alto rendimiento, consultas
+                                complejas optimizadas, o cuando necesitas control total del SQL</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 25: Comparación Mapster vs AutoMapper -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Mapster vs AutoMapper</h2>
+            </div>
+            <div class="content">
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>Mapster</h3>
+                        <ul>
+                            <li>✓ Performance superior (5x más rápido)</li>
+                            <li>✓ Zero configuration por defecto</li>
+                            <li>✓ Lightweight y simple</li>
+                            <li>✓ Generación de código en compile-time</li>
+                            <li>✓ Sintaxis más simple</li>
+                            <li>✓ Menor curva de aprendizaje</li>
+                            <li>✗ Comunidad más pequeña</li>
+                            <li>✓ Ideal para proyectos nuevos</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>AutoMapper</h3>
+                        <ul>
+                            <li>✗ Performance moderada</li>
+                            <li>✓ Configuración explícita</li>
+                            <li>✓ Características avanzadas</li>
+                            <li>✓ Reflection-based</li>
+                            <li>✗ Sintaxis más verbose</li>
+                            <li>✓ Mayor curva de aprendizaje</li>
+                            <li>✓ Comunidad establecida</li>
+                            <li>✓ Ideal para proyectos legacy</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">📊 Comparación de Código:</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <strong style="color: #43e97b;">Mapster</strong>
+                            <pre
+                                style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; font-size: 0.85em; margin-top: 10px;">// Simple
+var dto = user.Adapt&lt;UserDto&gt;();
+
+// Con configuración
+TypeAdapterConfig&lt;User, UserDto&gt;
+  .NewConfig()
+  .Map(dest => dest.FullName,
+       src => $"{src.FirstName} {src.LastName}");</pre>
+                        </div>
+                        <div>
+                            <strong style="color: #667eea;">AutoMapper</strong>
+                            <pre
+                                style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; font-size: 0.85em; margin-top: 10px;">// Necesita configuración
+var dto = mapper.Map&lt;UserDto&gt;(user);
+
+// Profile requerido
+CreateMap&lt;User, UserDto&gt;()
+  .ForMember(dest => dest.FullName,
+    opt => opt.MapFrom(
+      src => $"{src.FirstName} {src.LastName}"));</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 26: Conclusión Sección 2 -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">🎯</div>
+                <h2>Resumen: Microservicio de Usuarios</h2>
+                <div style="text-align: left; max-width: 900px; margin-top: 40px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h3 style="color: white; margin-bottom: 15px;">🏗️ Arquitectura</h3>
+                            <ul style="color: white; font-size: 0.95em;">
+                                <li>Vertical Slice Architecture</li>
+                                <li>Features</li>
+                                <li>Inyección de dependencias</li>
+                            </ul>
+                        </div>
+
+                        <div
+                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h3 style="color: white; margin-bottom: 15px;">💾 Datos</h3>
+                            <ul style="color: white; font-size: 0.95em;">
+                                <li>PostgreSQL database</li>
+                                <li>Entity Framework Core</li>
+                                <li>Code First + Migrations</li>
+                            </ul>
+                        </div>
+
+                        <div
+                            style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h3 style="color: white; margin-bottom: 15px;">⚙️ Herramientas</h3>
+                            <ul style="color: white; font-size: 0.95em;">
+                                <li>Mapster para mapping</li>
+                                <li>FluentValidation</li>
+                                <!-- <li>Swagger/OpenAPI</li> -->
+                            </ul>
+                        </div>
+
+                        <div
+                            style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h3 style="color: white; margin-bottom: 15px;">🔧 Prácticas</h3>
+                            <ul style="color: white; font-size: 0.95em;">
+                                <!-- <li>API Versioning</li> -->
+                                <li>Git version control</li>
+                                <!-- <li>Documentación automática</li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 27: Conclusión Final -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">✅</div>
+                <h2>Conclusiones Finales</h2>
+                <div style="text-align: left; max-width: 800px; margin-top: 40px;">
+                    <ul style="font-size: 1.2em; line-height: 2;">
+                        <li>Los microservicios ofrecen <strong>agilidad y escalabilidad</strong></li>
+                        <li>Permiten <strong>independencia</strong> en desarrollo y despliegue</li>
+                        <li><strong>Vertical Slice Architecture</strong> organiza por características</li>
+                        <li><strong>CQRS nativo</strong> separa Commands y Queries</li>
+                        <li><strong>EF Core</strong> simplifica el acceso a datos con PostgreSQL</li>
+                        <li><strong>Mapster</strong> proporciona mapping de alto rendimiento</li>
+                        <li>Implementar <strong>validación y documentación</strong> desde el inicio</li>
+                        <li>Son ideales para aplicaciones <strong>complejas y escalables</strong></li>
+                    </ul>
+                </div>
+                <p style="margin-top: 50px; font-size: 1.3em; color: #667eea;">
+                    <strong>¡Gracias por su atención!</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide: Sección 3 - Portada -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">🏗️</div>
+                <h1>Microservicio con Clean Architecture</h1>
+                <p class="subtitle">Usando MySQL con Entity Framework Core y Dapper</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 3: Implementación Avanzada</p>
+            </div>
+        </div>
+
+        <!-- Slide: Clean Architecture - Diagrama -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Clean Architecture - Principios Fundamentales</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.1em;">
+                    Clean Architecture busca <strong>independencia y modularidad</strong> separando responsabilidades en
+                    capas.
+                    Las reglas de negocio no dependen de frameworks, bases de datos ni de la interfaz de usuario.
+                </p>
+
+                <div style="text-align:center; margin-top: 25px;">
+                    <img src="img/clean_architecture.png" alt="Clean Architecture Diagram"
+                        style="max-width: 85%; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);" />
+                </div>
+
+                <p style="margin-top: 25px; font-size: 1.05em; text-align:center;">
+                    <em>“Las dependencias siempre apuntan hacia el núcleo — el dominio.”</em>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide: Estructura de Carpetas (Actualizada) -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Estructura del Proyecto - Clean Architecture</h2>
+            </div>
+            <div class="content">
+                <p style="margin-bottom: 25px; font-size: 1.1em;">Ejemplo basado en la solución
+                    <strong>eCommerce.ProductsService</strong>:</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div
+                        style="background: #f7fafc; padding: 25px; border-radius: 12px; font-family: monospace; font-size: 0.85em;">
+                        📦 <strong>eCommerce.ProductsService.sln</strong><br>
+                        ├── 📁 <strong>eCommerce.ProductsService.Api</strong><br>
+                        │ ├── 📁 Controllers<br>
+                        │ ├── 📄 Program.cs<br>
+                        │ ├── 📄 appsettings.json<br>
+                        │ └── 📄 eCommerce.ProductsService.Api.http<br>
+                        │<br>
+                        ├── 📁 <strong>eCommerce.ProductsService.Application</strong><br>
+                        │ ├── 📁 Abstractions<br>
+                        │ ├── 📁 Behaviors<br>
+                        │ ├── 📁 Commons<br>
+                        │ ├── 📁 Dtos<br>
+                        │ ├── 📁 Interfaces<br>
+                        │ ├── 📁 UseCases<br>
+                        │ └── 📄 DependencyInjection.cs<br>
+                        │<br>
+                        ├── 📁 <strong>eCommerce.ProductsService.Domain</strong><br>
+                        │ ├── 📁 Entities<br>
+                        │ ├── 📁 Dependencias<br>
+                        │ └── 📄 DependencyInjection.cs<br>
+                        │<br>
+                        └── 📁 <strong>eCommerce.ProductsService.Infrastructure</strong><br>
+                        ├── 📁 Persistence<br>
+                        ├── 📁 Services<br>
+                        └── 📄 DependencyInjection.cs
+                    </div>
+
+                    <div style="background: #f0fff4; padding: 25px; border-radius: 12px;">
+                        <h3 style="color: #43e97b;">🧠 Buenas Prácticas</h3>
+                        <ul>
+                            <li>Las dependencias fluyen desde <strong>Api → Application → Domain</strong></li>
+                            <li>Infrastructure implementa las interfaces de Application</li>
+                            <li>Application nunca depende de Infrastructure directamente</li>
+                            <li>Dependency Injection centraliza las configuraciones</li>
+                        </ul>
+
+                        <div
+                            style="margin-top: 20px; background: #43e97b; padding: 15px; border-radius: 8px; color: white;">
+                            <strong>💡 Consejo:</strong> Cada microservicio debe ser completamente independiente
+                            y contener su propio dominio, aplicación, infraestructura y capa API.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: MySQL con Entity Framework Core -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>MySQL con Entity Framework Core</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.15em;">
+                    En esta arquitectura, <strong>MySQL</strong> es la base de datos principal del microservicio.
+                    Se utiliza el proveedor oficial de Oracle <strong>MySql.EntityFrameworkCore</strong>, totalmente
+                    compatible con
+                    Entity Framework Core.
+                </p>
+
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin: 20px 0;">
+                    <h3 style="color: #667eea;">📦 Instalación del paquete</h3>
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto;">
+dotnet add package MySql.EntityFrameworkCore
+</pre>
+                </div>
+
+                <h3 style="margin-top: 25px;">Configuración del DbContext:</h3>
+                <pre
+                    style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; line-height: 1.6;">
+var assembly = typeof(ApplicationDbContext).Assembly.FullName;
+
+services.AddDbContext&lt;ApplicationDbContext&gt;(
+    options => options.UseMySQL(
+        configuration.GetConnectionString("ProductsServiceDatabase")!,
+        x => x.MigrationsAssembly(assembly)));
+</pre>
+
+                <ul style="margin-top: 20px;">
+                    <li>📦 Usa <strong>MySQL</strong> como proveedor de base de datos.</li>
+                    <li>🏗️ Las <strong>migraciones</strong> se cargan desde el ensamblado actual.</li>
+                    <li>🔌 La conexión se obtiene desde <code>appsettings.json</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide: Integración EF Core + Dapper -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Integración EF Core + Dapper</h2>
+            </div>
+            <div class="content">
+                <p>El enfoque híbrido aprovecha lo mejor de ambos mundos:</p>
+                <ul>
+                    <li><strong>EF Core:</strong> Persistencia, transacciones, migraciones.</li>
+                    <li><strong>Dapper:</strong> Consultas optimizadas, reportes y lectura masiva.</li>
+                </ul>
+
+                <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto;">
+// Ejemplo con Dapper
+using var connection = new MySqlConnection(_connectionString);
+var products = await connection.QueryAsync&lt;ProductDto&gt;(
+    "SELECT Id, Name, Price FROM Products WHERE IsActive = 1");
+</pre>
+
+                <div style="margin-top: 25px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+                    padding: 20px; border-radius: 12px; color: white;">
+                    <strong>💡 Buenas Prácticas:</strong>
+                    <ul style="margin-top: 10px; color: white;">
+                        <li>Usar EF Core para operaciones de escritura</li>
+                        <li>Usar Dapper para lecturas de alto rendimiento</li>
+                        <li>Reutilizar la misma conexión para mantener coherencia transaccional</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Conclusiones Finales -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Conclusiones Finales - Sección 3</h2>
+            </div>
+            <div class="content">
+                <ul style="font-size: 1.1em; line-height: 1.8;">
+                    <li>🏗️ <strong>Clean Architecture</strong> ofrece una separación clara de responsabilidades,
+                        facilitando mantenibilidad.</li>
+                    <li>🐬 <strong>MySQL</strong> se integra de forma natural con <strong>Entity Framework Core</strong>
+                        mediante el paquete oficial de Oracle.</li>
+                    <li>⚡ <strong>Dapper</strong> complementa el rendimiento en consultas complejas o reportes.</li>
+                    <li>💉 La inyección de dependencias permite mantener un código limpio y fácilmente testeable.</li>
+                    <li>🧩 Esta arquitectura es ideal para microservicios autónomos, escalables y fáciles de desplegar.
+                    </li>
+                </ul>
+
+                <div style="margin-top: 30px; text-align: center;">
+                    <h3 style="color: #43e97b;">✨ “Simplicidad en la arquitectura, potencia en la ejecución.”</h3>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Slide: Sección 4 - Portada Docker -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">🐳</div>
+                <h1>Deployment con Docker</h1>
+                <p class="subtitle">Containerización de Microservicios</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 4: Deployment</p>
+            </div>
+        </div>
+
+        <!-- Slide: Deployment Workflow - Hypervisor -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Deployment Workflow - Máquinas Virtuales</h2>
+            </div>
+            <div class="content">
+                <h3 style="margin-bottom: 20px;">Hypervisor</h3>
+                <p>Un hypervisor es un software que permite crear y ejecutar múltiples máquinas virtuales, donde cada
+                    una puede tener su propio sistema operativo basado en recursos de hardware pre-asignados.</p>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Arquitectura con Hypervisor:</h3>
+                <div
+                    style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 25px; font-family: 'Courier New', monospace; text-align: center;">
+                    <div style="margin-bottom: 10px;"><strong>Aplicación</strong></div>
+                    <div style="margin-bottom: 10px;">↓</div>
+                    <div style="margin-bottom: 10px;"><strong>Sistema Operativo Invitado</strong></div>
+                    <div style="margin-bottom: 10px;">↓</div>
+                    <div style="margin-bottom: 10px;"><strong>Hypervisor</strong> (VMWare / VirtualBox)</div>
+                    <div style="margin-bottom: 10px;">↓</div>
+                    <div style="margin-bottom: 10px;"><strong>Sistema Operativo Host</strong></div>
+                    <div style="margin-bottom: 10px;">↓</div>
+                    <div><strong>Hardware</strong></div>
+                </div>
+
+                <h3 style="margin-bottom: 15px;">⚠️ Problemas con Hypervisors:</h3>
+                <div class="drawback-list">
+                    <div class="drawback-item">
+                        <h3>Esfuerzo Manual</h3>
+                        <p>Se requiere esfuerzo manual para replicar el entorno de desarrollo a producción.</p>
+                    </div>
+                    <div class="drawback-item">
+                        <h3>Consumo de Recursos</h3>
+                        <p>Gran huella digital y desperdicio de recursos de hardware debido a máquinas virtuales
+                            completas.</p>
+                    </div>
+                    <div class="drawback-item">
+                        <h3>Propenso a Errores</h3>
+                        <p>Errores debido a discrepancias de configuración, diferencias en versiones de dependencias o
+                            errores humanos.</p>
+                    </div>
+                    <div class="drawback-item">
+                        <h3>Escalabilidad Limitada</h3>
+                        <p>Difícil escalar horizontalmente sin realizar inversiones sustanciales en recursos de
+                            hardware.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Introducción a Docker -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Introducción a Docker</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;">
+                    <strong>Docker</strong> es una herramienta de containerización que empaqueta aplicaciones con sus
+                    dependencias para un despliegue consistente y eficiente en diversos entornos.
+                </p>
+
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="font-size: 4em; margin-bottom: 15px;">🐳</div>
+                    <p style="font-size: 1.1em; color: #4a5568;">Docker revolucionó la forma en que empaquetamos,
+                        distribuimos y ejecutamos aplicaciones.</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>📦 Containerización</h3>
+                        <p>Empaqueta aplicaciones con todas sus dependencias en un contenedor aislado</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔄 Consistencia</h3>
+                        <p>Garantiza el mismo comportamiento en desarrollo, testing y producción</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⚡ Eficiencia</h3>
+                        <p>Utiliza recursos de manera más eficiente que máquinas virtuales tradicionales</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🚀 Escalabilidad</h3>
+                        <p>Facilita el despliegue y escalado rápido de aplicaciones</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker Images vs Containers -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Docker Images vs Containers</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div
+                        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 15px;">📦</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Docker Image</h3>
+                        <p style="color: white; margin-bottom: 15px;">Un paquete auto-contenido con todos los
+                            componentes necesarios para ejecutar una aplicación de software.</p>
+                        <ul style="color: white; font-size: 0.95em;">
+                            <li>✓ Código fuente</li>
+                            <li>✓ Dependencias</li>
+                            <li>✓ Configuración del entorno</li>
+                            <li>✓ Inmutable</li>
+                        </ul>
+                    </div>
+
+                    <div
+                        style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 15px;">🎯</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Docker Container</h3>
+                        <p style="color: white; margin-bottom: 15px;">Una instancia ejecutable ligera, aislada y creada
+                            desde una imagen Docker.</p>
+                        <ul style="color: white; font-size: 0.95em;">
+                            <li>✓ Instancia de Image</li>
+                            <li>✓ Ligero y rápido</li>
+                            <li>✓ Aislado del sistema</li>
+                            <li>✓ Múltiples por imagen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 30px; text-align: center; padding: 25px; background: #f7fafc; border-radius: 15px; border-left: 5px solid #667eea;">
+                    <strong>💡 Analogía:</strong>
+                    <p style="margin-top: 10px; font-size: 1.05em;">Una <strong>Image</strong> es como una
+                        <strong>clase</strong>, y un <strong>Container</strong> es como una <strong>instancia</strong>
+                        de esa clase.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Beneficios de Containerización -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Beneficios de la Containerización</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="principle-card">
+                        <h3>🔒 1. Aislamiento</h3>
+                        <p>Los contenedores proporcionan aislamiento entre aplicaciones, evitando conflictos con otros
+                            contenedores o el sistema host.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🌍 2. Portabilidad</h3>
+                        <p>Los contenedores encapsulan aplicaciones y dependencias, asegurando consistencia en diversos
+                            entornos.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⚙️ 3. Optimización de Recursos</h3>
+                        <p>Los contenedores comparten el kernel del SO host y utilizan recursos de forma más eficiente
+                            que VMs.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>✅ 4. Consistencia</h3>
+                        <p>Incluyen todo necesario para ejecutar la aplicación, reduciendo problemas de "funciona en mi
+                            máquina".</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📈 5. Escalabilidad</h3>
+                        <p>Permite escalar fácilmente servicios específicos ejecutando cada uno en su propio contenedor.
+                        </p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⚡ 6. Despliegue Rápido</h3>
+                        <p>Los contenedores inician y se detienen rápidamente, habilitando despliegue y escalado
+                            rápidos.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔄 7. Versionamiento</h3>
+                        <p>Docker permite versionado de imágenes para rollback fácil si surgen problemas.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🛡️ 8. Seguridad</h3>
+                        <p>Los contenedores aislados mejoran la seguridad al limitar el impacto de vulnerabilidades.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Containers vs Virtual Machines -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Containers vs Máquinas Virtuales</h2>
+            </div>
+            <div class="content">
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🐳 Containers</h3>
+                        <ul>
+                            <li>✓ Ligero</li>
+                            <li>✓ Inicio rápido</li>
+                            <li>✓ Bajo overhead</li>
+                            <li>✓ Comparten kernel</li>
+                            <li>✓ Alta densidad</li>
+                            <li>✓ Portabilidad</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>💻 Virtual Machines</h3>
+                        <ul>
+                            <li>✓ OS completo</li>
+                            <li>✓ Aislamiento fuerte</li>
+                            <li>✗ Inicio lento</li>
+                            <li>✗ Alto overhead</li>
+                            <li>✗ Baja densidad</li>
+                            <li>✗ Menos portables</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 20px;">Diferencias Clave:</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+                    <div
+                        style="background: #f7fafc; padding: 15px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">Aislamiento:</strong><br />
+                        <span style="font-size: 0.9em;">Containers: Ligero | VMs: Fuerte</span>
+                    </div>
+                    <div
+                        style="background: #f7fafc; padding: 15px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">Rendimiento:</strong><br />
+                        <span style="font-size: 0.9em;">Containers: Rápido | VMs: Lento</span>
+                    </div>
+                    <div
+                        style="background: #f7fafc; padding: 15px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">Escalabilidad:</strong><br />
+                        <span style="font-size: 0.9em;">Containers: Rápida | VMs: Lenta</span>
+                    </div>
+                    <div
+                        style="background: #f7fafc; padding: 15px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">Overhead:</strong><br />
+                        <span style="font-size: 0.9em;">Containers: Bajo | VMs: Alto</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Cómo Funcionan las Imágenes y Contenedores -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Cómo Funcionan Internamente</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>📝 1. Dockerfile</h3>
+                        <p>Script que especifica los pasos para construir una imagen, incluyendo copiar archivos e
+                            instalar dependencias.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🏗️ 2. Base Image</h3>
+                        <p>Las imágenes se construyen a partir de una imagen base que contiene componentes esenciales
+                            del SO (dotnet/aspnet, python, node, etc.)</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📚 3. Layered FS</h3>
+                        <p>Cada instrucción en el Dockerfile crea una nueva capa. Las capas almacenan cambios en el
+                            sistema de archivos.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⚙️ 4. Instantiation</h3>
+                        <p>Los contenedores son instancias de imágenes. Acceden al sistema de archivos de la imagen
+                            padre.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔒 5. Imágenes Inmutables</h3>
+                        <p>Una vez creada, la imagen no puede cambiar. Se envuelve en una capa de solo lectura.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>✍️ 6. Contenedores Escribibles</h3>
+                        <p>Los contenedores tienen una capa delgada y escribible con cambios al sistema de archivos
+                            durante la ejecución.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker Hub -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Docker Hub</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;">
+                    <strong>Docker Hub</strong> es un repositorio en la nube para cargar y distribuir imágenes Docker.
+                </p>
+
+                <div style="text-align: center; margin: 40px 0;">
+                    <div style="font-size: 4em; margin-bottom: 20px;">☁️</div>
+                    <p style="font-size: 1.1em;">Es como el "GitHub" de las imágenes Docker.</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>📦 Repositorio Público</h3>
+                        <p>Imágenes visibles para todos. Ideal para proyectos de código abierto.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔒 Repositorio Privado</h3>
+                        <p>Acceso restringido. Esencial para aplicaciones sensibles o propietarias.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🔖 Tags y Versioning</h3>
+                        <p>Cada tag representa una versión específica de la imagen.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>⬇️ Pull / Push</h3>
+                        <p>Descargar (pull) o subir (push) imágenes al repositorio.</p>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 30px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 25px; border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 10px;">🔗 Acceso a Docker Hub</h3>
+                    <p style="color: white;">Necesitas crear una cuenta en <strong>hub.docker.com</strong> para subir
+                        repositorios privados.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Dockerfile - Instrucciones Principales -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Dockerfile - Instrucciones Principales</h2>
+            </div>
+            <div class="content">
+                <div style="columns: 2; column-gap: 30px;">
+                    <div
+                        style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">FROM &lt;image&gt;:&lt;tag&gt;</strong><br />
+                        <span style="font-size: 0.9em; color: #4a5568;">Especifica la imagen base para el
+                            contenedor</span>
+                    </div>
+
+                    <div
+                        style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">USER &lt;user_name&gt;</strong><br />
+                        <span style="font-size: 0.9em; color: #4a5568;">Especifica el usuario antes de ejecutar
+                            comandos</span>
+                    </div>
+
+                    <div
+                        style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">WORKDIR &lt;path&gt;</strong><br />
+                        <span style="font-size: 0.9em; color: #4a5568;">Define el directorio de trabajo en la
+                            imagen</span>
+                    </div>
+
+                    <div
+                        style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">EXPOSE &lt;port&gt;</strong><br />
+                        <span style="font-size: 0.9em; color: #4a5568;">Informa qué puerto escuchará el
+                            contenedor</span>
+                    </div>
+
+                    <div
+                        style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">ARG &lt;variable&gt;=&lt;value&gt;</strong><br />
+                        <span style="font-size: 0.9em; color: #4a5568;">Define variables durante el build</span>
+                    </div>
+
+                    <div
+                        style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">COPY &lt;source&gt; &lt;dest&gt;</strong><br />
+                        <span style="font-size: 0.9em; color: #4a5568;">Copia archivos del host a la imagen</span>
+                    </div>
+
+                    <div
+                        style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">RUN &lt;command&gt;</strong><br />
+                        <span style="font-size: 0.9em; color: #4a5568;">Ejecuta un comando durante el build</span>
+                    </div>
+
+                    <div
+                        style="break-inside: avoid; margin-bottom: 15px; background: #f7fafc; padding: 15px; border-radius: 8px; border-left: 4px solid #667eea;">
+                        <strong style="color: #667eea;">ENTRYPOINT [...]</strong><br />
+                        <span style="font-size: 0.9em; color: #4a5568;">Comando principal al iniciar el
+                            contenedor</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Multi-Stage Dockerfile -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Multi-Stage Dockerfile</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.1em; margin-bottom: 25px;">
+                    El <strong>Multi-Stage Build</strong> optimiza el tamaño final de la imagen eliminando artefactos de
+                    build innecesarios.
+                </p>
+
+                <div class="drawback-list">
+                    <div class="drawback-item">
+                        <h3>📋 Stage 1: "base"</h3>
+                        <p>Configura la imagen base con el runtime ASP.NET, usuario, directorio de trabajo y puertos
+                            expuestos.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>🔨 Stage 2: "build"</h3>
+                        <p>Usa SDK .NET, copia archivos de proyecto, restaura dependencias y compila la aplicación.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>📦 Stage 3: "publish"</h3>
+                        <p>Publica la aplicación compilada en modo Release optimizado para producción.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>✨ Stage 4: "final"</h3>
+                        <p>Usa la imagen base (stage 1), copia los archivos publicados, y establece el punto de entrada.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 25px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 20px; border-radius: 12px; color: white;">
+                    <strong>💡 Ventaja:</strong>
+                    <p style="margin-top: 10px;">La imagen final solo contiene los artefactos necesarios, reduciendo
+                        tamaño y mejorando seguridad.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Comandos Docker Principales -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Comandos Docker Principales</h2>
+            </div>
+            <div class="content">
+                <h3 style="margin-bottom: 20px;">Construcción y Ejecución:</h3>
+
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.95em; line-height: 1.6;">
+<strong style="color: #fbbf24;">docker build</strong> -t &lt;image&gt;:&lt;tag&gt; -f &lt;Dockerfile_path&gt; &lt;context&gt;
+Construye una imagen Docker desde un Dockerfile
+
+<strong style="color: #fbbf24;">docker run</strong> --name &lt;container_name&gt; -e &lt;env_var&gt;=&lt;value&gt; &lt;image&gt;:&lt;tag&gt;
+Crea e inicia un nuevo contenedor desde una imagen
+
+<strong style="color: #fbbf24;">docker tag</strong> &lt;source_image&gt;:&lt;tag&gt; &lt;username&gt;/&lt;image&gt;:&lt;tag&gt;
+Crea un alias para una imagen existente
+
+<strong style="color: #fbbf24;">docker push</strong> &lt;username&gt;/&lt;image&gt;:&lt;tag&gt;
+Sube una imagen a Docker Hub
+
+<strong style="color: #fbbf24;">docker pull</strong> &lt;username&gt;/&lt;image&gt;:&lt;tag&gt;
+Descarga una imagen desde Docker Hub
+            </pre>
+                </div>
+
+                <div class="principle-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="principle-card">
+                        <h3>🔍 Ver Imágenes</h3>
+                        <p><code
+                                style="background: #2d3748; color: #e2e8f0; padding: 5px 8px; border-radius: 4px;">docker images</code>
+                        </p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📊 Ver Contenedores</h3>
+                        <p><code
+                                style="background: #2d3748; color: #e2e8f0; padding: 5px 8px; border-radius: 4px;">docker ps</code>
+                        </p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🛑 Detener</h3>
+                        <p><code
+                                style="background: #2d3748; color: #e2e8f0; padding: 5px 8px; border-radius: 4px;">docker stop &lt;container&gt;</code>
+                        </p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🗑️ Eliminar</h3>
+                        <p><code
+                                style="background: #2d3748; color: #e2e8f0; padding: 5px 8px; border-radius: 4px;">docker rm &lt;container&gt;</code>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker Networks -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Docker Networks</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;">
+                    Una <strong>Docker Network</strong> es una interfaz de red virtual que habilita la comunicación
+                    entre contenedores Docker.
+                </p>
+
+                <h3 style="margin-bottom: 20px;">Tipos de Drivers de Red:</h3>
+
+                <div class="drawback-list">
+                    <div class="drawback-item">
+                        <h3>🌉 Bridge (Predeterminado)</h3>
+                        <p>Crea una red interna en el host Docker. Los contenedores en la misma red bridge pueden
+                            comunicarse usando sus direcciones IP.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>🖥️ Host</h3>
+                        <p>El contenedor usa la red del host directamente. Útil para alto rendimiento pero sin
+                            aislamiento.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>🚫 None</h3>
+                        <p>El contenedor no tiene acceso a la red. Usado para contenedores completamente aislados.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>🌐 Overlay</h3>
+                        <p>Conecta múltiples Docker daemons. Esencial en Docker Swarm y Kubernetes para comunicación
+                            entre nodos.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>🔗 Macvlan</h3>
+                        <p>Asigna direcciones MAC a contenedores, haciéndolos parecer dispositivos físicos en la red.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 12px; color: white;">
+                    <strong>💡 Caso Común:</strong>
+                    <p style="margin-top: 10px;">Usar <strong>Bridge</strong> para conectar un contenedor de aplicación
+                        con un contenedor de base de datos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker en Linux -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Docker en Linux - Instalación</h2>
+            </div>
+            <div class="content">
+                <h3 style="margin-bottom: 20px;">Pasos de Instalación en Ubuntu:</h3>
+
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.95em; line-height: 1.8;">
+# 1. Actualizar los paquetes disponibles
+<strong style="color: #fbbf24;">sudo apt-get update</strong>
+
+# 2. Instalar Docker
+<strong style="color: #fbbf24;">sudo apt install docker.io</strong>
+
+# 3. Verificar la instalación
+<strong style="color: #fbbf24;">docker --version</strong>
+
+# 4. (Opcional) Ejecutar Docker sin sudo
+<strong style="color: #fbbf24;">sudo usermod -aG docker $USER</strong>
+            </pre>
+                </div>
+
+                <div class="principle-grid" style="grid-template-columns: 1fr;">
+                    <div class="principle-card">
+                        <h3>📝 apt-get</h3>
+                        <p>Herramienta de gestión de paquetes en distribuciones Debian. El comando <code
+                                style="background: #2d3748; color: #e2e8f0; padding: 5px 8px; border-radius: 4px;">apt-get update</code>
+                            actualiza el índice de paquetes disponibles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Resumen Docker -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">✨</div>
+                <h2>Resumen: Docker para Microservicios</h2>
+                <div style="text-align: left; max-width: 900px; margin-top: 40px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h3 style="color: white; margin-bottom: 15px;">📦 Containerización</h3>
+                            <ul style="color: white; font-size: 0.95em;">
+                                <li>Empaqueta apps con dependencias</li>
+                                <li>Consistencia garantizada</li>
+                                <li>Fácil escalabilidad</li>
+                            </ul>
+                        </div>
+
+                        <div
+                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h3 style="color: white; margin-bottom: 15px;">🐳 Imágenes & Contenedores</h3>
+                            <ul style="color: white; font-size: 0.95em;">
+                                <li>Images: blueprints inmutables</li>
+                                <li>Containers: instancias ejecutables</li>
+                                <li>Layered architecture</li>
+                            </ul>
+                        </div>
+
+                        <div
+                            style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h3 style="color: white; margin-bottom: 15px;">📝 Dockerfile</h3>
+                            <ul style="color: white; font-size: 0.95em;">
+                                <li>Define construcción de imágenes</li>
+                                <li>Multi-stage builds</li>
+                                <li>Optimización de tamaño</li>
+                            </ul>
+                        </div>
+
+                        <div
+                            style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h3 style="color: white; margin-bottom: 15px;">☁️ Distribución</h3>
+                            <ul style="color: white; font-size: 0.95em;">
+                                <li>Docker Hub repositories</li>
+                                <li>Push/Pull de imágenes</li>
+                                <li>Versioning y tagging</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-counter">
+            <span id="current">1</span> / <span id="total">52</span>
+        </div>
+
+        <div class="controls">
+            <button id="prev" onclick="prevSlide()">← Anterior</button>
+            <button id="next" onclick="nextSlide()">Siguiente →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('current').textContent = currentSlide + 1;
+            document.getElementById('prev').disabled = currentSlide === 0;
+            document.getElementById('next').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        showSlide(0);
+    </script>
+</body>
+
+</html>
