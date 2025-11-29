@@ -3087,6 +3087,74 @@ var products = await connection.QueryAsync&lt;ProductDto&gt;(
             </div>
         </div>
 
+        <!-- Slide: Ejemplo Detallado Dockerfile -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Ejemplo Detallado de Dockerfile</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 25px; height: 100%;">
+                    <!-- Code Column -->
+                    <div style="background: #1e1e1e; padding: 20px; border-radius: 12px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.75em; color: #d4d4d4; line-height: 1.4;">
+                        <div style="color: #6a9955;"># 1. Fase Base (Runtime)</div>
+                        <span style="color: #569cd6;">FROM</span> mcr.microsoft.com/dotnet/aspnet:10.0 <span style="color: #569cd6;">AS</span> base
+                        <span style="color: #569cd6;">USER</span> $APP_UID
+                        <span style="color: #569cd6;">WORKDIR</span> /app
+                        <span style="color: #569cd6;">EXPOSE</span> 8080
+                        <span style="color: #569cd6;">EXPOSE</span> 8081
+                        <br><br>
+                        <div style="color: #6a9955;"># 2. Fase Build (SDK)</div>
+                        <span style="color: #569cd6;">FROM</span> mcr.microsoft.com/dotnet/sdk:10.0 <span style="color: #569cd6;">AS</span> build
+                        <span style="color: #569cd6;">ARG</span> BUILD_CONFIGURATION=Release
+                        <span style="color: #569cd6;">WORKDIR</span> /src
+                        <span style="color: #6a9955;"># Copia de proyectos (Restore layers)</span>
+                        <span style="color: #569cd6;">COPY</span> ["src/eCommerce.ProductsService.Api/eCommerce.ProductsService.Api.csproj", "src/eCommerce.ProductsService.Api/"]
+                        <span style="color: #569cd6;">COPY</span> ["eCommerce.ProductsService.Infrastructure/eCommerce.ProductsService.Infrastructure.csproj", "eCommerce.ProductsService.Infrastructure/"]
+                        <span style="color: #569cd6;">COPY</span> ["src/eCommerce.ProductsService.Application/eCommerce.ProductsService.Application.csproj", "src/eCommerce.ProductsService.Application/"]
+                        <span style="color: #569cd6;">COPY</span> ["src/eCommerce.ProductsService.Domain/eCommerce.ProductsService.Domain.csproj", "src/eCommerce.ProductsService.Domain/"]
+                        <span style="color: #569cd6;">RUN</span> dotnet restore "./src/eCommerce.ProductsService.Api/eCommerce.ProductsService.Api.csproj"
+                        <span style="color: #569cd6;">COPY</span> . .
+                        <span style="color: #569cd6;">WORKDIR</span> "/src/src/eCommerce.ProductsService.Api"
+                        <span style="color: #569cd6;">RUN</span> dotnet build "./eCommerce.ProductsService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+                        <br><br>
+                        <div style="color: #6a9955;"># 3. Fase Publish</div>
+                        <span style="color: #569cd6;">FROM</span> build <span style="color: #569cd6;">AS</span> publish
+                        <span style="color: #569cd6;">ARG</span> BUILD_CONFIGURATION=Release
+                        <span style="color: #569cd6;">RUN</span> dotnet publish "./eCommerce.ProductsService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+                        <br><br>
+                        <div style="color: #6a9955;"># 4. Fase Final (Producción)</div>
+                        <span style="color: #569cd6;">FROM</span> base <span style="color: #569cd6;">AS</span> final
+                        <span style="color: #569cd6;">WORKDIR</span> /app
+                        <span style="color: #569cd6;">COPY</span> --from=publish /app/publish .
+                        <span style="color: #569cd6;">ENTRYPOINT</span> ["dotnet", "eCommerce.ProductsService.Api.dll"]
+                    </div>
+
+                    <!-- Explanation Column -->
+                    <div style="overflow-y: auto; padding-right: 10px;">
+                        <div class="drawback-item" style="margin-bottom: 15px; padding: 15px;">
+                            <h3 style="font-size: 1.1em; margin-bottom: 5px;">1️⃣ Fase Base</h3>
+                            <p style="font-size: 0.9em;">Usa una imagen ligera (Runtime) solo para <strong>ejecutar</strong> la app. Configura usuario y puertos.</p>
+                        </div>
+
+                        <div class="drawback-item" style="margin-bottom: 15px; padding: 15px;">
+                            <h3 style="font-size: 1.1em; margin-bottom: 5px;">2️⃣ Fase Build</h3>
+                            <p style="font-size: 0.9em;">Usa una imagen completa (SDK) para <strong>compilar</strong>. Copia los .csproj primero para aprovechar el caché de Docker en la restauración de paquetes.</p>
+                        </div>
+
+                        <div class="drawback-item" style="margin-bottom: 15px; padding: 15px;">
+                            <h3 style="font-size: 1.1em; margin-bottom: 5px;">3️⃣ Fase Publish</h3>
+                            <p style="font-size: 0.9em;">Genera los binarios finales optimizados ("Release") listos para ser desplegados.</p>
+                        </div>
+
+                        <div class="drawback-item" style="margin-bottom: 15px; padding: 15px;">
+                            <h3 style="font-size: 1.1em; margin-bottom: 5px;">4️⃣ Fase Final</h3>
+                            <p style="font-size: 0.9em;">Crea la imagen definitiva copiando <strong>solo</strong> lo necesario desde la fase 'publish' a la fase 'base'. ¡Resultado: Imagen pequeña y segura!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Slide: Multi-Stage Dockerfile -->
         <div class="slide">
             <div class="slide-header">
@@ -3280,6 +3348,245 @@ Descarga una imagen desde Docker Hub
             </div>
         </div>
 
+        <!-- Slide: Docker Práctico - Build -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Docker: Validación y Construcción</h2>
+            </div>
+            <div class="content">
+                <div class="drawback-item" style="margin-bottom: 20px;">
+                    <h3>1. Validación de Instalación</h3>
+                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; margin-top: 10px;">docker</pre>
+                </div>
+
+                <h3 style="margin-bottom: 15px;">2. Creación de Imágenes (Build)</h3>
+                <pre style="background: #2d3748; color: #fbbf24; padding: 15px; border-radius: 8px; font-weight: bold; overflow-x: auto;">docker build -t users-service:initial -f ./eCommerce.ProductsService.Api/Dockerfile .</pre>
+
+                <div class="principle-grid" style="margin-top: 20px; grid-template-columns: 1fr 1fr;">
+                    <div class="principle-card">
+                        <h3>1) docker build</h3>
+                        <p>Le dice a Docker: <strong>construye una imagen</strong> usando un Dockerfile.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>2) -t users-service:initial</h3>
+                        <p>Asigna <strong>nombre y versión</strong> (tag) a la imagen.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>3) -f ./path/Dockerfile</h3>
+                        <p>Indica <strong>qué Dockerfile usar</strong> explícitamente.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>4) . (punto final)</h3>
+                        <p>Define el <strong>build context</strong> (carpeta actual).</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: #f0fff4; border-radius: 10px; border-left: 5px solid #48bb78;">
+                    <strong>Resumen:</strong> Construye la imagen usando el Dockerfile del microservicio y tomando la carpeta actual como contexto.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker Práctico - Run -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Ejecutando Contenedores</h2>
+            </div>
+            <div class="content">
+                <pre style="background: #2d3748; color: #fbbf24; padding: 15px; border-radius: 8px; font-weight: bold; margin-bottom: 30px;">docker run -p 8080:8080 -p 8081:8081 users-service:initial</pre>
+
+                <div class="drawback-list">
+                    <div class="drawback-item">
+                        <h3>1️⃣ docker run</h3>
+                        <p>“Crea un contenedor y ejecútalo”.</p>
+                    </div>
+                    <div class="drawback-item">
+                        <h3>2️⃣ -p 8080:8080</h3>
+                        <p><strong>Puerto PC : Puerto Contenedor</strong>. Lo que llega a localhost:8080 va al 8080 del microservicio.</p>
+                    </div>
+                    <div class="drawback-item">
+                        <h3>3️⃣ -p 8081:8081</h3>
+                        <p>Expone un segundo puerto (ej. HTTPS). Docker hace accesibles ambos puertos.</p>
+                    </div>
+                    <div class="drawback-item">
+                        <h3>4️⃣ users-service:initial</h3>
+                        <p>Es la <strong>imagen</strong> que construiste. Docker la usa para crear el contenedor.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; text-align: center;">
+                    <h3>🎯 Elevator Pitch</h3>
+                    <p style="color: white; margin-top: 10px;">Levanta tu microservicio en Docker y mapea sus puertos al host para poder navegarlo desde tu PC.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker Práctico - Gestión -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Gestión de Imágenes y Docker Hub</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+                    <div style="background: #f7fafc; padding: 20px; border-radius: 12px;">
+                        <h3 style="color: #2d3748; margin-bottom: 10px;">docker login</h3>
+                        <p>Te autentica en Docker Hub para poder subir imágenes.</p>
+                    </div>
+                    <div style="background: #f7fafc; padding: 20px; border-radius: 12px;">
+                        <h3 style="color: #2d3748; margin-bottom: 10px;">docker images</h3>
+                        <p>Lista las imágenes que tienes descargadas o construidas en tu máquina.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 15px;">Etiquetado y Subida (Tag & Push)</h3>
+                
+                <div class="drawback-item" style="margin-bottom: 15px;">
+                    <pre style="background: transparent; color: #2d3748; padding: 0; margin: 0; font-weight: bold;">docker tag products-microservice:1.0 adrianmvalencia/ecommerce-products-microservice:v1.0</pre>
+                    <p style="margin-top: 10px;">Renombra la imagen preparándola para el registry (Docker Hub).</p>
+                </div>
+
+                <div class="drawback-item">
+                    <pre style="background: transparent; color: #2d3748; padding: 0; margin: 0; font-weight: bold;">docker push adrianmvalencia/ecommerce-products-microservice:v1.0</pre>
+                    <p style="margin-top: 10px;">Sube tu imagen a Docker Hub. Genera un <strong>Digest (SHA-256)</strong> único que actúa como huella digital.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker Práctico - Linux -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Despliegue en Linux (Pull & Run)</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <h3 style="margin-bottom: 15px;">1. Descargar (Pull)</h3>
+                        <div style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 12px;">
+                            <code style="color: #fbbf24;">sudo docker pull user/image:tag</code>
+                            <p style="margin-top: 15px; font-size: 0.9em; color: #a0aec0;">Descarga la imagen desde Docker Hub hacia tu servidor Linux.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="margin-bottom: 15px;">2. Ejecutar (Run)</h3>
+                        <div style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 12px;">
+                            <code style="color: #fbbf24;">sudo docker run -p 80:80 image:tag</code>
+                            <p style="margin-top: 15px; font-size: 0.9em; color: #a0aec0;">Inicia el contenedor exponiendo puertos y variables de entorno.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">Ejemplo Real:</h3>
+                    <pre style="background: #f7fafc; padding: 20px; border-radius: 12px; border-left: 5px solid #667eea; color: #4a5568;">
+# Descargar
+sudo docker pull adrianmvalencia/ecommerce-products-microservice:v1.0
+
+# Ejecutar
+sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.0</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker Práctico - Redes -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Docker Networks</h2>
+            </div>
+            <div class="content">
+                <p>Las redes permiten que varios contenedores se comuniquen entre sí (ej: API ↔ MySQL).</p>
+
+                <div class="drawback-list" style="margin-top: 20px;">
+                    <div class="drawback-item">
+                        <h3>🔵 1. Crear Red Personalizada</h3>
+                        <pre style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">sudo docker network create productsmicroservice-network</pre>
+                        <p>Crea un canal de comunicación aislado para tus servicios.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>🔵 2. Ver Redes</h3>
+                        <pre style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">sudo docker network ls</pre>
+                        <p>Lista todas las redes disponibles en el sistema.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>🔵 3. Inspeccionar Red</h3>
+                        <pre style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">sudo docker network inspect productsmicroservice-network</pre>
+                        <p>Muestra detalles: contenedores conectados, IPs, configuración.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker Práctico - Integración -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Integración: MySQL + Microservicio</h2>
+            </div>
+            <div class="content">
+                <div style="margin-bottom: 25px;">
+                    <h3 style="color: #d69e2e;">🟡 Paso 1: MySQL en la Red</h3>
+                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.9em;">sudo docker run -it \
+  -e MYSQL_ROOT_PASSWORD=admin \
+  -p 3306:3306 \
+  --hostname=mysql-host-productsmicroservice \
+  --network=productsmicroservice-network \
+  mysql:latest</pre>
+                    <p style="font-size: 0.9em; margin-top: 5px;">Define password, puerto, hostname y <strong>conecta a la red</strong>.</p>
+                </div>
+
+                <div>
+                    <h3 style="color: #38a169;">🟢 Paso 2: Microservicio en la Red</h3>
+                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.9em;">sudo docker run -p 8080:8080 \
+  --network=productsmicroservice-network \
+  adrianmvalencia/ecommerce-products-microservice:v1.0</pre>
+                    <p style="font-size: 0.9em; margin-top: 5px;">Al estar en la misma red, la API puede conectar a MySQL usando el hostname: <code>mysql-host-productsmicroservice</code>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Docker Práctico - Resumen -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Resumen Global del Despliegue</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid" style="grid-template-columns: 1fr;">
+                    <div class="principle-card" style="display: flex; align-items: center; gap: 20px;">
+                        <div style="font-size: 2em;">1️⃣</div>
+                        <div>
+                            <h3>Descargar Imagen</h3>
+                            <p><code>docker pull imagen</code></p>
+                        </div>
+                    </div>
+                    <div class="principle-card" style="display: flex; align-items: center; gap: 20px;">
+                        <div style="font-size: 2em;">2️⃣</div>
+                        <div>
+                            <h3>Crear Red</h3>
+                            <p><code>docker network create ...</code> para comunicar servicios.</p>
+                        </div>
+                    </div>
+                    <div class="principle-card" style="display: flex; align-items: center; gap: 20px;">
+                        <div style="font-size: 2em;">3️⃣</div>
+                        <div>
+                            <h3>Ejecutar MySQL</h3>
+                            <p><code>docker run ... --network=...</code> dentro de la red.</p>
+                        </div>
+                    </div>
+                    <div class="principle-card" style="display: flex; align-items: center; gap: 20px;">
+                        <div style="font-size: 2em;">4️⃣</div>
+                        <div>
+                            <h3>Ejecutar Microservicio</h3>
+                            <p><code>docker run ... --network=...</code> en la misma red.</p>
+                        </div>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3 style="color: #2d3748;">✅ Resultado</h3>
+                        <p style="color: #2d3748;">La API y la Base de Datos se comunican exitosamente en un entorno aislado y portable.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Slide: Resumen Docker -->
         <div class="slide">
             <div class="intro-content">
@@ -3332,7 +3639,7 @@ Descarga una imagen desde Docker Hub
         </div>
 
         <div class="slide-counter">
-            <span id="current">1</span> / <span id="total">52</span>
+            <span id="current">1</span> / <span id="total">60</span>
         </div>
 
         <div class="controls">
