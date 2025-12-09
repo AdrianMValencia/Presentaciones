@@ -3590,6 +3590,319 @@ sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.
         <!-- Slide: Resumen Docker -->
         <div class="slide">
             <div class="intro-content">
+                <div class="logo">🐙</div>
+                <h1>Docker Compose</h1>
+                <p class="subtitle">Orquestación Simplificada de Contenedores</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Gestión de Aplicaciones Multi-Contenedor</p>
+            </div>
+        </div>
+
+        <!-- Slide: Que es Docker Compose -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>¿Qué es Docker Compose?</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;">Herramienta para definir y ejecutar aplicaciones Docker de <strong>múltiples contenedores</strong>. Usa un archivo YAML para configurar los servicios de la aplicación.</p>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>📄 Archivo Único</h3>
+                        <p>Toda la configuración (redes, volúmenes, servicios) en un solo archivo <code>docker-compose.yml</code>.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>🚀 Un Solo Comando</h3>
+                        <p>Con <code>docker-compose up</code>, creas e inicias todos los servicios de tu configuración.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>🔄 Entornos Aislados</h3>
+                        <p>Usa nombres de proyecto para aislar entornos unos de otros.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Casos de Uso:</h3>
+                <ul style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <li>🏢 <strong>Apps Multi-Contenedor:</strong> Bases de datos, APIs, Colas de mensajes.</li>
+                    <li>💻 <strong>Entornos de Desarrollo:</strong> Simula el stack completo localmente.</li>
+                    <li>🧪 <strong>Testing & CI/CD:</strong> Levanta entornos de prueba efímeros y consistentes.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide: Beneficios Compose -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Beneficios y Comparación</h2>
+            </div>
+            <div class="content">
+                <div class="comparison">
+                    <div class="comparison-box monolith-box">
+                        <h3>Docker Run (Manual)</h3>
+                        <ul>
+                            <li>❌ Múltiples comandos largos</li>
+                            <li>❌ Gestión manual de redes</li>
+                            <li>❌ Difícil de mantener y compartir</li>
+                            <li>❌ Propenso a errores humanos</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-box micro-box">
+                        <h3>Docker Compose (Automático)</h3>
+                        <ul>
+                            <li>✅ Un solo archivo YAML declarativo</li>
+                            <li>✅ Redes automáticas (DNS interno)</li>
+                            <li>✅ Control de versiones de infraestructura</li>
+                            <li>✅ Escalado sencillo (<code>--scale</code>)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: #f0fff4; border-radius: 12px; border-left: 5px solid #48bb78;">
+                    <strong>💡 Networking Fácil:</strong> Los servicios se comunican usando sus nombres como hostnames. ¡Adiós a las IPs manuales!
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Estructura YAML -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Estructura de docker-compose.yml</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <div>
+                        <pre style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 12px; font-size: 0.9em;">
+version: '3.8'  <span style="color: #718096;"># Versión del formato</span>
+
+services:       <span style="color: #718096;"># Definición de contenedores</span>
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+
+networks:       <span style="color: #718096;"># Redes personalizadas</span>
+  app-net:
+    driver: bridge
+
+volumes:        <span style="color: #718096;"># Volúmenes persistentes</span>
+  db-data:</pre>
+                    </div>
+                    
+                    <div class="drawback-list">
+                        <div class="drawback-item">
+                            <h3>1. Version</h3>
+                            <p>Define la sintaxis soportada (ej. '3.8').</p>
+                        </div>
+                        <div class="drawback-item">
+                            <h3>2. Services</h3>
+                            <p>Los bloques de construcción de tu app. Cada uno es un contenedor.</p>
+                        </div>
+                        <div class="drawback-item">
+                            <h3>3. Networks</h3>
+                            <p>Define cómo se comunican los servicios (Bridge, Overlay).</p>
+                        </div>
+                        <div class="drawback-item">
+                            <h3>4. Volumes</h3>
+                            <p>Almacenamiento persistente que sobrevive al reinicio de contenedores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Propiedades Clave -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Propiedades Clave de Servicios</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="principle-card">
+                        <h3>🖼️ image / build</h3>
+                        <p><code>image</code>: Usa una imagen existente (Docker Hub).<br><code>build</code>: Construye desde un Dockerfile local.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>🔌 ports</h3>
+                        <p>Mapea puertos <code>HOST:CONTAINER</code>.<br>Ej: <code>"8080:80"</code> expone el puerto 80 del contenedor en el 8080 de tu PC.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>🌍 environment</h3>
+                        <p>Variables de entorno (env vars).<br>Crucial para passwords, connection strings y configuración.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>💾 volumes</h3>
+                        <p>Monta carpetas del host o volúmenes nombrados.<br>Ej: <code>./data:/var/lib/mysql</code> para persistencia.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>🔗 depends_on</h3>
+                        <p>Controla el orden de inicio.<br>Ej: Iniciar la DB antes que la API.</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>🌐 networks</h3>
+                        <p>A qué redes se conecta el servicio.<br>Permite aislamiento y comunicación por nombre.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Comandos Compose -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Comandos Principales (CLI)</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 10px;">
+                        <code style="color: #fbbf24; font-size: 1.1em; font-weight: bold;">docker-compose up -d</code>
+                        <p style="margin-top: 5px;">Crea e inicia contenedores en segundo plano (Detached).</p>
+                    </div>
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 10px;">
+                        <code style="color: #fbbf24; font-size: 1.1em; font-weight: bold;">docker-compose down</code>
+                        <p style="margin-top: 5px;">Detiene y elimina contenedores y redes.</p>
+                    </div>
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 10px;">
+                        <code style="color: #fbbf24; font-size: 1.1em; font-weight: bold;">docker-compose logs -f</code>
+                        <p style="margin-top: 5px;">Ver logs de todos los servicios en tiempo real.</p>
+                    </div>
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 10px;">
+                        <code style="color: #fbbf24; font-size: 1.1em; font-weight: bold;">docker-compose ps</code>
+                        <p style="margin-top: 5px;">Lista el estado de los contenedores del proyecto.</p>
+                    </div>
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 10px;">
+                        <code style="color: #fbbf24; font-size: 1.1em; font-weight: bold;">docker-compose build</code>
+                        <p style="margin-top: 5px;">Construye o reconstruye las imágenes de los servicios.</p>
+                    </div>
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 10px;">
+                        <code style="color: #fbbf24; font-size: 1.1em; font-weight: bold;">docker-compose exec [srv] bash</code>
+                        <p style="margin-top: 5px;">Entra a la terminal de un contenedor en ejecución.</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 25px; text-align: center;">
+                    <p><strong>💡 Tip Pro:</strong> Usa <code>--scale web=3</code> para escalar instancias horizontalmente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Ejemplo Real eCommerce -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Ejemplo Real: Sistema eCommerce</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 100%;">
+                    <div style="overflow-y: auto; background: #1e1e1e; padding: 15px; border-radius: 10px; font-size: 0.7em; color: #d4d4d4;">
+<pre style="margin: 0;">version: "3.8"
+services:
+  <span style="color: #6a9955;"># --- MySQL Database ---</span>
+  mysql-container:
+    image: mysql:8.3.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    networks:
+      - ecommerce-network
+    hostname: mysql-host-productsmicroservice
+
+  <span style="color: #6a9955;"># --- Products Microservice ---</span>
+  products-microservice:
+    image: harshamicroservices/ecommerce-products-microservice:v1.0
+    environment:
+      MYSQL_HOST: mysql-host-productsmicroservice
+      MYSQL_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    networks:
+      - ecommerce-network
+
+  <span style="color: #6a9955;"># --- PostgreSQL Database ---</span>
+  postgres-container:
+    image: postgres:16.1
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=eCommerceUsers
+    ports:
+      - "5432:5432"
+    networks:
+      - ecommerce-network
+
+  <span style="color: #6a9955;"># --- Users Microservice ---</span>
+  users-microservice:
+    image: harshamicroservices/ecommerce-users-microservice:v1.0
+    environment:
+      - POSTGRES_HOST=postgres-container
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - "9090:9090"
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge</pre>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <div class="principle-card" style="margin-bottom: 20px;">
+                            <h3>🏗️ Arquitectura Definida</h3>
+                            <ul style="margin-top: 10px;">
+                                <li>2 Bases de Datos (MySQL, Postgres)</li>
+                                <li>2 Microservicios (Products, Users)</li>
+                                <li>1 Red Compartida (ecommerce-network)</li>
+                            </ul>
+                        </div>
+                        <div style="background: #f0fff4; padding: 20px; border-radius: 12px; border-left: 5px solid #48bb78;">
+                            <strong>Conexión Mágica:</strong><br>
+                            El servicio <code>products-microservice</code> se conecta a MySQL usando el hostname <code>mysql-host-productsmicroservice</code> definido en el YAML.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Explicación Ejemplo -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Análisis del Ejemplo eCommerce</h2>
+            </div>
+            <div class="content">
+                <div class="drawback-list">
+                    <div class="drawback-item">
+                        <h3>1. Definición de Servicios (Services)</h3>
+                        <p>Cada bloque (<code>mysql-container</code>, <code>products-microservice</code>) es un contenedor independiente. Se definen imágenes específicas y versiones para garantizar consistencia.</p>
+                    </div>
+                    
+                    <div class="drawback-item">
+                        <h3>2. Variables de Entorno (Environment)</h3>
+                        <p>Se inyectan configuraciones críticas como contraseñas y hosts. <br>Ej: <code>MYSQL_HOST</code> le dice al microservicio dónde encontrar su base de datos dentro de la red Docker.</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>3. Redes (Networks)</h3>
+                        <p>Todos los servicios pertenecen a <code>ecommerce-network</code>. Esto crea una red privada donde pueden "verse" entre sí usando sus nombres de servicio o hostnames, pero están aislados del exterior (excepto por los puertos expuestos).</p>
+                    </div>
+
+                    <div class="drawback-item">
+                        <h3>4. Volúmenes (Volumes)</h3>
+                        <p><code>./mysql-init:/docker-entrypoint-initdb.d</code>: Carga scripts SQL iniciales desde tu PC al contenedor automáticamente al arrancar. Ideal para crear tablas o datos semilla.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Resumen Docker -->
+        <div class="slide">
+            <div class="intro-content">
                 <div class="logo">✨</div>
                 <h2>Resumen: Docker para Microservicios</h2>
                 <div style="text-align: left; max-width: 900px; margin-top: 40px;">
@@ -3639,7 +3952,7 @@ sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.
         </div>
 
         <div class="slide-counter">
-            <span id="current">1</span> / <span id="total">60</span>
+            <span id="current">1</span> / <span id="total">67</span>
         </div>
 
         <div class="controls">
