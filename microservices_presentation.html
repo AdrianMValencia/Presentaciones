@@ -278,6 +278,45 @@
             color: #667eea;
             font-size: 1.2em;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 20px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .nav-select {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+            color: #4a5568;
+            font-family: inherit;
+            font-size: 0.8em;
+            outline: none;
+            cursor: pointer;
+            background: white;
+        }
+
+        .nav-input {
+            width: 60px;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e0;
+            text-align: center;
+            color: #4a5568;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 0.9em;
+            outline: none;
+        }
+
+        .nav-input:focus,
+        .nav-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
         }
 
         .highlight {
@@ -2527,7 +2566,8 @@ CreateMap&lt;User, UserDto&gt;()
             </div>
             <div class="content">
                 <p style="margin-bottom: 25px; font-size: 1.1em;">Ejemplo basado en la solución
-                    <strong>eCommerce.ProductsService</strong>:</p>
+                    <strong>eCommerce.ProductsService</strong>:
+                </p>
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                     <div
@@ -2814,7 +2854,8 @@ var products = await connection.QueryAsync&lt;ProductDto&gt;(
                     <strong>💡 Analogía:</strong>
                     <p style="margin-top: 10px; font-size: 1.05em;">Una <strong>Image</strong> es como una
                         <strong>clase</strong>, y un <strong>Container</strong> es como una <strong>instancia</strong>
-                        de esa clase.</p>
+                        de esa clase.
+                    </p>
                 </div>
             </div>
         </div>
@@ -3095,32 +3136,46 @@ var products = await connection.QueryAsync&lt;ProductDto&gt;(
             <div class="content">
                 <div style="display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 25px; height: 100%;">
                     <!-- Code Column -->
-                    <div style="background: #1e1e1e; padding: 20px; border-radius: 12px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.75em; color: #d4d4d4; line-height: 1.4;">
+                    <div
+                        style="background: #1e1e1e; padding: 20px; border-radius: 12px; overflow-y: auto; font-family: 'Consolas', monospace; font-size: 0.75em; color: #d4d4d4; line-height: 1.4;">
                         <div style="color: #6a9955;"># 1. Fase Base (Runtime)</div>
-                        <span style="color: #569cd6;">FROM</span> mcr.microsoft.com/dotnet/aspnet:10.0 <span style="color: #569cd6;">AS</span> base
+                        <span style="color: #569cd6;">FROM</span> mcr.microsoft.com/dotnet/aspnet:10.0 <span
+                            style="color: #569cd6;">AS</span> base
                         <span style="color: #569cd6;">USER</span> $APP_UID
                         <span style="color: #569cd6;">WORKDIR</span> /app
                         <span style="color: #569cd6;">EXPOSE</span> 8080
                         <span style="color: #569cd6;">EXPOSE</span> 8081
                         <br><br>
                         <div style="color: #6a9955;"># 2. Fase Build (SDK)</div>
-                        <span style="color: #569cd6;">FROM</span> mcr.microsoft.com/dotnet/sdk:10.0 <span style="color: #569cd6;">AS</span> build
+                        <span style="color: #569cd6;">FROM</span> mcr.microsoft.com/dotnet/sdk:10.0 <span
+                            style="color: #569cd6;">AS</span> build
                         <span style="color: #569cd6;">ARG</span> BUILD_CONFIGURATION=Release
                         <span style="color: #569cd6;">WORKDIR</span> /src
                         <span style="color: #6a9955;"># Copia de proyectos (Restore layers)</span>
-                        <span style="color: #569cd6;">COPY</span> ["src/eCommerce.ProductsService.Api/eCommerce.ProductsService.Api.csproj", "src/eCommerce.ProductsService.Api/"]
-                        <span style="color: #569cd6;">COPY</span> ["eCommerce.ProductsService.Infrastructure/eCommerce.ProductsService.Infrastructure.csproj", "eCommerce.ProductsService.Infrastructure/"]
-                        <span style="color: #569cd6;">COPY</span> ["src/eCommerce.ProductsService.Application/eCommerce.ProductsService.Application.csproj", "src/eCommerce.ProductsService.Application/"]
-                        <span style="color: #569cd6;">COPY</span> ["src/eCommerce.ProductsService.Domain/eCommerce.ProductsService.Domain.csproj", "src/eCommerce.ProductsService.Domain/"]
-                        <span style="color: #569cd6;">RUN</span> dotnet restore "./src/eCommerce.ProductsService.Api/eCommerce.ProductsService.Api.csproj"
+                        <span style="color: #569cd6;">COPY</span>
+                        ["src/eCommerce.ProductsService.Api/eCommerce.ProductsService.Api.csproj",
+                        "src/eCommerce.ProductsService.Api/"]
+                        <span style="color: #569cd6;">COPY</span>
+                        ["eCommerce.ProductsService.Infrastructure/eCommerce.ProductsService.Infrastructure.csproj",
+                        "eCommerce.ProductsService.Infrastructure/"]
+                        <span style="color: #569cd6;">COPY</span>
+                        ["src/eCommerce.ProductsService.Application/eCommerce.ProductsService.Application.csproj",
+                        "src/eCommerce.ProductsService.Application/"]
+                        <span style="color: #569cd6;">COPY</span>
+                        ["src/eCommerce.ProductsService.Domain/eCommerce.ProductsService.Domain.csproj",
+                        "src/eCommerce.ProductsService.Domain/"]
+                        <span style="color: #569cd6;">RUN</span> dotnet restore
+                        "./src/eCommerce.ProductsService.Api/eCommerce.ProductsService.Api.csproj"
                         <span style="color: #569cd6;">COPY</span> . .
                         <span style="color: #569cd6;">WORKDIR</span> "/src/src/eCommerce.ProductsService.Api"
-                        <span style="color: #569cd6;">RUN</span> dotnet build "./eCommerce.ProductsService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+                        <span style="color: #569cd6;">RUN</span> dotnet build "./eCommerce.ProductsService.Api.csproj"
+                        -c $BUILD_CONFIGURATION -o /app/build
                         <br><br>
                         <div style="color: #6a9955;"># 3. Fase Publish</div>
                         <span style="color: #569cd6;">FROM</span> build <span style="color: #569cd6;">AS</span> publish
                         <span style="color: #569cd6;">ARG</span> BUILD_CONFIGURATION=Release
-                        <span style="color: #569cd6;">RUN</span> dotnet publish "./eCommerce.ProductsService.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+                        <span style="color: #569cd6;">RUN</span> dotnet publish "./eCommerce.ProductsService.Api.csproj"
+                        -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
                         <br><br>
                         <div style="color: #6a9955;"># 4. Fase Final (Producción)</div>
                         <span style="color: #569cd6;">FROM</span> base <span style="color: #569cd6;">AS</span> final
@@ -3133,22 +3188,28 @@ var products = await connection.QueryAsync&lt;ProductDto&gt;(
                     <div style="overflow-y: auto; padding-right: 10px;">
                         <div class="drawback-item" style="margin-bottom: 15px; padding: 15px;">
                             <h3 style="font-size: 1.1em; margin-bottom: 5px;">1️⃣ Fase Base</h3>
-                            <p style="font-size: 0.9em;">Usa una imagen ligera (Runtime) solo para <strong>ejecutar</strong> la app. Configura usuario y puertos.</p>
+                            <p style="font-size: 0.9em;">Usa una imagen ligera (Runtime) solo para
+                                <strong>ejecutar</strong> la app. Configura usuario y puertos.</p>
                         </div>
 
                         <div class="drawback-item" style="margin-bottom: 15px; padding: 15px;">
                             <h3 style="font-size: 1.1em; margin-bottom: 5px;">2️⃣ Fase Build</h3>
-                            <p style="font-size: 0.9em;">Usa una imagen completa (SDK) para <strong>compilar</strong>. Copia los .csproj primero para aprovechar el caché de Docker en la restauración de paquetes.</p>
+                            <p style="font-size: 0.9em;">Usa una imagen completa (SDK) para <strong>compilar</strong>.
+                                Copia los .csproj primero para aprovechar el caché de Docker en la restauración de
+                                paquetes.</p>
                         </div>
 
                         <div class="drawback-item" style="margin-bottom: 15px; padding: 15px;">
                             <h3 style="font-size: 1.1em; margin-bottom: 5px;">3️⃣ Fase Publish</h3>
-                            <p style="font-size: 0.9em;">Genera los binarios finales optimizados ("Release") listos para ser desplegados.</p>
+                            <p style="font-size: 0.9em;">Genera los binarios finales optimizados ("Release") listos para
+                                ser desplegados.</p>
                         </div>
 
                         <div class="drawback-item" style="margin-bottom: 15px; padding: 15px;">
                             <h3 style="font-size: 1.1em; margin-bottom: 5px;">4️⃣ Fase Final</h3>
-                            <p style="font-size: 0.9em;">Crea la imagen definitiva copiando <strong>solo</strong> lo necesario desde la fase 'publish' a la fase 'base'. ¡Resultado: Imagen pequeña y segura!</p>
+                            <p style="font-size: 0.9em;">Crea la imagen definitiva copiando <strong>solo</strong> lo
+                                necesario desde la fase 'publish' a la fase 'base'. ¡Resultado: Imagen pequeña y segura!
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -3356,11 +3417,13 @@ Descarga una imagen desde Docker Hub
             <div class="content">
                 <div class="drawback-item" style="margin-bottom: 20px;">
                     <h3>1. Validación de Instalación</h3>
-                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; margin-top: 10px;">docker</pre>
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; margin-top: 10px;">docker</pre>
                 </div>
 
                 <h3 style="margin-bottom: 15px;">2. Creación de Imágenes (Build)</h3>
-                <pre style="background: #2d3748; color: #fbbf24; padding: 15px; border-radius: 8px; font-weight: bold; overflow-x: auto;">docker build -t users-service:initial -f ./eCommerce.ProductsService.Api/Dockerfile .</pre>
+                <pre
+                    style="background: #2d3748; color: #fbbf24; padding: 15px; border-radius: 8px; font-weight: bold; overflow-x: auto;">docker build -t users-service:initial -f ./eCommerce.ProductsService.Api/Dockerfile .</pre>
 
                 <div class="principle-grid" style="margin-top: 20px; grid-template-columns: 1fr 1fr;">
                     <div class="principle-card">
@@ -3380,9 +3443,11 @@ Descarga una imagen desde Docker Hub
                         <p>Define el <strong>build context</strong> (carpeta actual).</p>
                     </div>
                 </div>
-                
-                <div style="margin-top: 20px; padding: 15px; background: #f0fff4; border-radius: 10px; border-left: 5px solid #48bb78;">
-                    <strong>Resumen:</strong> Construye la imagen usando el Dockerfile del microservicio y tomando la carpeta actual como contexto.
+
+                <div
+                    style="margin-top: 20px; padding: 15px; background: #f0fff4; border-radius: 10px; border-left: 5px solid #48bb78;">
+                    <strong>Resumen:</strong> Construye la imagen usando el Dockerfile del microservicio y tomando la
+                    carpeta actual como contexto.
                 </div>
             </div>
         </div>
@@ -3393,7 +3458,8 @@ Descarga una imagen desde Docker Hub
                 <h2>Ejecutando Contenedores</h2>
             </div>
             <div class="content">
-                <pre style="background: #2d3748; color: #fbbf24; padding: 15px; border-radius: 8px; font-weight: bold; margin-bottom: 30px;">docker run -p 8080:8080 -p 8081:8081 users-service:initial</pre>
+                <pre
+                    style="background: #2d3748; color: #fbbf24; padding: 15px; border-radius: 8px; font-weight: bold; margin-bottom: 30px;">docker run -p 8080:8080 -p 8081:8081 users-service:initial</pre>
 
                 <div class="drawback-list">
                     <div class="drawback-item">
@@ -3402,7 +3468,8 @@ Descarga una imagen desde Docker Hub
                     </div>
                     <div class="drawback-item">
                         <h3>2️⃣ -p 8080:8080</h3>
-                        <p><strong>Puerto PC : Puerto Contenedor</strong>. Lo que llega a localhost:8080 va al 8080 del microservicio.</p>
+                        <p><strong>Puerto PC : Puerto Contenedor</strong>. Lo que llega a localhost:8080 va al 8080 del
+                            microservicio.</p>
                     </div>
                     <div class="drawback-item">
                         <h3>3️⃣ -p 8081:8081</h3>
@@ -3414,9 +3481,11 @@ Descarga una imagen desde Docker Hub
                     </div>
                 </div>
 
-                <div style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; text-align: center;">
+                <div
+                    style="margin-top: 30px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; text-align: center;">
                     <h3>🎯 Elevator Pitch</h3>
-                    <p style="color: white; margin-top: 10px;">Levanta tu microservicio en Docker y mapea sus puertos al host para poder navegarlo desde tu PC.</p>
+                    <p style="color: white; margin-top: 10px;">Levanta tu microservicio en Docker y mapea sus puertos al
+                        host para poder navegarlo desde tu PC.</p>
                 </div>
             </div>
         </div>
@@ -3439,15 +3508,18 @@ Descarga una imagen desde Docker Hub
                 </div>
 
                 <h3 style="margin-bottom: 15px;">Etiquetado y Subida (Tag & Push)</h3>
-                
+
                 <div class="drawback-item" style="margin-bottom: 15px;">
-                    <pre style="background: transparent; color: #2d3748; padding: 0; margin: 0; font-weight: bold;">docker tag products-microservice:1.0 adrianmvalencia/ecommerce-products-microservice:v1.0</pre>
+                    <pre
+                        style="background: transparent; color: #2d3748; padding: 0; margin: 0; font-weight: bold;">docker tag products-microservice:1.0 adrianmvalencia/ecommerce-products-microservice:v1.0</pre>
                     <p style="margin-top: 10px;">Renombra la imagen preparándola para el registry (Docker Hub).</p>
                 </div>
 
                 <div class="drawback-item">
-                    <pre style="background: transparent; color: #2d3748; padding: 0; margin: 0; font-weight: bold;">docker push adrianmvalencia/ecommerce-products-microservice:v1.0</pre>
-                    <p style="margin-top: 10px;">Sube tu imagen a Docker Hub. Genera un <strong>Digest (SHA-256)</strong> único que actúa como huella digital.</p>
+                    <pre
+                        style="background: transparent; color: #2d3748; padding: 0; margin: 0; font-weight: bold;">docker push adrianmvalencia/ecommerce-products-microservice:v1.0</pre>
+                    <p style="margin-top: 10px;">Sube tu imagen a Docker Hub. Genera un <strong>Digest
+                            (SHA-256)</strong> único que actúa como huella digital.</p>
                 </div>
             </div>
         </div>
@@ -3463,21 +3535,24 @@ Descarga una imagen desde Docker Hub
                         <h3 style="margin-bottom: 15px;">1. Descargar (Pull)</h3>
                         <div style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 12px;">
                             <code style="color: #fbbf24;">sudo docker pull user/image:tag</code>
-                            <p style="margin-top: 15px; font-size: 0.9em; color: #a0aec0;">Descarga la imagen desde Docker Hub hacia tu servidor Linux.</p>
+                            <p style="margin-top: 15px; font-size: 0.9em; color: #a0aec0;">Descarga la imagen desde
+                                Docker Hub hacia tu servidor Linux.</p>
                         </div>
                     </div>
                     <div>
                         <h3 style="margin-bottom: 15px;">2. Ejecutar (Run)</h3>
                         <div style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 12px;">
                             <code style="color: #fbbf24;">sudo docker run -p 80:80 image:tag</code>
-                            <p style="margin-top: 15px; font-size: 0.9em; color: #a0aec0;">Inicia el contenedor exponiendo puertos y variables de entorno.</p>
+                            <p style="margin-top: 15px; font-size: 0.9em; color: #a0aec0;">Inicia el contenedor
+                                exponiendo puertos y variables de entorno.</p>
                         </div>
                     </div>
                 </div>
 
                 <div style="margin-top: 30px;">
                     <h3 style="margin-bottom: 15px;">Ejemplo Real:</h3>
-                    <pre style="background: #f7fafc; padding: 20px; border-radius: 12px; border-left: 5px solid #667eea; color: #4a5568;">
+                    <pre
+                        style="background: #f7fafc; padding: 20px; border-radius: 12px; border-left: 5px solid #667eea; color: #4a5568;">
 # Descargar
 sudo docker pull adrianmvalencia/ecommerce-products-microservice:v1.0
 
@@ -3498,19 +3573,22 @@ sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.
                 <div class="drawback-list" style="margin-top: 20px;">
                     <div class="drawback-item">
                         <h3>🔵 1. Crear Red Personalizada</h3>
-                        <pre style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">sudo docker network create productsmicroservice-network</pre>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">sudo docker network create productsmicroservice-network</pre>
                         <p>Crea un canal de comunicación aislado para tus servicios.</p>
                     </div>
 
                     <div class="drawback-item">
                         <h3>🔵 2. Ver Redes</h3>
-                        <pre style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">sudo docker network ls</pre>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">sudo docker network ls</pre>
                         <p>Lista todas las redes disponibles en el sistema.</p>
                     </div>
 
                     <div class="drawback-item">
                         <h3>🔵 3. Inspeccionar Red</h3>
-                        <pre style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">sudo docker network inspect productsmicroservice-network</pre>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">sudo docker network inspect productsmicroservice-network</pre>
                         <p>Muestra detalles: contenedores conectados, IPs, configuración.</p>
                     </div>
                 </div>
@@ -3525,21 +3603,25 @@ sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.
             <div class="content">
                 <div style="margin-bottom: 25px;">
                     <h3 style="color: #d69e2e;">🟡 Paso 1: MySQL en la Red</h3>
-                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.9em;">sudo docker run -it \
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.9em;">sudo docker run -it \
   -e MYSQL_ROOT_PASSWORD=admin \
   -p 3306:3306 \
   --hostname=mysql-host-productsmicroservice \
   --network=productsmicroservice-network \
   mysql:latest</pre>
-                    <p style="font-size: 0.9em; margin-top: 5px;">Define password, puerto, hostname y <strong>conecta a la red</strong>.</p>
+                    <p style="font-size: 0.9em; margin-top: 5px;">Define password, puerto, hostname y <strong>conecta a
+                            la red</strong>.</p>
                 </div>
 
                 <div>
                     <h3 style="color: #38a169;">🟢 Paso 2: Microservicio en la Red</h3>
-                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.9em;">sudo docker run -p 8080:8080 \
+                    <pre
+                        style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.9em;">sudo docker run -p 8080:8080 \
   --network=productsmicroservice-network \
   adrianmvalencia/ecommerce-products-microservice:v1.0</pre>
-                    <p style="font-size: 0.9em; margin-top: 5px;">Al estar en la misma red, la API puede conectar a MySQL usando el hostname: <code>mysql-host-productsmicroservice</code>.</p>
+                    <p style="font-size: 0.9em; margin-top: 5px;">Al estar en la misma red, la API puede conectar a
+                        MySQL usando el hostname: <code>mysql-host-productsmicroservice</code>.</p>
                 </div>
             </div>
         </div>
@@ -3581,7 +3663,8 @@ sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.
                     </div>
                     <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
                         <h3 style="color: #2d3748;">✅ Resultado</h3>
-                        <p style="color: #2d3748;">La API y la Base de Datos se comunican exitosamente en un entorno aislado y portable.</p>
+                        <p style="color: #2d3748;">La API y la Base de Datos se comunican exitosamente en un entorno
+                            aislado y portable.</p>
                     </div>
                 </div>
             </div>
@@ -3593,7 +3676,8 @@ sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.
                 <div class="logo">🐙</div>
                 <h1>Docker Compose</h1>
                 <p class="subtitle">Orquestación Simplificada de Contenedores</p>
-                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Gestión de Aplicaciones Multi-Contenedor</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Gestión de Aplicaciones Multi-Contenedor
+                </p>
             </div>
         </div>
 
@@ -3603,16 +3687,20 @@ sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.
                 <h2>¿Qué es Docker Compose?</h2>
             </div>
             <div class="content">
-                <p style="font-size: 1.2em; margin-bottom: 30px;">Herramienta para definir y ejecutar aplicaciones Docker de <strong>múltiples contenedores</strong>. Usa un archivo YAML para configurar los servicios de la aplicación.</p>
+                <p style="font-size: 1.2em; margin-bottom: 30px;">Herramienta para definir y ejecutar aplicaciones
+                    Docker de <strong>múltiples contenedores</strong>. Usa un archivo YAML para configurar los servicios
+                    de la aplicación.</p>
 
                 <div class="principle-grid">
                     <div class="principle-card">
                         <h3>📄 Archivo Único</h3>
-                        <p>Toda la configuración (redes, volúmenes, servicios) en un solo archivo <code>docker-compose.yml</code>.</p>
+                        <p>Toda la configuración (redes, volúmenes, servicios) en un solo archivo
+                            <code>docker-compose.yml</code>.</p>
                     </div>
                     <div class="principle-card">
                         <h3>🚀 Un Solo Comando</h3>
-                        <p>Con <code>docker-compose up</code>, creas e inicias todos los servicios de tu configuración.</p>
+                        <p>Con <code>docker-compose up</code>, creas e inicias todos los servicios de tu configuración.
+                        </p>
                     </div>
                     <div class="principle-card">
                         <h3>🔄 Entornos Aislados</h3>
@@ -3656,8 +3744,10 @@ sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.
                     </div>
                 </div>
 
-                <div style="margin-top: 30px; padding: 20px; background: #f0fff4; border-radius: 12px; border-left: 5px solid #48bb78;">
-                    <strong>💡 Networking Fácil:</strong> Los servicios se comunican usando sus nombres como hostnames. ¡Adiós a las IPs manuales!
+                <div
+                    style="margin-top: 30px; padding: 20px; background: #f0fff4; border-radius: 12px; border-left: 5px solid #48bb78;">
+                    <strong>💡 Networking Fácil:</strong> Los servicios se comunican usando sus nombres como hostnames.
+                    ¡Adiós a las IPs manuales!
                 </div>
             </div>
         </div>
@@ -3670,7 +3760,8 @@ sudo docker run -p 8080:8080 adrianmvalencia/ecommerce-products-microservice:v1.
             <div class="content">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
                     <div>
-                        <pre style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 12px; font-size: 0.9em;">
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 12px; font-size: 0.9em;">
 version: '3.8'  <span style="color: #718096;"># Versión del formato</span>
 
 services:       <span style="color: #718096;"># Definición de contenedores</span>
@@ -3693,7 +3784,7 @@ networks:       <span style="color: #718096;"># Redes personalizadas</span>
 volumes:        <span style="color: #718096;"># Volúmenes persistentes</span>
   db-data:</pre>
                     </div>
-                    
+
                     <div class="drawback-list">
                         <div class="drawback-item">
                             <h3>1. Version</h3>
@@ -3725,19 +3816,23 @@ volumes:        <span style="color: #718096;"># Volúmenes persistentes</span>
                 <div class="principle-grid" style="grid-template-columns: repeat(2, 1fr);">
                     <div class="principle-card">
                         <h3>🖼️ image / build</h3>
-                        <p><code>image</code>: Usa una imagen existente (Docker Hub).<br><code>build</code>: Construye desde un Dockerfile local.</p>
+                        <p><code>image</code>: Usa una imagen existente (Docker Hub).<br><code>build</code>: Construye
+                            desde un Dockerfile local.</p>
                     </div>
                     <div class="principle-card">
                         <h3>🔌 ports</h3>
-                        <p>Mapea puertos <code>HOST:CONTAINER</code>.<br>Ej: <code>"8080:80"</code> expone el puerto 80 del contenedor en el 8080 de tu PC.</p>
+                        <p>Mapea puertos <code>HOST:CONTAINER</code>.<br>Ej: <code>"8080:80"</code> expone el puerto 80
+                            del contenedor en el 8080 de tu PC.</p>
                     </div>
                     <div class="principle-card">
                         <h3>🌍 environment</h3>
-                        <p>Variables de entorno (env vars).<br>Crucial para passwords, connection strings y configuración.</p>
+                        <p>Variables de entorno (env vars).<br>Crucial para passwords, connection strings y
+                            configuración.</p>
                     </div>
                     <div class="principle-card">
                         <h3>💾 volumes</h3>
-                        <p>Monta carpetas del host o volúmenes nombrados.<br>Ej: <code>./data:/var/lib/mysql</code> para persistencia.</p>
+                        <p>Monta carpetas del host o volúmenes nombrados.<br>Ej: <code>./data:/var/lib/mysql</code> para
+                            persistencia.</p>
                     </div>
                     <div class="principle-card">
                         <h3>🔗 depends_on</h3>
@@ -3779,13 +3874,15 @@ volumes:        <span style="color: #718096;"># Volúmenes persistentes</span>
                         <p style="margin-top: 5px;">Construye o reconstruye las imágenes de los servicios.</p>
                     </div>
                     <div style="background: #f7fafc; padding: 15px; border-radius: 10px;">
-                        <code style="color: #fbbf24; font-size: 1.1em; font-weight: bold;">docker-compose exec [srv] bash</code>
+                        <code
+                            style="color: #fbbf24; font-size: 1.1em; font-weight: bold;">docker-compose exec [srv] bash</code>
                         <p style="margin-top: 5px;">Entra a la terminal de un contenedor en ejecución.</p>
                     </div>
                 </div>
-                
+
                 <div style="margin-top: 25px; text-align: center;">
-                    <p><strong>💡 Tip Pro:</strong> Usa <code>--scale web=3</code> para escalar instancias horizontalmente.</p>
+                    <p><strong>💡 Tip Pro:</strong> Usa <code>--scale web=3</code> para escalar instancias
+                        horizontalmente.</p>
                 </div>
             </div>
         </div>
@@ -3797,8 +3894,9 @@ volumes:        <span style="color: #718096;"># Volúmenes persistentes</span>
             </div>
             <div class="content">
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; height: 100%;">
-                    <div style="overflow-y: auto; background: #1e1e1e; padding: 15px; border-radius: 10px; font-size: 0.7em; color: #d4d4d4;">
-<pre style="margin: 0;">version: "3.8"
+                    <div
+                        style="overflow-y: auto; background: #1e1e1e; padding: 15px; border-radius: 10px; font-size: 0.7em; color: #d4d4d4;">
+                        <pre style="margin: 0;">version: "3.8"
 services:
   <span style="color: #6a9955;"># --- MySQL Database ---</span>
   mysql-container:
@@ -3851,7 +3949,7 @@ networks:
   ecommerce-network:
     driver: bridge</pre>
                     </div>
-                    
+
                     <div style="display: flex; flex-direction: column; justify-content: center;">
                         <div class="principle-card" style="margin-bottom: 20px;">
                             <h3>🏗️ Arquitectura Definida</h3>
@@ -3861,9 +3959,11 @@ networks:
                                 <li>1 Red Compartida (ecommerce-network)</li>
                             </ul>
                         </div>
-                        <div style="background: #f0fff4; padding: 20px; border-radius: 12px; border-left: 5px solid #48bb78;">
+                        <div
+                            style="background: #f0fff4; padding: 20px; border-radius: 12px; border-left: 5px solid #48bb78;">
                             <strong>Conexión Mágica:</strong><br>
-                            El servicio <code>products-microservice</code> se conecta a MySQL usando el hostname <code>mysql-host-productsmicroservice</code> definido en el YAML.
+                            El servicio <code>products-microservice</code> se conecta a MySQL usando el hostname
+                            <code>mysql-host-productsmicroservice</code> definido en el YAML.
                         </div>
                     </div>
                 </div>
@@ -3879,22 +3979,29 @@ networks:
                 <div class="drawback-list">
                     <div class="drawback-item">
                         <h3>1. Definición de Servicios (Services)</h3>
-                        <p>Cada bloque (<code>mysql-container</code>, <code>products-microservice</code>) es un contenedor independiente. Se definen imágenes específicas y versiones para garantizar consistencia.</p>
+                        <p>Cada bloque (<code>mysql-container</code>, <code>products-microservice</code>) es un
+                            contenedor independiente. Se definen imágenes específicas y versiones para garantizar
+                            consistencia.</p>
                     </div>
-                    
+
                     <div class="drawback-item">
                         <h3>2. Variables de Entorno (Environment)</h3>
-                        <p>Se inyectan configuraciones críticas como contraseñas y hosts. <br>Ej: <code>MYSQL_HOST</code> le dice al microservicio dónde encontrar su base de datos dentro de la red Docker.</p>
+                        <p>Se inyectan configuraciones críticas como contraseñas y hosts. <br>Ej:
+                            <code>MYSQL_HOST</code> le dice al microservicio dónde encontrar su base de datos dentro de
+                            la red Docker.</p>
                     </div>
 
                     <div class="drawback-item">
                         <h3>3. Redes (Networks)</h3>
-                        <p>Todos los servicios pertenecen a <code>ecommerce-network</code>. Esto crea una red privada donde pueden "verse" entre sí usando sus nombres de servicio o hostnames, pero están aislados del exterior (excepto por los puertos expuestos).</p>
+                        <p>Todos los servicios pertenecen a <code>ecommerce-network</code>. Esto crea una red privada
+                            donde pueden "verse" entre sí usando sus nombres de servicio o hostnames, pero están
+                            aislados del exterior (excepto por los puertos expuestos).</p>
                     </div>
 
                     <div class="drawback-item">
                         <h3>4. Volúmenes (Volumes)</h3>
-                        <p><code>./mysql-init:/docker-entrypoint-initdb.d</code>: Carga scripts SQL iniciales desde tu PC al contenedor automáticamente al arrancar. Ideal para crear tablas o datos semilla.</p>
+                        <p><code>./mysql-init:/docker-entrypoint-initdb.d</code>: Carga scripts SQL iniciales desde tu
+                            PC al contenedor automáticamente al arrancar. Ideal para crear tablas o datos semilla.</p>
                     </div>
                 </div>
             </div>
@@ -3951,8 +4058,234 @@ networks:
             </div>
         </div>
 
+        <!-- Slide: Sección 6 - Portada -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">📦</div>
+                <h1>Orders Microservice</h1>
+                <p class="subtitle">NoSQL & Vertical Slice Architecture</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 6</p>
+            </div>
+        </div>
+
+        <!-- Slide: Orders Architecture VSA -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Orders Microservice - Arquitectura</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.1em; margin-bottom: 30px;">
+                    A diferencia de la arquitectura en capas tradicional, el servicio de <strong>Orders</strong>
+                    implementa
+                    <strong>Vertical Slice Architecture</strong>. Cada funcionalidad (Feature) encapsula todo lo
+                    necesario.
+                </p>
+
+                <div class="comparison">
+                    <div class="comparison-box"
+                        style="background: #f7fafc; border: 2px dashed #cbd5e0; color: #718096;">
+                        <h3 style="color: #718096; font-size: 1.5em;">❌ Layered (Tradicional)</h3>
+                        <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                            <div style="background: #e2e8f0; padding: 10px; border-radius: 8px;">Presentation
+                                (Controllers)</div>
+                            <div style="font-size: 1.5em;">⬇️</div>
+                            <div style="background: #e2e8f0; padding: 10px; border-radius: 8px;">Business Logic
+                                (Services)</div>
+                            <div style="font-size: 1.5em;">⬇️</div>
+                            <div style="background: #e2e8f0; padding: 10px; border-radius: 8px;">Data Access
+                                (Repository)</div>
+                        </div>
+                    </div>
+
+                    <div class="comparison-box micro-box">
+                        <h3 style="font-size: 1.5em;">✅ Vertical Slice</h3>
+                        <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+                            <div
+                                style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; text-align: left;">
+                                <strong>📂 Features/CreateOrder</strong>
+                                <ul style="margin-top: 10px; font-size: 0.9em; list-style: none; margin-left: 10px;">
+                                    <li>📄 CreateOrderEndpoint.cs</li>
+                                    <li>⚡ CreateOrderCommand.cs</li>
+                                    <li>⚙️ CreateOrderHandler.cs</li>
+                                </ul>
+                            </div>
+                            <div style="font-size: 1.5em;">⬇️</div>
+                            <div style="background: #2d3748; color: #4fd1c5; padding: 10px; border-radius: 8px;">
+                                🍃 MongoDB Driver (Direct Access)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: NoSQL Databases -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>NoSQL Databases</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; margin-bottom: 30px;">
+                    <strong>NoSQL</strong> (Non-SQL o Not-Only-SQL) es una categoría de bases de datos que proporciona
+                    mecanismos para almacenar datos como
+                    <span class="highlight">documentos JSON</span>, en lugar de las relaciones tabulares utilizadas en
+                    bases de datos relacionales.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 40px;">
+                    <div style="background: #f7fafc; padding: 30px; border-radius: 15px;">
+                        <h3 style="color: #2d3748; margin-bottom: 20px;">📄 Document Model (JSON)</h3>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 10px; overflow-x: auto;">
+{
+  "_id": "507f1f77bcf86cd799439011",
+  "customer": "John Doe",
+  "items": [
+    { "product": "Laptop", "price": 1200 },
+    { "product": "Mouse", "price": 25 }
+  ],
+  "total": 1225,
+  "status": "Pending"
+}</pre>
+                    </div>
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
+                        <div class="principle-card"
+                            style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); margin-bottom: 20px;">
+                            <h3>Schema-less</h3>
+                            <p>Estructura flexible que puede cambiar sin migraciones complejas.</p>
+                        </div>
+                        <div class="principle-card"
+                            style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <h3>Horizontal Scaling</h3>
+                            <p>Diseñadas para escalar distribuyendo datos en múltiples servidores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: When to use NoSQL -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>¿Cuándo usar NoSQL?</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>🔄 Flexible Data Models</h3>
+                        <p>Escenarios donde la estructura de datos es dinámica, semi-estructurada o requiere tipos
+                            diversos (JSON, XML).</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>🚀 High Performance</h3>
+                        <p>Aplicaciones que requieren respuestas de latencia ultra baja y alto throughput.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>📈 Scalability</h3>
+                        <p>Cuando la aplicación demanda escalado horizontal para manejar grandes volúmenes de datos y
+                            tráfico.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>☁️ Cloud-Native</h3>
+                        <p>Ideales para entornos distribuidos y nube debido a su tolerancia a fallos y escalabilidad
+                            inherente.</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <h3>💰 Cost-Effectiveness</h3>
+                        <p>Modelos de precios eficientes en la nube y optimización de recursos para ciertos casos de
+                            uso.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Examples of NoSQL -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Ejemplos de Bases de Datos NoSQL</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 30px;">
+                    <div class="drawback-item" style="text-align: center;">
+                        <h3 style="font-size: 1.5em; margin-bottom: 10px;">🍃 MongoDB</h3>
+                        <p>Document Store líder, basado en JSON.</p>
+                    </div>
+                    <div class="drawback-item" style="text-align: center;">
+                        <h3 style="font-size: 1.5em; margin-bottom: 10px;">🔴 Redis</h3>
+                        <p>Key-Value store en memoria de alto rendimiento.</p>
+                    </div>
+                    <div class="drawback-item" style="text-align: center;">
+                        <h3 style="font-size: 1.5em; margin-bottom: 10px;">👁️ Cassandra</h3>
+                        <p>Wide-column store para grandes volúmenes de datos.</p>
+                    </div>
+                    <div class="drawback-item" style="text-align: center;">
+                        <h3 style="font-size: 1.5em; margin-bottom: 10px;">⚡ DynamoDB</h3>
+                        <p>Servicio NoSQL gestionado de AWS.</p>
+                    </div>
+                    <div class="drawback-item" style="text-align: center;">
+                        <h3 style="font-size: 1.5em; margin-bottom: 10px;">🪐 Cosmos DB</h3>
+                        <p>Base de datos multi-modelo global de Azure.</p>
+                    </div>
+                    <div class="drawback-item" style="text-align: center;">
+                        <h3 style="font-size: 1.5em; margin-bottom: 10px;">🛋️ Couchbase</h3>
+                        <p>Base de datos de documentos distribuida.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: MongoDB Intro -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>MongoDB</h2>
+            </div>
+            <div class="content">
+                <div style="display: flex; align-items: center; gap: 40px;">
+                    <div style="flex: 1;">
+                        <p style="font-size: 1.2em; margin-bottom: 20px;">
+                            <strong>MongoDB</strong> es una base de datos orientada a documentos, multiplataforma y de
+                            código abierto.
+                        </p>
+                        <ul style="font-size: 1.1em; line-height: 2;">
+                            <li>📦 Almacena datos en documentos flexibles tipo JSON (BSON).</li>
+                            <li>🔗 No requiere un esquema fijo (Schema-less).</li>
+                            <li>⚡ Alta disponibilidad y escalabilidad horizontal (Sharding).</li>
+                            <li>🔍 Potente lenguaje de consulta y agregación.</li>
+                        </ul>
+                    </div>
+                    <div style="flex: 1; background: #2d3748; padding: 30px; border-radius: 15px; color: #e2e8f0;">
+                        <h3 style="color: #4fd1c5; margin-bottom: 15px;">SQL vs MongoDB</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                            <div><strong>Table</strong></div>
+                            <div style="color: #4fd1c5;">Collection</div>
+
+                            <div><strong>Row</strong></div>
+                            <div style="color: #4fd1c5;">Document</div>
+
+                            <div><strong>Column</strong></div>
+                            <div style="color: #4fd1c5;">Field</div>
+
+                            <div><strong>Joins</strong></div>
+                            <div style="color: #4fd1c5;">$lookup / Embedding</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="slide-counter">
-            <span id="current">1</span> / <span id="total">67</span>
+            <select id="sectionNav" class="nav-select" onchange="jumpToSection(this.value)">
+                <option value="0">Inicio</option>
+            </select>
+            <div style="width: 1px; height: 20px; background: #cbd5e0; margin: 0 5px;"></div>
+            <input type="number" id="slideInput" class="nav-input" min="1" value="1"
+                onchange="jumpToSlideInput(this.value)">
+            <span style="color: #a0aec0;">/</span>
+            <span id="total">73</span>
         </div>
 
         <div class="controls">
@@ -3965,17 +4298,70 @@ networks:
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
         const totalSlides = slides.length;
+        const slideInput = document.getElementById('slideInput');
+        const sectionNav = document.getElementById('sectionNav');
 
         document.getElementById('total').textContent = totalSlides;
+        slideInput.max = totalSlides;
+
+        // Populate Section Navigation
+        function initNavigation() {
+            // Clear existing options except first
+            while (sectionNav.options.length > 1) {
+                sectionNav.remove(1);
+            }
+
+            slides.forEach((slide, index) => {
+                // Check for Section Covers (intro-content) or specific headers
+                const introContent = slide.querySelector('.intro-content');
+                const header = slide.querySelector('.slide-header h2');
+
+                if (introContent) {
+                    const title = slide.querySelector('h1')?.innerText ||
+                        slide.querySelector('.subtitle')?.innerText ||
+                        `Sección ${index}`;
+
+                    // Avoid duplicate "Inicio"
+                    if (index !== 0) {
+                        addNavOption(index, "📍 " + title);
+                    }
+                }
+            });
+        }
+
+        function addNavOption(index, text) {
+            const option = document.createElement('option');
+            option.value = index;
+            option.text = text;
+            sectionNav.appendChild(option);
+        }
 
         function showSlide(n) {
             slides[currentSlide].classList.remove('active');
             currentSlide = (n + totalSlides) % totalSlides;
             slides[currentSlide].classList.add('active');
 
-            document.getElementById('current').textContent = currentSlide + 1;
+            // Update UI controls
+            slideInput.value = currentSlide + 1;
+
+            // Update buttons state
             document.getElementById('prev').disabled = currentSlide === 0;
             document.getElementById('next').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function jumpToSlideInput(val) {
+            let slideNum = parseInt(val);
+            if (isNaN(slideNum)) slideNum = 1;
+            if (slideNum < 1) slideNum = 1;
+            if (slideNum > totalSlides) slideNum = totalSlides;
+
+            showSlide(slideNum - 1);
+        }
+
+        function jumpToSection(index) {
+            showSlide(parseInt(index));
+            // Reset focus to body so keyboard arrows work
+            document.body.focus();
         }
 
         function nextSlide() {
@@ -3991,10 +4377,14 @@ networks:
         }
 
         document.addEventListener('keydown', (e) => {
+            // Ignore arrow keys if focus is on input
+            if (document.activeElement === slideInput) return;
+
             if (e.key === 'ArrowRight') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
         });
 
+        initNavigation();
         showSlide(0);
     </script>
 </body>
