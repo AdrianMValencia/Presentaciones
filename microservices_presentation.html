@@ -4325,6 +4325,897 @@ networks:
             </div>
         </div>
 
+        <!-- Sección 7: Tolerancia a Fallos -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">🛡️</div>
+                <h1>Tolerancia a Fallos</h1>
+                <p class="subtitle">Resiliencia en Microservicios con Polly</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 7</p>
+            </div>
+        </div>
+
+        <!-- Slide: Definición de Tolerancia a Fallos -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Tolerancia a Fallos</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 30px;"><strong>Tolerancia a fallos</strong> se refiere a la capacidad de un sistema para continuar operando correctamente y entregar la funcionalidad esperada a pesar de encontrar fallos (o excepciones).</p>
+                
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 20px; color: white; text-align: center;">
+                    <h3 style="color: white; font-size: 1.5em; margin-bottom: 20px;">🛡️ Objetivo Principal</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Mantener el sistema funcionando incluso cuando los componentes individuales fallan</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Polly -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Polly</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;"><strong>Polly</strong> es una biblioteca de .NET utilizada para implementar políticas de manejo de fallos en aplicaciones, especialmente en arquitecturas de microservicios.</p>
+                
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 40px;">Proporciona características como <strong>reintentos</strong>, <strong>tiempos de espera</strong>, <strong>disyuntores</strong> y <strong>mecanismos de respaldo</strong> para mejorar la tolerancia a fallos de sistemas distribuidos.</p>
+
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 15px;">✨ ¿Por qué usar Polly?</h3>
+                    <p style="color: white; font-size: 1.1em; line-height: 1.8;">En arquitecturas de microservicios, los servicios pueden fallar temporalmente. Polly ayuda a manejar estos fallos de manera elegante y automática.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Paquetes NuGet de Polly -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Paquetes NuGet de Polly</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>📦 Polly</h3>
+                        <p>Proporciona funcionalidad básica para políticas de resiliencia como reintentos, tiempos de espera, disyuntores y respaldos.</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <h3>🌐 Polly.Extensions.Http</h3>
+                        <p>Extiende las políticas de Polly para usarlas con solicitudes HTTP.</p>
+                    </div>
+                    
+                    <div class="principle-card">
+                        <h3>🔧 Microsoft.Extensions.Http.Polly</h3>
+                        <p>Proporciona métodos de extensión para aplicar políticas de Polly con HttpClientFactory de manera centralizada.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Recomendación</h3>
+                    <p style="color: #234e52; font-size: 1.1em;">Usar <strong>Microsoft.Extensions.Http.Polly</strong> para integración perfecta con HttpClientFactory en .NET</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Polly.Retry -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Polly.Retry</h2>
+            </div>
+            <div class="content">
+                <h3 style="margin-bottom: 30px; color: #667eea;">Política de "Reintento" en Polly</h3>
+                
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">La política de <strong>"reintento"</strong> en Polly funciona reintentando automáticamente una solicitud HTTP fallida por un número específico de veces, con un retraso específico entre cada intento.</p>
+
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔄 Flujo de Reintento</h3>
+                        <ul>
+                            <li>1️⃣ Solicitud inicial falla</li>
+                            <li>⏱️ Espera un tiempo definido</li>
+                            <li>2️⃣ Primer reintento</li>
+                            <li>⏱️ Espera nuevamente</li>
+                            <li>3️⃣ Segundo reintento</li>
+                            <li>✓ Éxito o fallo final</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>⚙️ Configuración Típica</h3>
+                        <ul>
+                            <li>Número de reintentos: 3</li>
+                            <li>Delay entre reintentos: 2s</li>
+                            <li>Solo para errores transitorios</li>
+                            <li>No reintentar en errores 4xx</li>
+                            <li>Sí reintentar en errores 5xx</li>
+                            <li>Sí reintentar en timeouts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Exponential Backoff -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Retroceso Exponencial</h2>
+            </div>
+            <div class="content">
+                <h3 style="margin-bottom: 30px; color: #667eea;">Retroceso Exponencial con Reintento</h3>
+                
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Retroceso exponencial</strong> es una estrategia de reintento donde el retraso entre reintentos aumenta exponencialmente con cada intento.</p>
+
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px;">
+                    <h3 style="color: white; margin-bottom: 20px; text-align: center;">⏱️ Ejemplo de Delays</h3>
+                    <div style="text-align: center; font-size: 1.5em; font-weight: bold;">
+                        <p style="color: white;">1s → 2s → 4s → 8s → 16s</p>
+                    </div>
+                </div>
+
+                <div style="padding: 25px; background: #fef5e7; border-radius: 15px; border-left: 5px solid #f39c12;">
+                    <h3 style="color: #7d6608; margin-bottom: 15px;">✨ Ventajas</h3>
+                    <ul style="font-size: 1.1em; line-height: 2; color: #7d6608;">
+                        <li>Reduce la carga en el servicio que está fallando</li>
+                        <li>Da más tiempo al servicio para recuperarse</li>
+                        <li>Evita "tormentas de reintentos"</li>
+                        <li>Mejora las probabilidades de éxito en cada intento</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Circuit Breakers -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Disyuntores (Circuit Breakers)</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Cuando el número de errores excede un umbral predefinido dentro de un período de tiempo determinado, el disyuntor se <strong>'dispara'</strong> y entra en un estado <strong>'abierto'</strong> que evita cualquier solicitud adicional al servicio subyacente, hasta que el servicio subyacente se recupere.</p>
+                
+                <h3 style="margin: 30px 0 20px 0; text-align: center; color: #667eea;">¿Cómo funciona el Disyuntor?</h3>
+                
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 15px; color: white; margin-top: 30px;">
+                    <h3 style="color: white; margin-bottom: 15px;">🎯 Objetivo del Circuit Breaker</h3>
+                    <p style="color: white; font-size: 1.1em; line-height: 1.8;">Prevenir que un servicio fallido sea bombardeado con solicitudes, permitiéndole recuperarse mientras se proporcionan respuestas rápidas al cliente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Estados del Circuit Breaker -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Estados del Circuit Breaker</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+                        <h3>🟢 Cerrado (Closed)</h3>
+                        <p><strong>Estado normal:</strong> El circuito está cerrado, las solicitudes fluyen normalmente al servicio.</p>
+                        <p style="margin-top: 15px; font-size: 0.9em;">Se monitorean los fallos. Si exceden el umbral, pasa a Abierto.</p>
+                    </div>
+                    
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔴 Abierto (Open)</h3>
+                        <p><strong>Estado de fallo:</strong> El circuito está abierto, las solicitudes fallan inmediatamente sin llamar al servicio.</p>
+                        <p style="margin-top: 15px; font-size: 0.9em;">Después de un timeout, pasa a Semi-Abierto.</p>
+                    </div>
+                    
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🟡 Semi-Abierto (Half-Open)</h3>
+                        <p><strong>Estado de prueba:</strong> Permite algunas solicitudes de prueba para verificar si el servicio se ha recuperado.</p>
+                        <p style="margin-top: 15px; font-size: 0.9em;">Si tienen éxito, vuelve a Cerrado. Si fallan, vuelve a Abierto.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: BrokenCircuitException -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>BrokenCircuitException</h2>
+            </div>
+            <div class="content">
+                <h3 style="margin-bottom: 30px; color: #667eea; text-align: center;">¿Cómo funciona el Disyuntor?</h3>
+                
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Cuando el disyuntor está en estado <strong>abierto</strong>, cualquier intento de realizar una solicitud lanzará una <code style="background: #fed7d7; padding: 5px 10px; border-radius: 5px; color: #c53030;">BrokenCircuitException</code>.</p>
+
+                <div style="padding: 30px; background: #fed7d7; border-radius: 15px; border-left: 5px solid #f56565; margin-bottom: 30px;">
+                    <h3 style="color: #c53030; margin-bottom: 15px;">⚠️ Importante</h3>
+                    <p style="font-size: 1.1em; line-height: 1.8; color: #2d3748;">Esta excepción indica que el circuito está abierto y que <strong>no se está intentando</strong> llamar al servicio fallido. Esto permite que el servicio se recupere sin ser bombardeado con solicitudes.</p>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+                        <h3>✅ Ventajas del Fail-Fast</h3>
+                        <ul>
+                            <li>No desperdicia recursos</li>
+                            <li>Respuestas más rápidas</li>
+                            <li>Permite recuperación del servicio</li>
+                            <li>Facilita implementar fallbacks</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🔄 Estrategias de Fallback</h3>
+                        <ul>
+                            <li>Retornar datos en caché</li>
+                            <li>Retornar valores por defecto</li>
+                            <li>Llamar a un servicio alternativo</li>
+                            <li>Retornar mensaje de error amigable</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 8: Caché -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">💾</div>
+                <h1>Caché</h1>
+                <p class="subtitle">Optimización de Rendimiento en Microservicios</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 8</p>
+            </div>
+        </div>
+
+        <!-- Slide: Introducción a Caching -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Introducción al Caché</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Caché</strong> es una técnica de almacenar datos de acceso frecuente en una ubicación temporal para una recuperación más rápida.</p>
+
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px;">
+                    <h3 style="color: white; font-size: 1.5em; margin-bottom: 20px; text-align: center;">⚡ Beneficio Principal</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8; text-align: center;">Reduce la latencia y mejora el rendimiento al evitar llamadas repetidas a bases de datos o servicios externos</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card">
+                        <h3>🚀 Velocidad</h3>
+                        <p>Acceso más rápido a datos frecuentemente utilizados</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>💰 Reducción de Costos</h3>
+                        <p>Menos llamadas a servicios y bases de datos</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>📈 Escalabilidad</h3>
+                        <p>Maneja más usuarios con los mismos recursos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Tipos de Caching -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Tipos de Caché</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🧠 Caché en Memoria</h3>
+                        <p style="font-size: 1.1em;">Almacena datos en la RAM de la aplicación para acceso ultrarrápido</p>
+                    </div>
+                    
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🏢 Caché Centralizado</h3>
+                        <p style="font-size: 1.1em;">Un servidor de caché compartido por múltiples instancias de servicios</p>
+                    </div>
+                    
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🌐 Caché Distribuido</h3>
+                        <p style="font-size: 1.1em;">Datos distribuidos entre múltiples nodos para alta escalabilidad</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Nota Importante</h3>
+                    <p style="color: #234e52; font-size: 1.1em;">La elección del tipo de caché depende de los requisitos de escalabilidad, disponibilidad y rendimiento de tu aplicación</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: In-Memory Caching -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Caché en Memoria (In-Memory Caching)</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; color: white; margin-bottom: 30px;">
+                    <h3 style="color: white; margin-bottom: 15px;">📍 Almacenamiento</h3>
+                    <p style="color: white; font-size: 1.1em; line-height: 1.8;">Almacena datos en la RAM del servidor o instancia de la aplicación.</p>
+                </div>
+
+                <div style="background: #fef5e7; padding: 25px; border-radius: 15px; border-left: 5px solid #f39c12; margin-bottom: 30px;">
+                    <h3 style="color: #7d6608; margin-bottom: 15px;">🎯 Cuándo usarlo</h3>
+                    <p style="color: #7d6608; font-size: 1.1em; line-height: 1.8;">Adecuado para datos que se leen frecuentemente pero no necesitan persistir más allá de la vida útil de la instancia de aplicación.</p>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+                        <h3>✅ Ventajas</h3>
+                        <ul>
+                            <li><strong>Velocidad:</strong> Acceso con latencia mínima</li>
+                            <li><strong>Simplicidad:</strong> Fácil de implementar y gestionar</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>⚠️ Problemas</h3>
+                        <ul>
+                            <li><strong>Tamaño Limitado:</strong> Limitado por memoria disponible</li>
+                            <li><strong>Persistencia:</strong> Se pierde al reiniciar la app</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Centralized Caching -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Caché Centralizado (Centralized Caching)</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 30px; border-radius: 15px; color: white; margin-bottom: 30px;">
+                    <h3 style="color: white; margin-bottom: 15px;">📍 Almacenamiento</h3>
+                    <p style="color: white; font-size: 1.1em; line-height: 1.8;">Usa un único servidor de caché compartido al que pueden acceder múltiples instancias de diferentes microservicios.</p>
+                </div>
+
+                <div style="background: #fef5e7; padding: 25px; border-radius: 15px; border-left: 5px solid #f39c12; margin-bottom: 30px;">
+                    <h3 style="color: #7d6608; margin-bottom: 15px;">🎯 Cuándo usarlo</h3>
+                    <p style="color: #7d6608; font-size: 1.1em; line-height: 1.8;">Útil cuando múltiples instancias de diferentes microservicios necesitan compartir datos en caché para evitar llamadas redundantes a servidores de bases de datos y cálculos redundantes.</p>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+                        <h3>✅ Ventajas</h3>
+                        <ul>
+                            <li><strong>Compartido:</strong> Múltiples instancias acceden a los mismos datos</li>
+                            <li><strong>Eficiencia:</strong> Reduce duplicación de esfuerzo</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>⚠️ Problemas</h3>
+                        <ul>
+                            <li><strong>Punto Único de Fallo:</strong> Si falla, impacta todas las instancias</li>
+                            <li><strong>Cuellos de Botella:</strong> Puede saturarse con alta carga</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Distributed Caching -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Caché Distribuido (Distributed Caching)</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 30px; border-radius: 15px; color: white; margin-bottom: 30px;">
+                    <h3 style="color: white; margin-bottom: 15px;">📍 Almacenamiento</h3>
+                    <p style="color: white; font-size: 1.1em; line-height: 1.8;">Extiende el caché centralizado distribuyendo los datos en múltiples nodos de caché alojados en diferentes servidores.</p>
+                </div>
+
+                <div style="background: #fef5e7; padding: 25px; border-radius: 15px; border-left: 5px solid #f39c12; margin-bottom: 30px;">
+                    <h3 style="color: #7d6608; margin-bottom: 15px;">🎯 Cuándo usarlo</h3>
+                    <ul style="color: #7d6608; font-size: 1.1em; line-height: 2;">
+                        <li><strong>Alta Escalabilidad:</strong> Aplicaciones con alto tráfico</li>
+                        <li><strong>Sistemas Geo-distribuidos:</strong> Apps en múltiples regiones o data centers</li>
+                    </ul>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+                        <h3>✅ Ventajas</h3>
+                        <ul>
+                            <li><strong>Escalabilidad:</strong> Escala horizontalmente</li>
+                            <li><strong>Rendimiento:</strong> Baja latencia distribuida</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>⚠️ Problemas</h3>
+                        <ul>
+                            <li><strong>Complejidad:</strong> Requiere más infraestructura y expertise</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Comparación de Tipos de Caché -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Comparación de Tipos de Caché</h2>
+            </div>
+            <div class="content">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
+                        <thead>
+                            <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                <th style="padding: 15px; text-align: left; border: 1px solid #ddd;">Característica</th>
+                                <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">🧠 En Memoria</th>
+                                <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">🏢 Centralizado</th>
+                                <th style="padding: 15px; text-align: center; border: 1px solid #ddd;">🌐 Distribuido</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #f7fafc;">
+                                <td style="padding: 12px; border: 1px solid #ddd;"><strong>Velocidad</strong></td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">⚡⚡⚡</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">⚡⚡</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">⚡⚡</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #ddd;"><strong>Escalabilidad</strong></td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">⚠️</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">✅✅✅</td>
+                            </tr>
+                            <tr style="background: #f7fafc;">
+                                <td style="padding: 12px; border: 1px solid #ddd;"><strong>Complejidad</strong></td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">Baja</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">Media</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">Alta</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px; border: 1px solid #ddd;"><strong>Persistencia</strong></td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">❌</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">✅</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">✅</td>
+                            </tr>
+                            <tr style="background: #f7fafc;">
+                                <td style="padding: 12px; border: 1px solid #ddd;"><strong>Uso Típico</strong></td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">Apps pequeñas</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">Apps medianas</td>
+                                <td style="padding: 12px; text-align: center; border: 1px solid #ddd;">Apps empresariales</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 10px;">🎯 Recomendación</h3>
+                    <p style="color: white; font-size: 1.1em; line-height: 1.8;">En arquitecturas de microservicios, <strong>Redis</strong> es la opción más popular para caché centralizado y distribuido</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 9: API Gateway -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">🚪</div>
+                <h1>API Gateway</h1>
+                <p class="subtitle">Ocelot - Puerta de Entrada a Microservicios</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 9</p>
+            </div>
+        </div>
+
+        <!-- Slide: Introducción a API Gateway -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Introducción a API Gateway</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Un <strong>API Gateway</strong> es un mediador entre los clientes y los microservicios, y también entre microservicios, que enruta todas las solicitudes a los microservicios apropiados.</p>
+
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">🎯 Punto de Entrada Único</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">El API Gateway actúa como una fachada que oculta la complejidad de múltiples microservicios detrás de una interfaz unificada</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>📱 Clientes</h3>
+                        <p>Web, Mobile, Desktop se conectan a un solo endpoint</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🚪 API Gateway</h3>
+                        <p>Enruta, autentica y transforma solicitudes</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>⚙️ Microservicios</h3>
+                        <p>Procesan lógica de negocio específica</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Ventajas del API Gateway -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Ventajas del API Gateway</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🎯 Interacción Simplificada del Cliente</h3>
+                        <p>Proporciona un punto de entrada único para los clientes, abstrayendo la complejidad de rastrear ubicaciones de alojamiento de múltiples microservicios.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🔐 Seguridad Centralizada</h3>
+                        <p>Aplica autenticación y autorización consistente, evitando la autenticación individual a cada microservicio.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>⚙️ Preocupaciones Transversales</h3>
+                        <p>Centraliza funciones como balanceo de carga, logging, monitoreo, transformación de solicitudes y respuestas, descubrimiento de servicios, etc.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Beneficio Adicional</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Los clientes no necesitan saber cómo están estructurados internamente los microservicios. El API Gateway maneja toda la complejidad del enrutamiento.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Up-stream y Down-stream -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Up-stream y Down-stream en API Gateway</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 40px;">
+                    <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <h3 style="color: white; margin-bottom: 20px; font-size: 1.8em;">⬆️ Up-stream</h3>
+                        <p style="color: white; font-size: 1.1em; line-height: 1.8; margin-bottom: 15px;">Es la <strong>ruta pública</strong> que los clientes usan para acceder al API Gateway.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                            <p style="color: white; font-weight: bold; font-size: 1.1em;">Ejemplo:</p>
+                            <code style="color: white; font-size: 1em;">https://api.miapp.com/products</code>
+                        </div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <h3 style="color: white; margin-bottom: 20px; font-size: 1.8em;">⬇️ Down-stream</h3>
+                        <p style="color: white; font-size: 1.1em; line-height: 1.8; margin-bottom: 15px;">Es la <strong>ruta interna</strong> del microservicio al que el API Gateway redirige la solicitud.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                            <p style="color: white; font-weight: bold; font-size: 1.1em;">Ejemplo:</p>
+                            <code style="color: white; font-size: 1em;">http://products-svc:8080/api/products</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white; text-align: center;">
+                    <h3 style="color: white; margin-bottom: 15px;">🔄 Flujo Completo</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Cliente → Up-stream (API Gateway) → Down-stream (Microservicio) → Respuesta</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Comunicación sin API Gateway -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Comunicación de Microservicios - Sin API Gateway</h2>
+            </div>
+            <div class="content">
+                <div style="background: #fed7d7; padding: 30px; border-radius: 15px; border-left: 5px solid #f56565; margin-bottom: 30px;">
+                    <h3 style="color: #c53030; margin-bottom: 20px;">⚠️ Problemas sin API Gateway</h3>
+                    <ul style="color: #742a2a; font-size: 1.1em; line-height: 2;">
+                        <li>Los clientes deben conocer la ubicación de cada microservicio</li>
+                        <li>Cada cliente debe implementar autenticación por separado</li>
+                        <li>Cambios en la ubicación de servicios requieren actualizar todos los clientes</li>
+                        <li>No hay punto central para logging, monitoreo o rate limiting</li>
+                        <li>Problemas de CORS al acceder desde navegadores</li>
+                    </ul>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; border: 2px dashed #cbd5e0;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔀 Arquitectura sin Gateway</h3>
+                    <pre style="background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 10px; font-size: 0.9em; line-height: 1.8;">
+📱 Cliente Web → http://products-svc:8080/api/products
+📱 Cliente Web → http://users-svc:9090/api/users
+📱 Cliente Web → http://orders-svc:7070/api/orders
+
+📱 Mobile App → http://products-svc:8080/api/products
+📱 Mobile App → http://users-svc:9090/api/users
+📱 Mobile App → http://orders-svc:7070/api/orders
+                    </pre>
+                    <p style="color: #718096; text-align: center; margin-top: 15px; font-style: italic;">Cada cliente debe gestionar múltiples endpoints</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Comunicación con API Gateway -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Comunicación de Microservicios - Con API Gateway</h2>
+            </div>
+            <div class="content">
+                <div style="background: #c6f6d5; padding: 30px; border-radius: 15px; border-left: 5px solid #38a169; margin-bottom: 30px;">
+                    <h3 style="color: #22543d; margin-bottom: 20px;">✅ Beneficios con API Gateway</h3>
+                    <ul style="color: #22543d; font-size: 1.1em; line-height: 2;">
+                        <li>Un solo endpoint para todos los clientes</li>
+                        <li>Autenticación centralizada en el gateway</li>
+                        <li>Los cambios internos no afectan a los clientes</li>
+                        <li>Logging, monitoreo y rate limiting centralizados</li>
+                        <li>Manejo de CORS simplificado</li>
+                    </ul>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white;">
+                    <h3 style="color: white; margin-bottom: 20px; text-align: center;">🎯 Arquitectura con Gateway</h3>
+                    <pre style="background: rgba(0,0,0,0.3); color: white; padding: 20px; border-radius: 10px; font-size: 0.9em; line-height: 1.8;">
+📱 Cliente Web → https://api.miapp.com/products
+📱 Cliente Web → https://api.miapp.com/users
+📱 Cliente Web → https://api.miapp.com/orders
+
+                    ↓ API Gateway enruta internamente ↓
+
+🚪 Gateway → http://products-svc:8080/api/products
+🚪 Gateway → http://users-svc:9090/api/users
+🚪 Gateway → http://orders-svc:7070/api/orders
+                    </pre>
+                    <p style="color: white; text-align: center; margin-top: 15px; font-style: italic;">Un solo punto de entrada para todos los clientes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Ocelot - API Gateway para .NET -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Ocelot - API Gateway para .NET</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;"><strong>Ocelot</strong> es un API Gateway ligero, de código abierto y altamente configurable diseñado específicamente para aplicaciones .NET.</p>
+
+                <div class="principle-grid" style="margin-bottom: 30px;">
+                    <div class="principle-card">
+                        <h3>🔀 Enrutamiento</h3>
+                        <p>Redirige requests a microservicios específicos basándose en rutas configuradas</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>⏱️ Rate Limiting</h3>
+                        <p>Limita el número de requests por cliente para prevenir abuso</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>🔐 Autenticación</h3>
+                        <p>Valida tokens JWT antes de permitir acceso</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>⚖️ Load Balancing</h3>
+                        <p>Distribuye el tráfico entre múltiples instancias</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>🔄 Circuit Breaker</h3>
+                        <p>Maneja fallos de servicios con Polly</p>
+                    </div>
+                    <div class="principle-card">
+                        <h3>📝 Logging</h3>
+                        <p>Registro centralizado de todas las requests</p>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px;">
+                    <h3 style="color: #4a5568; margin-bottom: 15px;">📦 Instalación</h3>
+                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto;">
+dotnet add package Ocelot
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Configuración de Ocelot -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Configuración de Ocelot - ocelot.json</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.1em; margin-bottom: 20px;">Ocelot se configura mediante un archivo JSON que define las rutas (Routes) y configuraciones globales.</p>
+
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.85em; line-height: 1.6;">
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/products/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      
+      "DownstreamPathTemplate": "/api/products/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "products-service", "Port": 8080 }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/users/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      
+      "DownstreamPathTemplate": "/api/users/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "users-service", "Port": 9090 }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://api.miapp.com"
+  }
+}
+                    </pre>
+                </div>
+
+                <div style="padding: 20px; background: #e6fffa; border-radius: 12px; border-left: 5px solid #38b2ac;">
+                    <p style="color: #234e52; font-size: 1em;"><strong>💡 Explicación:</strong> Cada ruta define cómo transformar una solicitud pública (upstream) en una llamada interna (downstream)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Polly con Ocelot -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Polly con Ocelot</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Ocelot se integra perfectamente con <strong>Polly</strong> para implementar políticas de resiliencia como reintentos, circuit breakers y timeouts.</p>
+
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin-bottom: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 15px;">🔄 Configuración de Retry en Ocelot</h3>
+                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.85em;">
+{
+  "UpstreamPathTemplate": "/products/{everything}",
+  "DownstreamPathTemplate": "/api/products/{everything}",
+  "DownstreamHostAndPorts": [
+    { "Host": "products-service", "Port": 8080 }
+  ],
+  "QoSOptions": {
+    "ExceptionsAllowedBeforeBreaking": 3,
+    "DurationOfBreak": 10000,
+    "TimeoutValue": 5000
+  }
+}
+                    </pre>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔄 Retry Policy</h3>
+                        <p>Reintenta automáticamente solicitudes fallidas antes de retornar error al cliente</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>⚡ Circuit Breaker</h3>
+                        <p>Previene cascadas de fallos deteniendo requests a servicios caídos</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>⏱️ Timeout</h3>
+                        <p>Establece tiempo máximo de espera para cada solicitud</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Circuit Breaker en Ocelot -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Circuit Breaker en Ocelot</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.1em; line-height: 1.8; margin-bottom: 30px;">El Circuit Breaker en Ocelot funciona monitoreando el número de excepciones. Cuando se alcanza el umbral, el circuito se abre.</p>
+
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white; margin-bottom: 30px;">
+                    <h3 style="color: white; margin-bottom: 20px;">⚙️ Parámetros de QoSOptions</h3>
+                    <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                        <p style="color: white; margin-bottom: 10px;"><strong>ExceptionsAllowedBeforeBreaking:</strong> Número de excepciones antes de abrir el circuito (ej: 3)</p>
+                        <p style="color: white; margin-bottom: 10px;"><strong>DurationOfBreak:</strong> Tiempo en ms que el circuito permanece abierto (ej: 10000 = 10s)</p>
+                        <p style="color: white;"><strong>TimeoutValue:</strong> Tiempo máximo de espera para una solicitud en ms (ej: 5000 = 5s)</p>
+                    </div>
+                </div>
+
+                <div class="comparison">
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+                        <h3>🟢 Circuito Cerrado</h3>
+                        <ul style="color: white;">
+                            <li>Solicitudes fluyen normalmente</li>
+                            <li>Se monitorean las excepciones</li>
+                            <li>Estado saludable</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔴 Circuito Abierto</h3>
+                        <ul style="color: white;">
+                            <li>Se alcanzó el límite de errores</li>
+                            <li>Solicitudes fallan inmediatamente</li>
+                            <li>Espera antes de reintentar</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Timeout Policy -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Timeout Policy</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">La política de <strong>timeout</strong> en Polly establece un límite de tiempo para que una operación se complete. Si la operación excede el límite de tiempo, la política activa un timeout y la operación se aborta.</p>
+
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">⏱️ Timeout en Acción</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Si un microservicio tarda más de 5 segundos en responder, el API Gateway cancela la solicitud y retorna un error al cliente</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🎯 Beneficio Principal</h3>
+                        <p>Evita que los clientes esperen indefinidamente por servicios lentos o no responsivos</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>💰 Libera Recursos</h3>
+                        <p>Cancela operaciones que toman demasiado tiempo, liberando recursos del sistema</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>⚡ Mejor UX</h3>
+                        <p>Proporciona respuestas rápidas al usuario en lugar de esperas prolongadas</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #fef5e7; border-radius: 15px; border-left: 5px solid #f39c12;">
+                    <h3 style="color: #7d6608; margin-bottom: 10px;">💡 Configuración Típica</h3>
+                    <p style="color: #7d6608; font-size: 1.1em;">TimeoutValue típicos: 3-10 segundos para APIs, 30-60 segundos para operaciones pesadas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Ejemplo Completo de Ocelot con Polly -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Ejemplo Completo - Ocelot + Polly</h2>
+            </div>
+            <div class="content">
+                <div style="background: #f7fafc; padding: 20px; border-radius: 12px;">
+                    <pre style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; font-size: 0.8em; line-height: 1.6;">
+{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/products/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      
+      "DownstreamPathTemplate": "/api/products/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "products-service", "Port": 8080 }
+      ],
+      
+      <span style="color: #fbbf24;">"QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 10000,
+        "TimeoutValue": 5000
+      }</span>,
+      
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1m",
+        "PeriodTimespan": 60,
+        "Limit": 100
+      }
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://api.miapp.com",
+    "RateLimitOptions": {
+      "DisableRateLimitHeaders": false,
+      "QuotaExceededMessage": "Too many requests!",
+      "HttpStatusCode": 429
+    }
+  }
+}
+                    </pre>
+                </div>
+
+                <div style="margin-top: 20px; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; color: white;">
+                    <p style="color: white; font-size: 1em; line-height: 1.8;"><strong>Este ejemplo incluye:</strong> Enrutamiento, Circuit Breaker con 3 excepciones máximas, Timeout de 5 segundos, Rate Limiting de 100 requests por minuto</p>
+                </div>
+            </div>
+        </div>
+
         <div class="slide-counter">
             <select id="sectionNav" class="nav-select" onchange="jumpToSection(this.value)">
                 <option value="0">Inicio</option>
