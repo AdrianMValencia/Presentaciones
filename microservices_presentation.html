@@ -6736,6 +6736,854 @@ dotnet add package Ocelot
             </div>
         </div>
 
+        <!-- Sección 12: AKS (Kubernetes) -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">⚓</div>
+                <h1>AKS (Kubernetes)</h1>
+                <p class="subtitle">Orquestación de Contenedores para Microservicios</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 12</p>
+            </div>
+        </div>
+
+        <!-- Slide: Introducción a Kubernetes y AKS -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Introducción a Kubernetes y AKS</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Kubernetes</strong>, también conocido como <strong>K8s</strong>, es una plataforma de código abierto para desplegar y gestionar aplicaciones containerizadas. Maneja la gestión de clústeres, escalado y actualizaciones progresivas, asegurando que tus aplicaciones funcionen sin problemas con mínimas interrupciones.</p>
+
+                <div style="background: linear-gradient(135deg, #326ce5 0%, #00d4ff 100%); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 4em; margin-bottom: 15px;">⚓</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Kubernetes (K8s)</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">El estándar de la industria para orquestación de contenedores</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>📦 Gestión de Contenedores</h3>
+                        <p>Orquesta múltiples contenedores de forma automática</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>📈 Escalado Automático</h3>
+                        <p>Escala aplicaciones basándose en demanda</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔄 Actualizaciones Progresivas</h3>
+                        <p>Actualiza aplicaciones sin downtime</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🛡️ Auto-Recuperación</h3>
+                        <p>Reinicia contenedores fallidos automáticamente</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>⚖️ Balanceo de Carga</h3>
+                        <p>Distribuye tráfico entre múltiples instancias</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>☁️ AKS (Azure Kubernetes Service)</h3>
+                        <p>Kubernetes gestionado por Azure, sin operar el control plane</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo del Mundo Real</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes 20 microservicios en producción. Sin Kubernetes, tendrías que gestionar cada contenedor manualmente: reiniciar si falla, escalar manualmente, actualizar uno por uno. Con Kubernetes, defines "quiero 5 réplicas de este servicio" y Kubernetes se encarga de todo. Si un contenedor falla, lo reinicia. Si necesitas más capacidad, escala automáticamente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Pros y Contras de AKS -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Pros y Contras de AKS</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                    <div style="background: #f0fff4; padding: 30px; border-radius: 15px; border: 2px solid #68d391;">
+                        <h3 style="color: #22543d; margin-bottom: 20px; text-align: center;">✅ Ventajas de AKS</h3>
+                        <div class="principle-grid" style="grid-template-columns: 1fr;">
+                            <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                <h3>📈 Escalabilidad</h3>
+                                <p>Escala microservicios fácilmente según demanda, asegurando uso eficiente de recursos</p>
+                            </div>
+                            <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <h3>🔧 Gestión</h3>
+                                <p>Azure gestiona el control plane de Kubernetes, reduciendo tu carga operativa</p>
+                            </div>
+                            <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <h3>🔗 Integración</h3>
+                                <p>Se integra perfectamente con otros servicios Azure para monitoreo, logging y seguridad</p>
+                            </div>
+                            <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                <h3>🎯 Flexibilidad</h3>
+                                <p>Soporta aplicaciones complejas multi-contenedor y orquesta despliegues intrincados</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #fff5f5; padding: 30px; border-radius: 15px; border: 2px solid #fc8181;">
+                        <h3 style="color: #c53030; margin-bottom: 20px; text-align: center;">❌ Desventajas de AKS</h3>
+                        <div class="drawback-list">
+                            <div class="drawback-item" style="border-left-color: #fc8181;">
+                                <h3 style="color: #c53030;">🔴 Complejidad</h3>
+                                <p>Kubernetes puede ser complejo de gestionar y configurar, especialmente si eres nuevo en orquestación de contenedores</p>
+                            </div>
+                            <div class="drawback-item" style="border-left-color: #fc8181;">
+                                <h3 style="color: #c53030;">📚 Curva de Aprendizaje</h3>
+                                <p>Hay una curva de aprendizaje significativa asociada con Kubernetes y AKS</p>
+                            </div>
+                            <div class="drawback-item" style="border-left-color: #fc8181;">
+                                <h3 style="color: #c53030;">💰 Costo</h3>
+                                <p>AKS en sí no tiene costo directo, pero pagas por las máquinas virtuales subyacentes y otros recursos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Startup vs Empresa</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;"><strong>Startup pequeña:</strong> AKS puede ser excesivo. La complejidad y costo no justifican los beneficios si solo tienes 2-3 microservicios. Mejor usa Container Apps.</p>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8; margin-top: 10px;"><strong>Empresa grande:</strong> AKS es perfecto. Tienes 50+ microservicios, necesitas control total, service mesh, auto-scaling avanzado. La inversión en aprendizaje vale la pena.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Arquitectura de Kubernetes - Visión General -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Arquitectura de Kubernetes</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Kubernetes tiene una arquitectura <strong>maestro-trabajador</strong> que consta de componentes clave:</p>
+
+                <div style="background: linear-gradient(135deg, #326ce5 0%, #00d4ff 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🏗️</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Componentes Principales</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Control Plane (Maestro) y Nodes (Trabajadores)</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+                    🎛️ CONTROL PLANE (Maestro)
+    ┌─────────────────────────────────────┐
+    │  API Server  │  etcd  │  Scheduler │
+    │  Controller Manager                 │
+    └─────────────────────────────────────┘
+                    ↓
+    ┌─────────────────────────────────────┐
+    │         🌐 CLUSTER                   │
+    │  ┌──────────┐  ┌──────────┐         │
+    │  │  Node 1  │  │  Node 2  │  ...    │
+    │  │  ┌────┐  │  │  ┌────┐  │         │
+    │  │  │Pod │  │  │  │Pod │  │         │
+    │  │  └────┘  │  │  └────┘  │         │
+    │  └──────────┘  └──────────┘         │
+    └─────────────────────────────────────┘
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🎛️ Control Plane</h3>
+                        <p>Gestiona el clúster completo (API Server, etcd, Scheduler, Controller Manager)</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🖥️ Nodes</h3>
+                        <p>Máquinas que ejecutan los contenedores (Pods)</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>📦 Pods</h3>
+                        <p>Unidad más pequeña desplegable, contiene uno o más contenedores</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Cluster y Node -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Cluster y Node</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                    <div style="background: #f0f9ff; padding: 30px; border-radius: 15px; border: 2px solid #60a5fa;">
+                        <div style="font-size: 3em; margin-bottom: 15px; text-align: center;">🌐</div>
+                        <h3 style="color: #1e40af; margin-bottom: 20px; text-align: center;">Cluster</h3>
+                        <p style="color: #2d3748; font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">El sistema completo que consiste en todos los componentes de Kubernetes, incluyendo nodes, control plane y las aplicaciones que gestionan.</p>
+                        <div style="background: #dbeafe; padding: 15px; border-radius: 10px;">
+                            <p style="color: #1e40af; font-size: 0.95em; line-height: 1.6;"><strong>Ejemplo:</strong> Tu clúster de AKS tiene 1 control plane (gestionado por Azure) y 3 nodes trabajadores donde corren tus 20 microservicios.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #f0fdf4; padding: 30px; border-radius: 15px; border: 2px solid #68d391;">
+                        <div style="font-size: 3em; margin-bottom: 15px; text-align: center;">🖥️</div>
+                        <h3 style="color: #22543d; margin-bottom: 20px; text-align: center;">Node</h3>
+                        <p style="color: #2d3748; font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">Una máquina (virtual o física) en el clúster de Kubernetes que ejecuta aplicaciones containerizadas. Cada node contiene los componentes necesarios para ejecutar pods y es gestionado por el control plane.</p>
+                        <div style="background: #c6f6d5; padding: 15px; border-radius: 10px;">
+                            <p style="color: #22543d; font-size: 0.95em; line-height: 1.6;"><strong>Ejemplo:</strong> Un node es una VM de Azure con 4 CPUs y 16GB RAM. Puede ejecutar múltiples pods (contenedores) simultáneamente.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Relación Cluster-Node</h3>
+                    <div style="background: white; padding: 20px; border-radius: 10px;">
+                        <pre style="font-size: 0.95em; line-height: 2; color: #2d3748; text-align: center;">
+🌐 CLUSTER (Sistema Completo)
+    │
+    ├── 🎛️ Control Plane (1 instancia, gestionado por Azure en AKS)
+    │
+    └── 🖥️ Nodes (3 máquinas trabajadoras)
+            ├── Node 1: 10 pods ejecutándose
+            ├── Node 2: 8 pods ejecutándose
+            └── Node 3: 12 pods ejecutándose
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Control Plane / Master Node -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Control Plane / Master Node</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">La <strong>capa de gestión central</strong> que controla todo el clúster de Kubernetes. En AKS, Azure gestiona el control plane por ti.</p>
+
+                <div style="background: linear-gradient(135deg, #326ce5 0%, #00d4ff 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🎛️</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Control Plane</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">El cerebro del clúster Kubernetes</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 0.95em; line-height: 2; color: #2d3748; text-align: center;">
+        🎛️ CONTROL PLANE
+    ┌─────────────────────────┐
+    │  🌐 API Server          │ ← Punto de entrada
+    │  💾 etcd                │ ← Base de datos
+    │  📅 Scheduler           │ ← Asigna pods a nodes
+    │  ⚙️ Controller Manager  │ ← Gestiona controladores
+    └─────────────────────────┘
+            ↓
+    Gestiona todos los Nodes
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🌐 API Server</h3>
+                        <p>Componente central que expone la API de Kubernetes. Punto de entrada para todas las tareas administrativas</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>💾 etcd</h3>
+                        <p>Almacén clave-valor distribuido que contiene todos los datos del clúster (configuración y estado)</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📅 Scheduler</h3>
+                        <p>Asigna pods a nodes basándose en disponibilidad de recursos y otras restricciones</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>⚙️ Controller Manager</h3>
+                        <p>Gestiona controladores que manejan tareas rutinarias, como asegurar que el número deseado de réplicas de pods esté ejecutándose</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: AKS vs Kubernetes Autogestionado</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;"><strong>Kubernetes autogestionado:</strong> Tú instalas y gestionas el control plane (API Server, etcd, Scheduler). Debes actualizar, hacer backup, monitorear. Mucho trabajo.</p>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8; margin-top: 10px;"><strong>AKS:</strong> Azure gestiona el control plane por ti. Solo te preocupas por tus nodes y aplicaciones. Azure se encarga de alta disponibilidad, backups, actualizaciones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Componentes del Control Plane -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Componentes del Control Plane</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🌐 API Server</h3>
+                        <p>Componente central que expone la API de Kubernetes. Es el punto de entrada para todas las tareas administrativas y el centro de comunicación para todos los demás componentes.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.9em;"><strong>Ejemplo:</strong> Cuando ejecutas <code style="background: rgba(0,0,0,0.2); padding: 2px 4px; border-radius: 4px;">kubectl get pods</code>, se comunica con el API Server.</p>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>💾 etcd</h3>
+                        <p>Almacén clave-valor distribuido que contiene todos los datos del clúster, como detalles de configuración y el estado del clúster.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.9em;"><strong>Ejemplo:</strong> Guarda información de todos los pods, servicios, configuraciones. Si un node falla, etcd tiene el estado para recrear los pods.</p>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📅 Scheduler</h3>
+                        <p>Asigna pods a nodes basándose en disponibilidad de recursos y otras restricciones.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.9em;"><strong>Ejemplo:</strong> Si creas un pod que necesita 2 CPUs, el Scheduler busca un node con recursos disponibles y lo asigna allí.</p>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>⚙️ Controller Manager</h3>
+                        <p>Gestiona controladores que manejan tareas rutinarias, como asegurar que el número deseado de réplicas de pods esté ejecutándose.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.9em;"><strong>Ejemplo:</strong> Si defines "quiero 5 réplicas" y una falla, el Controller Manager crea una nueva automáticamente.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Service e Ingress -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Service e Ingress</h2>
+            </div>
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                    <div style="background: #f0f9ff; padding: 30px; border-radius: 15px; border: 2px solid #60a5fa;">
+                        <div style="font-size: 3em; margin-bottom: 15px; text-align: center;">🔌</div>
+                        <h3 style="color: #1e40af; margin-bottom: 20px; text-align: center;">Service</h3>
+                        <p style="color: #2d3748; font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">Una abstracción que define un conjunto lógico de pods y una política para acceder a ellos, típicamente usada para exponer aplicaciones a otros componentes dentro del clúster o a clientes externos.</p>
+                        <div style="background: #dbeafe; padding: 15px; border-radius: 10px;">
+                            <p style="color: #1e40af; font-size: 0.95em; line-height: 1.6;"><strong>Ejemplo:</strong> Tienes 5 pods del microservicio "API". El Service les da una IP fija y DNS name. Otros servicios acceden a "api-service" sin saber qué pod específico están usando.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #f0fdf4; padding: 30px; border-radius: 15px; border: 2px solid #68d391;">
+                        <div style="font-size: 3em; margin-bottom: 15px; text-align: center;">🌐</div>
+                        <h3 style="color: #22543d; margin-bottom: 20px; text-align: center;">Ingress</h3>
+                        <p style="color: #2d3748; font-size: 1.1em; line-height: 1.8; margin-bottom: 20px;">Gestiona el acceso externo a servicios, típicamente HTTP/HTTPS, proporcionando balanceo de carga, terminación SSL y hosting virtual basado en nombres.</p>
+                        <div style="background: #c6f6d5; padding: 15px; border-radius: 10px;">
+                            <p style="color: #22543d; font-size: 0.95em; line-height: 1.6;"><strong>Ejemplo:</strong> Los usuarios acceden a <code style="background: #a7f3d0; padding: 2px 4px; border-radius: 4px;">api.miempresa.com</code>. El Ingress enruta el tráfico al Service correcto, maneja SSL y balancea carga.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo: Usuario → Ingress → Service → Pods</h3>
+                    <div style="background: white; padding: 20px; border-radius: 10px;">
+                        <pre style="font-size: 0.95em; line-height: 2; color: #2d3748; text-align: center;">
+👤 Usuario: api.miempresa.com
+         ↓
+🌐 Ingress (rutea por dominio)
+         ↓
+🔌 Service (IP fija, balancea carga)
+         ↓
+    ┌────┴────┬────┴────┐
+    ↓         ↓         ↓
+📦 Pod 1   📦 Pod 2   📦 Pod 3
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Pod, Kubelet, Kube-Proxy -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Pod, Kubelet y Kube-Proxy</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">📦</div>
+                        <h3>Pod</h3>
+                        <p>La unidad desplegable más pequeña en Kubernetes, típicamente contiene uno o más contenedores que comparten recursos y red.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.85em;"><strong>Ejemplo:</strong> Un pod puede tener tu contenedor .NET y un contenedor sidecar para logging.</p>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🤖</div>
+                        <h3>Kubelet</h3>
+                        <p>Un agente que corre en cada node que asegura que los contenedores estén ejecutándose en un pod como se especifica en el PodSpec del manifiesto de despliegue.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.85em;"><strong>Ejemplo:</strong> Si defines "ejecuta este contenedor", Kubelet se asegura de que siempre esté corriendo. Si falla, lo reinicia.</p>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🌐</div>
+                        <h3>Kube-Proxy</h3>
+                        <p>Un proxy de red que corre en cada node que ayuda con el enrutamiento de tráfico al pod apropiado.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.85em;"><strong>Ejemplo:</strong> Cuando un Service balancea carga entre 3 pods, Kube-Proxy enruta el tráfico al pod correcto en cada node.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0; margin-top: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Cómo Trabajan Juntos en un Node</h3>
+                    <div style="background: white; padding: 20px; border-radius: 10px;">
+                        <pre style="font-size: 0.95em; line-height: 2; color: #2d3748; text-align: center;">
+🖥️ NODE
+    │
+    ├── 🤖 Kubelet (gestiona pods)
+    │       └── 📦 Pod 1 (contenedores)
+    │       └── 📦 Pod 2 (contenedores)
+    │
+    └── 🌐 Kube-Proxy (enruta tráfico)
+            └── Balancea carga entre pods
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Volume, ConfigMap, Secret, Namespace -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Volume, ConfigMap, Secret y Namespace</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>💾 Volume</h3>
+                        <p>Una abstracción de almacenamiento que permite que los datos persistan a través de reinicios de pods, soportando varios backends de almacenamiento.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.9em;"><strong>Ejemplo:</strong> Tu base de datos necesita almacenamiento persistente. El Volume mantiene los datos aunque el pod se reinicie.</p>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>📝 ConfigMap</h3>
+                        <p>Objeto de Kubernetes usado para almacenar datos de configuración no sensibles como pares clave-valor. Permite desacoplar artefactos de configuración del código de la aplicación.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.9em;"><strong>Ejemplo:</strong> Guardas la URL de la API en ConfigMap. Cambias la URL sin reconstruir la imagen Docker.</p>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔐 Secret</h3>
+                        <p>Objeto de Kubernetes diseñado para almacenar datos sensibles como contraseñas, tokens o claves. Almacena datos como pares clave-valor pero con encriptación adicional para seguridad.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.9em;"><strong>Ejemplo:</strong> Guardas la contraseña de la base de datos en un Secret. El pod la lee, pero no se expone en texto plano.</p>
+                        </div>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>📁 Namespace</h3>
+                        <p>Una forma de dividir recursos del clúster entre múltiples usuarios o equipos, proporcionando un alcance para recursos como pods y servicios.</p>
+                        <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <p style="color: white; font-size: 0.9em;"><strong>Ejemplo:</strong> Tienes namespace "produccion" y "desarrollo". Cada equipo trabaja en su namespace sin interferir.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Separación de Entornos</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes 3 namespaces: <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">dev</code>, <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">staging</code>, <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">prod</code>. Cada uno tiene sus propios ConfigMaps (URLs diferentes) y Secrets (credenciales diferentes). Los desarrolladores solo acceden a "dev", los admins a todos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Kubernetes Deployments -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Kubernetes Deployments</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Un <strong>Deployment</strong> en Kubernetes gestiona la creación, escalado y actualización de Pods, asegurando que la aplicación se ejecute como se especifica. Automatiza actualizaciones progresivas, rollbacks y escalado para mantener el estado deseado de la aplicación.</p>
+
+                <div style="background: linear-gradient(135deg, #326ce5 0%, #00d4ff 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🚀</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Gestión Automática de Pods</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Define el estado deseado, Kubernetes lo mantiene automáticamente</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de Deployment</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+📝 Defines: "Quiero 5 réplicas de mi-app:v1.0"
+         ↓
+🚀 Deployment crea 5 Pods
+         ↓
+📊 Kubernetes monitorea estado
+         ↓
+❌ Si un Pod falla → Se recrea automáticamente
+         ↓
+🔄 Actualización: Cambias a v2.0
+         ↓
+📈 Rolling Update: Crea pods nuevos, elimina viejos gradualmente
+         ↓
+✅ Sin downtime, siempre hay pods disponibles
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>📈 Escalado</h3>
+                        <p>Cambia el número de réplicas con un comando. Kubernetes crea o elimina pods automáticamente</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔄 Rolling Updates</h3>
+                        <p>Actualiza la aplicación sin downtime. Crea nuevos pods antes de eliminar los viejos</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>↩️ Rollback</h3>
+                        <p>Si algo sale mal, revierte a la versión anterior con un comando</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🛡️ Auto-Recuperación</h3>
+                        <p>Si un pod falla, el Deployment lo recrea automáticamente</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo Real: Actualización Sin Downtime</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes 5 réplicas de tu API corriendo v1.0. Actualizas a v2.0. Kubernetes crea un pod v2.0, espera a que esté listo, elimina un pod v1.0. Repite hasta que todos sean v2.0. Durante todo el proceso, siempre hay al menos 4 pods disponibles. Cero downtime.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Kubernetes Services - Introducción -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Kubernetes Services</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Un <strong>Service</strong> en Kubernetes proporciona un endpoint de red estable para un conjunto de Pods, permitiendo acceso consistente a través de una IP fija y nombre DNS. Maneja balanceo de carga y puede configurarse para acceso interno o externo.</p>
+
+                <div style="background: linear-gradient(135deg, #326ce5 0%, #00d4ff 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔌</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Punto de Acceso Estable</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Los pods pueden morir y recrearse, pero el Service siempre tiene la misma IP y DNS</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Problema que Resuelve</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+❌ SIN SERVICE:
+    Pod 1: IP 10.0.1.5 (muere) → Nueva IP 10.0.1.8
+    Pod 2: IP 10.0.1.6 (muere) → Nueva IP 10.0.1.9
+    → Otros servicios no saben dónde conectarse
+
+✅ CON SERVICE:
+    Service: IP fija 10.0.0.100, DNS: "api-service"
+    → Siempre apunta a los pods actuales
+    → Balancea carga automáticamente
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>📍 IP Fija</h3>
+                        <p>El Service tiene una IP que nunca cambia, aunque los pods se recreen</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🏷️ DNS Name</h3>
+                        <p>Cada Service tiene un nombre DNS dentro del clúster</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>⚖️ Balanceo de Carga</h3>
+                        <p>Distribuye tráfico entre todos los pods del Service</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🔄 Auto-Discovery</h3>
+                        <p>Encuentra automáticamente pods nuevos y los incluye en el balanceo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Tipos de Services - ClusterIP -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Tipos de Services - ClusterIP</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🏠</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">ClusterIP (Por Defecto)</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Solo accesible dentro del clúster. Otros pods pueden acceder usando el nombre DNS del Service.</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de ClusterIP</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+📦 Pod Frontend (dentro del clúster)
+         ↓
+🔌 Service: "api-service" (ClusterIP)
+    IP: 10.0.0.100 (solo interna)
+         ↓
+    ┌────┴────┬────┴────┐
+    ↓         ↓         ↓
+📦 Pod API1 📦 Pod API2 📦 Pod API3
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>✅ Uso</h3>
+                        <p>Comunicación entre microservicios dentro del clúster</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔒 Seguridad</h3>
+                        <p>No es accesible desde fuera del clúster. Más seguro.</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>💡 Ejemplo</h3>
+                        <p>Tu microservicio de Pedidos se comunica con el de Inventario usando "inventario-service"</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Arquitectura Interna</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes 3 microservicios: Frontend, API y Database. Frontend usa ClusterIP para acceder a API usando <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">http://api-service:8080</code>. API usa ClusterIP para acceder a Database. Todo es interno, no expuesto a internet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Tipos de Services - NodePort -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Tipos de Services - NodePort</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🚪</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">NodePort</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Expone el Service en un puerto estático (30000-32767) en cada Node. Accesible desde fuera del clúster usando <code style="background: rgba(0,0,0,0.2); padding: 2px 6px; border-radius: 4px;">&lt;NodeIP&gt;:&lt;NodePort&gt;</code></p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de NodePort</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+👤 Usuario Externo
+         ↓
+🌐 http://node1-ip:30080
+         ↓
+🖥️ Node 1 (puerto 30080)
+         ↓
+🔌 Service (NodePort: 30080)
+         ↓
+    ┌────┴────┬────┴────┐
+    ↓         ↓         ↓
+📦 Pod 1   📦 Pod 2   📦 Pod 3
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>✅ Uso</h3>
+                        <p>Para desarrollo, testing, o cuando necesitas acceso directo sin LoadBalancer</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔢 Puerto</h3>
+                        <p>Puerto entre 30000-32767 asignado automáticamente o manualmente</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>⚠️ Limitación</h3>
+                        <p>Debes conocer la IP del Node. No ideal para producción.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Desarrollo Local</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Estás desarrollando y quieres probar tu API desde tu máquina local. Creas un Service NodePort en puerto 30080. Accedes a <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">http://20.123.45.67:30080</code> (IP del node) y puedes probar tu API sin configurar LoadBalancer.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Tipos de Services - LoadBalancer -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Tipos de Services - LoadBalancer</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">⚖️</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">LoadBalancer</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Expone el Service externamente usando un balanceador de carga del proveedor de nube. En Azure, crea automáticamente un Azure Load Balancer con una IP pública.</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de LoadBalancer</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+👤 Usuario: http://20.123.45.67 (IP pública)
+         ↓
+⚖️ Azure Load Balancer (creado automáticamente)
+         ↓
+🔌 Service (LoadBalancer)
+         ↓
+    ┌────┴────┬────┴────┬────┴────┐
+    ↓         ↓         ↓         ↓
+🖥️ Node 1  🖥️ Node 2  🖥️ Node 3
+    ↓         ↓         ↓
+📦 Pod 1   📦 Pod 2   📦 Pod 3
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>✅ Uso</h3>
+                        <p>Ideal para producción. Expone servicios directamente a internet</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🌐 IP Pública</h3>
+                        <p>Azure asigna automáticamente una IP pública accesible desde internet</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>⚖️ Balanceo</h3>
+                        <p>Balancea carga entre todos los nodes del clúster</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>💰 Costo</h3>
+                        <p>Cada LoadBalancer tiene un costo adicional en Azure</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: API Pública</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes una API REST que debe ser accesible desde internet. Creas un Service tipo LoadBalancer. Azure crea automáticamente un Load Balancer y asigna IP pública <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">20.123.45.67</code>. Los usuarios acceden a esa IP y el tráfico se balancea entre tus 3 nodes automáticamente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Tipos de Services - ExternalName -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Tipos de Services - ExternalName</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔗</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">ExternalName</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Mapea un Service a un nombre DNS externo. No crea un proxy, solo devuelve un registro CNAME.</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de ExternalName</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+📦 Pod dentro del clúster
+         ↓
+🔌 Service: "db-service" (ExternalName)
+    → apunta a: "database.external.com"
+         ↓
+🌐 Resuelve DNS externo
+         ↓
+🗄️ Base de datos externa
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>✅ Uso</h3>
+                        <p>Para acceder a servicios externos usando un nombre consistente dentro del clúster</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔗 CNAME</h3>
+                        <p>No crea endpoints, solo devuelve un registro CNAME DNS</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>💡 Ejemplo</h3>
+                        <p>Tu app accede a "db-service" pero apunta a una base de datos externa en AWS</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Base de Datos Externa</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes una base de datos PostgreSQL en Azure Database (fuera del clúster). Creas un Service ExternalName llamado <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">postgres-service</code> que apunta a <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">mi-db.postgres.database.azure.com</code>. Tu aplicación usa "postgres-service" como si fuera un servicio interno, pero realmente se conecta a la base externa.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Kubernetes Secrets -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Kubernetes Secrets</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Los <strong>Secrets</strong> en Kubernetes son objetos diseñados para almacenar y gestionar datos sensibles como contraseñas, tokens y claves de forma segura. Aseguran que la información sensible esté protegida y pueda ser accedida por aplicaciones dentro del clúster sin exponerla en texto plano.</p>
+
+                <div style="background: linear-gradient(135deg, #326ce5 0%, #00d4ff 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔐</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Almacenamiento Seguro</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Datos sensibles encriptados y accesibles solo por pods autorizados</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔒 Características de Seguridad</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">💾 Almacenamiento</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Los Secrets se almacenan en <strong>etcd</strong> (el almacén clave-valor distribuido del clúster)</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">🔐 Encriptación</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Están codificados en <strong>base64</strong> y pueden estar encriptados en reposo según la configuración del clúster</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔑 Contraseñas</h3>
+                        <p>Almacena contraseñas de bases de datos, APIs externas</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🎫 Tokens</h3>
+                        <p>Tokens de autenticación, API keys, certificados</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔒 Separación</h3>
+                        <p>Mantiene información sensible separada del código y configuraciones</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>👥 Control de Acceso</h3>
+                        <p>RBAC controla qué pods pueden acceder a qué Secrets</p>
+                    </div>
+                </div>
+
+                <div style="background: #1e1e1e; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                    <h3 style="color: #00ff00; margin-bottom: 15px; font-family: 'Courier New', monospace;">📝 Ejemplo de Secret</h3>
+                    <div style="color: #d4d4d4; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.8;">
+                        <div style="margin-bottom: 10px;">
+                            <span style="color: #569cd6;">apiVersion:</span> <span style="color: #ce9178;">v1</span><br/>
+                            <span style="color: #569cd6;">kind:</span> <span style="color: #ce9178;">Secret</span><br/>
+                            <span style="color: #569cd6;">metadata:</span><br/>
+                            <span style="color: #d4d4d4;">  name:</span> <span style="color: #ce9178;">db-secret</span><br/>
+                            <span style="color: #569cd6;">type:</span> <span style="color: #ce9178;">Opaque</span><br/>
+                            <span style="color: #569cd6;">data:</span><br/>
+                            <span style="color: #d4d4d4;">  username:</span> <span style="color: #ce9178;">YWRtaW4=</span> <span style="color: #6a9955;"># base64("admin")</span><br/>
+                            <span style="color: #d4d4d4;">  password:</span> <span style="color: #ce9178;">cGFzc3dvcmQxMjM=</span> <span style="color: #6a9955;"># base64("password123")</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Credenciales de Base de Datos</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes un microservicio que necesita conectarse a PostgreSQL. En lugar de hardcodear la contraseña en el código o ConfigMap, creas un Secret con username y password. El pod monta el Secret como variable de entorno. Si cambias la contraseña, solo actualizas el Secret, no necesitas reconstruir la imagen Docker.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="slide-counter">
             <select id="sectionNav" class="nav-select" onchange="jumpToSection(this.value)">
                 <option value="0">Inicio</option>
