@@ -7584,6 +7584,990 @@ dotnet add package Ocelot
             </div>
         </div>
 
+        <!-- Sección 13: Azure DevOps | CI/CD Pipelines -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">🔧</div>
+                <h1>Azure DevOps</h1>
+                <p class="subtitle">CI/CD Pipelines y Gestión de Desarrollo</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 13</p>
+            </div>
+        </div>
+
+        <!-- Slide: Introducción a Azure DevOps -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Introducción a Azure DevOps</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Azure DevOps</strong> es un conjunto de herramientas de Microsoft que ayuda a los equipos a planificar, desarrollar, probar y desplegar software de manera eficiente.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 4em; margin-bottom: 15px;">🔧</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Plataforma Completa de DevOps</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Se integra con diversas prácticas de desarrollo y soporta automatización, colaboración y seguimiento a lo largo del ciclo de vida del software</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>📋 Planificación</h3>
+                        <p>Gestiona tareas, sprints y seguimiento de trabajo</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>💻 Desarrollo</h3>
+                        <p>Control de versiones y gestión de código</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🧪 Pruebas</h3>
+                        <p>Testing automatizado y gestión de calidad</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🚀 Despliegue</h3>
+                        <p>CI/CD pipelines para automatización</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🤝 Colaboración</h3>
+                        <p>Herramientas para trabajo en equipo</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📊 Seguimiento</h3>
+                        <p>Dashboards y reportes de progreso</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo del Mundo Real</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Un equipo de 10 desarrolladores trabaja en un proyecto de microservicios. Usan Azure DevOps para: planificar sprints (Azure Boards), gestionar código (Azure Repos), ejecutar tests automáticos (Azure Pipelines), y desplegar a producción (CI/CD). Todo en una sola plataforma integrada.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure DevOps Services -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure DevOps Services</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Azure DevOps incluye <strong>5 servicios principales</strong> que cubren todo el ciclo de vida del desarrollo:</p>
+
+                <div class="principle-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">📋</div>
+                        <h3>Azure Boards</h3>
+                        <p>Gestión de trabajo, seguimiento de tareas, sprints y planificación de proyectos usando metodologías Agile (Scrum, Kanban)</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">💾</div>
+                        <h3>Azure Repos</h3>
+                        <p>Control de versiones Git o TFVC. Repositorios privados ilimitados para código fuente, con soporte para branches, pull requests y code reviews</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🔧</div>
+                        <h3>Azure Pipelines</h3>
+                        <p>CI/CD para construir, probar y desplegar aplicaciones. Soporta cualquier lenguaje, plataforma y nube (Azure, AWS, GCP)</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🧪</div>
+                        <h3>Azure Test Plans</h3>
+                        <p>Gestión de pruebas manuales y automatizadas. Planificación de testing, ejecución de casos de prueba y seguimiento de calidad</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); grid-column: span 2;">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">📦</div>
+                        <h3>Azure Artifacts</h3>
+                        <p>Repositorio de paquetes para compartir código, paquetes NuGet, npm, Maven, etc. entre equipos y proyectos</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Flujo Completo</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Desarrollador crea una tarea en <strong>Azure Boards</strong>, escribe código y hace commit a <strong>Azure Repos</strong>. Al hacer push, <strong>Azure Pipelines</strong> ejecuta automáticamente: compila, ejecuta tests, y si todo pasa, despliega a staging. El equipo revisa en <strong>Azure Test Plans</strong>. Si aprueba, se despliega a producción. Los paquetes se almacenan en <strong>Azure Artifacts</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure Boards -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure Boards</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Azure Boards</strong> es la herramienta de gestión de trabajo que permite planificar, rastrear y discutir el trabajo en todo el equipo usando metodologías Agile como Scrum y Kanban.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📋</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Gestión de Trabajo Agile</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Visualiza y gestiona el trabajo de tu equipo de forma eficiente</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>📝 Work Items</h3>
+                        <p>Epics, Features, User Stories, Tasks, Bugs. Organiza el trabajo en diferentes niveles</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>📊 Boards</h3>
+                        <p>Vista Kanban para visualizar el flujo de trabajo: To Do, In Progress, Done</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📈 Sprints</h3>
+                        <p>Planifica sprints, asigna trabajo, y rastrea el progreso con burndown charts</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🔗 Integración</h3>
+                        <p>Conecta work items con commits, pull requests y builds automáticamente</p>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de Trabajo en Boards</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+📝 Crear User Story: "Como usuario, quiero..."
+         ↓
+📋 Asignar a Sprint 1
+         ↓
+✂️ Dividir en Tasks
+         ↓
+👨‍💻 Desarrollador toma Task
+         ↓
+📊 Mueve a "In Progress"
+         ↓
+💻 Hace commit (se vincula automáticamente)
+         ↓
+✅ Mueve a "Done"
+         ↓
+📈 Burndown chart se actualiza
+                        </pre>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Feature de Login</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Product Owner crea Feature "Autenticación de Usuarios" en Azure Boards. Se divide en User Stories: "Login con email", "Recuperar contraseña", "2FA". Cada story se asigna a un sprint. Los desarrolladores crean Tasks, las mueven por el board (To Do → In Progress → Done). Al hacer commit, el work item se vincula automáticamente. El Scrum Master ve el progreso en tiempo real.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Scrum - Sprints -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Scrum - Sprints</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Un <strong>Sprint</strong> es un período de tiempo fijo (típicamente 2-4 semanas) durante el cual el equipo desarrolla y entrega un incremento de funcionalidad.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🏃</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Ciclo de Desarrollo Iterativo</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Planifica, desarrolla, revisa y mejora en iteraciones cortas</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Ciclo de un Sprint</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+📅 Sprint Planning (Inicio)
+    → Define qué se hará (2-4 semanas)
+         ↓
+💻 Desarrollo Diario
+    → Daily Standups (15 min)
+    → Trabajo en User Stories
+         ↓
+📊 Seguimiento
+    → Burndown chart muestra progreso
+         ↓
+🔍 Sprint Review (Final)
+    → Demuestra funcionalidad completada
+         ↓
+🤔 Sprint Retrospective
+    → ¿Qué salió bien? ¿Qué mejorar?
+         ↓
+🔄 Nuevo Sprint
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>📅 Sprint Planning</h3>
+                        <p>Equipo selecciona User Stories del backlog para el sprint</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>📊 Burndown Chart</h3>
+                        <p>Visualiza trabajo restante vs tiempo. Muestra si vas bien o mal</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔍 Sprint Review</h3>
+                        <p>Demostración de funcionalidad completada a stakeholders</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🤔 Retrospective</h3>
+                        <p>Reunión del equipo para mejorar el proceso</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Sprint de 2 Semanas</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Sprint 5: 1-14 de marzo. Sprint Planning: equipo selecciona 8 User Stories (40 story points). Cada día, Daily Standup de 15 min. Burndown chart muestra que el día 10 aún quedan 15 puntos. Equipo ajusta, elimina 2 stories de menor prioridad. Sprint Review: demuestran 6 stories completadas. Retrospective: "Necesitamos mejor estimación, agregamos buffer de tiempo".</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure DevOps Workflow - CI -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure DevOps Workflow - CI (Continuous Integration)</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Continuous Integration (CI)</strong> es la práctica de integrar código frecuentemente, donde cada integración se verifica mediante builds y tests automatizados.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔄</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Integración Continua</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Cada commit desencadena automáticamente build y tests</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de CI Pipeline</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+👨‍💻 Desarrollador hace commit
+         ↓
+📤 Push a Azure Repos
+         ↓
+🔧 Azure Pipeline se activa automáticamente
+         ↓
+📦 Build Stage
+    → Restaura dependencias (NuGet, npm)
+    → Compila código (.NET, TypeScript)
+    → Ejecuta linters
+         ↓
+🧪 Test Stage
+    → Unit tests
+    → Integration tests
+    → Code coverage
+         ↓
+📊 Report Stage
+    → Publica resultados de tests
+    → Genera artefactos (DLLs, Docker images)
+         ↓
+✅ Si todo pasa → Artefactos listos para CD
+❌ Si falla → Notifica al desarrollador
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>⚡ Automático</h3>
+                        <p>Cada push activa el pipeline sin intervención manual</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔍 Detección Temprana</h3>
+                        <p>Encuentra errores antes de que lleguen a producción</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📦 Artefactos</h3>
+                        <p>Genera builds listos para desplegar</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>📊 Feedback</h3>
+                        <p>Notificaciones inmediatas de éxito o fallo</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Microservicio .NET</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Desarrollador hace push de código a la rama "feature/login". Pipeline CI se activa: restaura paquetes NuGet, compila .NET 8, ejecuta 150 unit tests, genera code coverage (85%), construye imagen Docker, la sube a ACR. Si todo pasa (5 min), los artefactos están listos. Si un test falla, el desarrollador recibe notificación inmediata con detalles del error.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Env-specific pipeline stages -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Etapas Específicas por Entorno</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Los pipelines pueden tener <strong>etapas específicas para cada entorno</strong> (desarrollo, staging, producción), cada una con sus propias configuraciones y aprobaciones.</p>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Pipeline Multi-Ambiente</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+📦 CI Stage (Común)
+    → Build
+    → Tests
+    → Genera artefactos
+         ↓
+🚀 CD Stage - Development
+    → Despliega a DEV
+    → Tests de humo
+    → Auto-aprobado
+         ↓
+🚀 CD Stage - Staging
+    → Despliega a STAGING
+    → Tests de integración
+    → ⏸️ Aprobación manual requerida
+         ↓
+🚀 CD Stage - Production
+    → Despliega a PROD
+    → Tests de regresión
+    → ⏸️ Aprobación de 2 personas requerida
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔵 Development</h3>
+                        <p>Despliegue automático, sin aprobaciones. Para pruebas rápidas</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🟡 Staging</h3>
+                        <p>Aprobación manual opcional. Simula producción</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔴 Production</h3>
+                        <p>Aprobación múltiple requerida. Máxima seguridad</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🔐 Variables por Entorno</h3>
+                        <p>Cada entorno tiene sus propias variables (URLs, conexiones DB)</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Pipeline de 3 Etapas</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Push a "main" activa CI. Si pasa, automáticamente despliega a DEV (sin aprobación). En DEV, el equipo prueba. Si aprueban, hacen clic en "Deploy to Staging". Se despliega a STAGING, se ejecutan tests de integración. Si pasan, requiere aprobación de Tech Lead. Una vez aprobado, se despliega a PROD, pero requiere aprobación de 2 personas (Tech Lead + Product Owner). Cada entorno tiene su propia base de datos y configuración.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure DevOps Workflow - CD -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure DevOps Workflow - CD (Continuous Deployment)</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Continuous Deployment (CD)</strong> es la práctica de desplegar automáticamente el código que pasa todas las pruebas a los entornos de producción o staging.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🚀</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Despliegue Continuo</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Automatiza el despliegue desde artefactos hasta producción</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de CD Pipeline</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+📦 Artefactos de CI (listos)
+         ↓
+🔐 CD Stage - Pre-Deployment
+    → Valida configuración
+    → Verifica secrets
+    → Prepara entorno
+         ↓
+🚀 CD Stage - Deployment
+    → Despliega a Azure App Service / AKS
+    → Actualiza configuración
+    → Ejecuta migraciones de DB
+         ↓
+✅ CD Stage - Post-Deployment
+    → Health checks
+    → Smoke tests
+    → Notificaciones
+         ↓
+📊 CD Stage - Monitoring
+    → Verifica métricas
+    → Alerta si hay problemas
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔄 Automático</h3>
+                        <p>Despliega automáticamente después de CI exitoso</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔐 Seguro</h3>
+                        <p>Usa Service Connections y Secrets para autenticación</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>⏸️ Aprobaciones</h3>
+                        <p>Puede requerir aprobación manual antes de producción</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>↩️ Rollback</h3>
+                        <p>Puede revertir automáticamente si algo falla</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Despliegue a AKS</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">CI genera imagen Docker y la sube a ACR. CD pipeline se activa: descarga la imagen de ACR, actualiza el Deployment de Kubernetes en AKS, espera a que los nuevos pods estén listos (health check), ejecuta smoke tests. Si todo pasa, marca el despliegue como exitoso. Si falla, automáticamente hace rollback a la versión anterior. Todo en 3 minutos, sin intervención manual.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure DevOps - Project -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure DevOps - Project</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Un <strong>Azure DevOps Project</strong> es un contenedor para gestionar tu ciclo de vida de desarrollo de software, incluyendo planificación, codificación, construcción, pruebas y despliegue de aplicaciones.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📁</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Contenedor de Todo</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Proporciona herramientas para control de versiones, seguimiento de work items y CI/CD</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">📦 Componentes de un Project</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">📋 Azure Boards</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Work items, sprints, backlogs del proyecto</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">💾 Azure Repos</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Repositorios Git del proyecto</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">🔧 Azure Pipelines</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">CI/CD pipelines del proyecto</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">👥 Team Members</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Miembros del equipo con permisos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔐 Aislamiento</h3>
+                        <p>Cada proyecto tiene sus propios repos, boards, pipelines</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>👥 Permisos</h3>
+                        <p>Control de acceso granular por proyecto</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📊 Organización</h3>
+                        <p>Separa diferentes aplicaciones o equipos</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Múltiples Proyectos</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Empresa tiene 3 proyectos: "E-commerce-Platform", "Mobile-App", "Admin-Portal". Cada uno es un Azure DevOps Project separado. El equipo de E-commerce solo ve sus boards, repos y pipelines. No puede acceder a los otros proyectos. Cada proyecto tiene su propio proceso de CI/CD independiente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure Repos -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure Repos</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Azure Repos</strong> es el servicio de control de versiones que proporciona repositorios Git privados ilimitados para tu código fuente, con soporte completo para branches, pull requests y code reviews.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">💾</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Control de Versiones Git</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Repositorios privados ilimitados con todas las características de Git</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🌿 Branches</h3>
+                        <p>Gestión de ramas: main, develop, feature branches</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔀 Pull Requests</h3>
+                        <p>Code reviews, aprobaciones, merge automático</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📊 Historial</h3>
+                        <p>Historial completo de commits, cambios y comparaciones</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🔗 Integración</h3>
+                        <p>Se conecta automáticamente con Boards y Pipelines</p>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de Trabajo con Repos</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+🌿 Crear branch: feature/login
+         ↓
+💻 Hacer cambios y commits
+         ↓
+📤 Push a Azure Repos
+         ↓
+🔀 Crear Pull Request
+         ↓
+👀 Code Review (compañeros revisan)
+         ↓
+✅ Aprobaciones requeridas
+         ↓
+🔀 Merge a main
+         ↓
+🚀 Pipeline CI se activa automáticamente
+                        </pre>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Feature Branch</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Desarrollador crea branch "feature/user-authentication" desde main. Hace 5 commits con su código. Crea Pull Request. El Tech Lead y otro desarrollador revisan el código, hacen comentarios. Desarrollador corrige. Una vez aprobado (2 aprobaciones requeridas), se hace merge a main. Automáticamente se activa el pipeline CI que compila y ejecuta tests.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure Repos - Branches -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure Repos - Branches</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Las <strong>branches</strong> permiten trabajar en características o correcciones de forma aislada sin afectar el código principal.</p>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🌿 Estrategia de Branches Común</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+                    main (producción)
+                         │
+                         ├── develop (desarrollo)
+                         │     │
+                         │     ├── feature/login
+                         │     ├── feature/payment
+                         │     └── feature/cart
+                         │
+                         └── hotfix/critical-bug
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🔴 main</h3>
+                        <p>Código de producción. Solo merge desde develop o hotfix</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔵 develop</h3>
+                        <p>Rama de desarrollo. Integración de features</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🟢 feature/*</h3>
+                        <p>Ramas para nuevas características. Se crean desde develop</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔴 hotfix/*</h3>
+                        <p>Ramas para correcciones urgentes. Se crean desde main</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Git Flow</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Nueva feature "carrito de compras": creas branch "feature/shopping-cart" desde develop. Trabajas 3 días, haces 10 commits. Creas Pull Request a develop. Se revisa, se aprueba, se hace merge. Feature queda en develop. Cuando develop está estable, se hace Pull Request a main. Se despliega a producción. Si hay bug crítico en producción, creas "hotfix/payment-error" desde main, lo corriges, haces merge a main y develop.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure Repos - Branches and Pull Requests -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure Repos - Branches y Pull Requests</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Los <strong>Pull Requests (PR)</strong> permiten revisar código antes de hacer merge, facilitando code reviews, discusiones y aprobaciones.</p>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Proceso de Pull Request</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+🌿 Branch: feature/login (lista)
+         ↓
+🔀 Crear Pull Request
+    → Source: feature/login
+    → Target: develop
+         ↓
+👀 Code Review
+    → Revisores asignados
+    → Comentarios en líneas específicas
+    → Discusiones
+         ↓
+✅ Aprobaciones
+    → Mínimo 2 aprobaciones requeridas
+    → Build debe pasar
+         ↓
+🔀 Merge
+    → Squash and merge (recomendado)
+    → Elimina branch automáticamente
+         ↓
+🚀 Pipeline CI se activa
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>👀 Code Review</h3>
+                        <p>Revisores pueden comentar líneas específicas, sugerir cambios</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>✅ Políticas</h3>
+                        <p>Puedes requerir aprobaciones, que build pase, que no haya conflictos</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔗 Integración</h3>
+                        <p>Se vincula automáticamente con work items de Azure Boards</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>📊 Comparación</h3>
+                        <p>Muestra diff visual de todos los cambios entre branches</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: PR con Políticas</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Desarrollador crea PR de "feature/payment" a "develop". Políticas configuradas: requiere 2 aprobaciones, build debe pasar, no puede tener conflictos. Tech Lead y Senior Dev revisan, hacen 3 comentarios. Desarrollador corrige, hace push. Build pasa. Ambos aprueban. PR se hace merge automáticamente. Branch se elimina. Pipeline CI se activa para develop.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure DevOps - Service Connections -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure DevOps - Service Connections</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Las <strong>Service Connections</strong> son conexiones seguras que permiten a los pipelines de Azure DevOps autenticarse y comunicarse con servicios externos como Azure, GitHub, Docker Hub, etc.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔗</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Conexiones Seguras</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Autenticación automática con servicios externos sin exponer credenciales</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔗 Tipos de Service Connections</h3>
+                    <div class="principle-grid" style="grid-template-columns: repeat(2, 1fr);">
+                        <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <h3>☁️ Azure Resource Manager</h3>
+                            <p>Conecta con suscripciones de Azure para desplegar recursos</p>
+                        </div>
+                        <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <h3>🐳 Docker Registry</h3>
+                            <p>Conecta con ACR, Docker Hub para push/pull de imágenes</p>
+                        </div>
+                        <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <h3>⚓ Kubernetes</h3>
+                            <p>Conecta con clústeres AKS para desplegar aplicaciones</p>
+                        </div>
+                        <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <h3>🔐 GitHub</h3>
+                            <p>Conecta con repositorios GitHub para triggers y webhooks</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #1e1e1e; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                    <h3 style="color: #00ff00; margin-bottom: 15px; font-family: 'Courier New', monospace;">📝 Ejemplo de Uso en Pipeline</h3>
+                    <div style="color: #d4d4d4; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.8;">
+                        <div style="margin-bottom: 10px;">
+                            <span style="color: #569cd6;">- task:</span> <span style="color: #ce9178;">AzureWebApp@1</span><br/>
+                            <span style="color: #d4d4d4;">  displayName:</span> <span style="color: #ce9178;">'Deploy to Azure'</span><br/>
+                            <span style="color: #d4d4d4;">  inputs:</span><br/>
+                            <span style="color: #d4d4d4;">    azureSubscription:</span> <span style="color: #ce9178;">'mi-azure-connection'</span> <span style="color: #6a9955;"># Service Connection</span><br/>
+                            <span style="color: #d4d4d4;">    appName:</span> <span style="color: #ce9178;">'mi-app-service'</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Despliegue a Azure</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Creas Service Connection "azure-prod" que se autentica con tu suscripción Azure usando Service Principal. En el pipeline, usas esta conexión para desplegar a App Service. No necesitas guardar credenciales en el pipeline. Azure DevOps usa la conexión automáticamente. Si cambias la contraseña del Service Principal, solo actualizas la conexión, no todos los pipelines.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure DevOps - Tests in Pipeline -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure DevOps - Tests en Pipeline</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Los <strong>tests automatizados</strong> en pipelines aseguran que el código cumple con los estándares de calidad antes de desplegarse.</p>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🧪 Tipos de Tests en Pipeline</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">✅ Unit Tests</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Prueban funciones individuales. Rápidos, se ejecutan primero</p>
+                            <div style="background: #f0f9ff; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                                <p style="color: #1e40af; font-size: 0.85em;"><strong>Ejemplo:</strong> xUnit, NUnit, Jest</p>
+                            </div>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">🔗 Integration Tests</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Prueban interacción entre componentes. Más lentos</p>
+                            <div style="background: #f0fdf4; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                                <p style="color: #22543d; font-size: 0.85em;"><strong>Ejemplo:</strong> Tests de API, DB</p>
+                            </div>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">🌐 E2E Tests</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Prueban flujos completos de usuario. Más lentos aún</p>
+                            <div style="background: #fffbeb; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                                <p style="color: #78350f; font-size: 0.85em;"><strong>Ejemplo:</strong> Selenium, Playwright</p>
+                            </div>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">🔍 Code Quality</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Análisis estático, cobertura de código</p>
+                            <div style="background: #fdf4ff; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                                <p style="color: #581c87; font-size: 0.85em;"><strong>Ejemplo:</strong> SonarQube, CodeQL</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #1e1e1e; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                    <h3 style="color: #00ff00; margin-bottom: 15px; font-family: 'Courier New', monospace;">📝 Ejemplo de Pipeline con Tests</h3>
+                    <div style="color: #d4d4d4; font-family: 'Courier New', monospace; font-size: 0.85em; line-height: 1.8;">
+                        <div style="margin-bottom: 10px;">
+                            <span style="color: #569cd6;">- task:</span> <span style="color: #ce9178;">DotNetCoreCLI@2</span><br/>
+                            <span style="color: #d4d4d4;">  displayName:</span> <span style="color: #ce9178;">'Run Unit Tests'</span><br/>
+                            <span style="color: #d4d4d4;">  inputs:</span><br/>
+                            <span style="color: #d4d4d4;">    command:</span> <span style="color: #ce9178;">'test'</span><br/>
+                            <span style="color: #d4d4d4;">    publishTestResults:</span> <span style="color: #ce9178;">true</span><br/>
+                            <span style="color: #d4d4d4;">    codeCoverageTool:</span> <span style="color: #ce9178;">'Cobertura'</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Pipeline con Múltiples Tests</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Pipeline ejecuta: 1) Unit tests (150 tests, 2 min, cobertura 85%), 2) Integration tests (20 tests, 5 min, prueba APIs y DB), 3) Code quality (SonarQube, verifica bugs y code smells). Si unit tests fallan, pipeline se detiene. Si integration tests fallan pero unit pasan, se notifica pero no bloquea. Code quality genera reporte pero no bloquea. Solo si todo pasa, se despliega.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure DevOps - Environments -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure DevOps - Environments</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Los <strong>Environments</strong> en Azure DevOps representan entornos de despliegue (desarrollo, staging, producción) y permiten gestionar aprobaciones, historial de despliegues y recursos de Azure.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🌍</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Gestión de Entornos</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Controla despliegues con aprobaciones y seguimiento</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🌍 Tipos de Environments</h3>
+                    <div class="principle-grid" style="grid-template-columns: repeat(3, 1fr);">
+                        <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <h3>🔵 Development</h3>
+                            <p>Sin aprobaciones. Despliegue automático para pruebas rápidas</p>
+                        </div>
+                        <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <h3>🟡 Staging</h3>
+                            <p>Aprobación opcional. Simula producción para validación</p>
+                        </div>
+                        <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <h3>🔴 Production</h3>
+                            <p>Aprobación múltiple requerida. Máxima seguridad</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔐 Características de Environments</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 10px;">⏸️ Aprobaciones</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Puedes requerir aprobación manual antes de desplegar</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 10px;">📊 Historial</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Rastrea todos los despliegues a cada entorno</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 10px;">🔗 Recursos</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Vincula recursos de Azure (App Service, AKS) al entorno</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 10px;">👥 Permisos</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Controla quién puede aprobar despliegues</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Environments con Aprobaciones</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes 3 environments: "dev" (sin aprobación), "staging" (1 aprobación de Tech Lead), "prod" (2 aprobaciones: Tech Lead + Product Owner). Pipeline despliega a dev automáticamente. Para staging, se detiene y envía notificación. Tech Lead aprueba desde email o portal. Para prod, requiere ambas aprobaciones. Cada environment tiene su App Service vinculado. Historial muestra quién aprobó y cuándo.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure DevOps - Variable Groups -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure DevOps - Variable Groups</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Los <strong>Variable Groups</strong> permiten almacenar y reutilizar variables y secretos en múltiples pipelines, facilitando la gestión de configuración por entorno.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📦</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Variables Compartidas</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Centraliza configuración y secretos para reutilización</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">📦 Tipos de Variables</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">📝 Variables Normales</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Valores de texto visibles. Ejemplo: URLs, nombres de recursos</p>
+                            <div style="background: #f0f9ff; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                                <p style="color: #1e40af; font-size: 0.85em;"><code>API_URL = "https://api.example.com"</code></p>
+                            </div>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                            <h4 style="color: #4a5568; margin-bottom: 15px;">🔐 Secret Variables</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Valores encriptados, no visibles en logs. Ejemplo: contraseñas, tokens</p>
+                            <div style="background: #fef2f2; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                                <p style="color: #991b1b; font-size: 0.85em;"><code>DB_PASSWORD = "***" (oculto)</code></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #1e1e1e; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                    <h3 style="color: #00ff00; margin-bottom: 15px; font-family: 'Courier New', monospace;">📝 Ejemplo de Variable Group</h3>
+                    <div style="color: #d4d4d4; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.8;">
+                        <div style="margin-bottom: 10px;">
+                            <span style="color: #569cd6;">Variable Group:</span> <span style="color: #ce9178;">"prod-config"</span><br/>
+                            <span style="color: #d4d4d4;">  API_URL:</span> <span style="color: #ce9178;">"https://api.prod.com"</span><br/>
+                            <span style="color: #d4d4d4;">  DB_CONNECTION:</span> <span style="color: #ce9178;">"Server=prod-db..."</span><br/>
+                            <span style="color: #d4d4d4;">  DB_PASSWORD:</span> <span style="color: #ce9178;">***</span> <span style="color: #6a9955;"># Secret</span><br/>
+                            <span style="color: #d4d4d4;">  APP_NAME:</span> <span style="color: #ce9178;">"ecommerce-prod"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔄 Reutilización</h3>
+                        <p>Un Variable Group puede usarse en múltiples pipelines</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🌍 Por Entorno</h3>
+                        <p>Crea grupos separados: dev-vars, staging-vars, prod-vars</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔗 Key Vault</h3>
+                        <p>Puede vincularse con Azure Key Vault para secretos</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Variables por Entorno</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes 3 Variable Groups: "dev-config" (API_URL="dev-api.com"), "staging-config" (API_URL="staging-api.com"), "prod-config" (API_URL="api.com"). Cada pipeline referencia el grupo apropiado según el entorno. Si cambias la URL de producción, solo actualizas "prod-config" y todos los pipelines que lo usan toman el nuevo valor. Los secretos están vinculados a Azure Key Vault.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure Key Vault -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure Key Vault</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Azure Key Vault</strong> es un servicio en la nube para almacenar y gestionar de forma segura información sensible como secretos, claves y certificados. Proporciona control de acceso centralizado, encriptación y auditoría, asegurando que los datos críticos estén protegidos y solo sean accesibles por aplicaciones y usuarios autorizados.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔐</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Almacén Seguro Centralizado</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Protege secretos, claves y certificados con encriptación y control de acceso</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔑 Secrets</h3>
+                        <p>Contraseñas, connection strings, API keys, tokens</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🗝️ Keys</h3>
+                        <p>Claves de encriptación para proteger datos</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📜 Certificates</h3>
+                        <p>Certificados SSL/TLS para aplicaciones</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🔒 Seguridad</h3>
+                        <p>Encriptación en reposo y en tránsito, RBAC, auditoría</p>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Integración con Azure DevOps</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+📦 Variable Group en Azure DevOps
+         ↓
+🔗 Vincula con Azure Key Vault
+         ↓
+🔐 Pipeline accede a Key Vault
+         ↓
+📝 Lee secretos automáticamente
+         ↓
+✅ Usa en despliegue sin exponer valores
+                        </pre>
+                    </div>
+                </div>
+
+                <div style="background: #1e1e1e; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
+                    <h3 style="color: #00ff00; margin-bottom: 15px; font-family: 'Courier New', monospace;">📝 Ejemplo de Secret en Key Vault</h3>
+                    <div style="color: #d4d4d4; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.8;">
+                        <div style="margin-bottom: 10px;">
+                            <span style="color: #569cd6;">Key Vault:</span> <span style="color: #ce9178;">"mi-keyvault"</span><br/>
+                            <span style="color: #d4d4d4;">  Secret Name:</span> <span style="color: #ce9178;">"db-password"</span><br/>
+                            <span style="color: #d4d4d4;">  Value:</span> <span style="color: #ce9178;">"MySecureP@ssw0rd123"</span> <span style="color: #6a9955;"># Encriptado</span><br/>
+                            <span style="color: #d4d4d4;">  Access Policy:</span> <span style="color: #ce9178;">"Azure DevOps Service Principal"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Secretos en Producción</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes contraseñas de base de datos, API keys de servicios externos, y certificados SSL. En lugar de guardarlos en Variable Groups (menos seguro), los almacenas en Azure Key Vault. Variable Group "prod-secrets" se vincula a Key Vault. Pipeline accede automáticamente a los secretos durante el despliegue. Si cambias una contraseña, solo actualizas Key Vault, no el pipeline. Tienes auditoría de quién accedió a qué secreto y cuándo.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="slide-counter">
             <select id="sectionNav" class="nav-select" onchange="jumpToSection(this.value)">
                 <option value="0">Inicio</option>
