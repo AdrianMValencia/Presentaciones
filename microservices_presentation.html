@@ -5216,6 +5216,1526 @@ dotnet add package Ocelot
             </div>
         </div>
 
+        <!-- Sección 10: RabbitMQ -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">🐰</div>
+                <h1>RabbitMQ</h1>
+                <p class="subtitle">Comunicación Asíncrona entre Microservicios</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 10</p>
+            </div>
+        </div>
+
+        <!-- Slide: Introducción a RabbitMQ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Introducción a RabbitMQ</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>RabbitMQ</strong> es un message broker de código abierto que facilita el intercambio de mensajes entre microservicios para implementar comunicación <strong>indirecta / asíncrona</strong>.</p>
+
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">🐰 Message Broker Inteligente</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">RabbitMQ actúa como intermediario que recibe, enruta y entrega mensajes de forma confiable y asíncrona</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>⚡ Asíncrono</h3>
+                        <p>Los servicios no esperan respuesta inmediata, mejorando el rendimiento</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔄 Desacoplamiento</h3>
+                        <p>Los servicios no necesitan conocerse entre sí directamente</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📨 Confiable</h3>
+                        <p>Garantiza entrega de mensajes incluso si el consumidor está offline</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo del Mundo Real</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Cuando compras en línea, el servicio de pedidos envía un mensaje a RabbitMQ que será procesado por los servicios de inventario, facturación y envío de manera independiente, sin bloquear tu interfaz.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Arquitectura de RabbitMQ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Arquitectura de RabbitMQ</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔄</div>
+                    <pre style="background: rgba(0,0,0,0.3); color: white; padding: 25px; border-radius: 15px; font-size: 1.1em; line-height: 2; text-align: center;">
+📤 Producer → 📦 Exchange → 🔗 Binding → 📬 Queue → 📥 Consumer
+                    </pre>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+                    <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">📤</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Producer (Publicador)</h3>
+                        <p style="color: white; font-size: 1.05em; line-height: 1.7;">Microservicio que <strong>publica mensajes</strong> al exchange. Ejemplo: Servicio de Pedidos publica "PedidoCreado"</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 25px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">📦</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Exchange</h3>
+                        <p style="color: white; font-size: 1.05em; line-height: 1.7;"><strong>Enruta mensajes</strong> a las colas apropiadas basándose en reglas de binding (tipo: fanout, direct, topic, headers)</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 25px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🔗</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Bindings</h3>
+                        <p style="color: white; font-size: 1.05em; line-height: 1.7;"><strong>Conexiones</strong> entre routing keys (eventos/acciones) y colas de mensajes dentro de un exchange específico</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 25px; border-radius: 15px; color: white;">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">📬</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Message Queue</h3>
+                        <p style="color: white; font-size: 1.05em; line-height: 1.7;"><strong>Almacena mensajes</strong> hasta que sean consumidos. Persiste mensajes si el consumer está offline</p>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white; grid-column: span 2;">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">📥</div>
+                        <h3 style="color: white; margin-bottom: 15px;">Consumer (Consumidor)</h3>
+                        <p style="color: white; font-size: 1.05em; line-height: 1.7;">Microservicios que <strong>leen y procesan</strong> mensajes de las colas. Ejemplo: Servicio de Inventario procesa "PedidoCreado" y reduce stock</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Terminología de RabbitMQ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Terminología de RabbitMQ</h2>
+            </div>
+            <div class="content">
+                <div class="drawback-list">
+                    <div class="drawback-item" style="border-left-color: #4facfe;">
+                        <h3 style="color: #4facfe;">📤 Producer / Publisher Microservice</h3>
+                        <p>Microservicio que <strong>publica mensajes</strong> a un exchange. Es el origen de los eventos en el sistema.</p>
+                        <div style="background: #f0f9ff; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                            <p style="color: #0369a1; font-weight: 600;">Ejemplo Real:</p>
+                            <p style="color: #0c4a6e;">Servicio de <strong>Pedidos</strong> publica el evento "PedidoCreado" cuando un cliente completa una compra.</p>
+                        </div>
+                    </div>
+
+                    <div class="drawback-item" style="border-left-color: #43e97b;">
+                        <h3 style="color: #43e97b;">📦 Exchange</h3>
+                        <p><strong>Enruta mensajes</strong> a las colas apropiadas basándose en bindings. Es como una oficina postal que decide a dónde entregar cada paquete.</p>
+                        <div style="background: #f0fdf4; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                            <p style="color: #15803d; font-weight: 600;">Ejemplo Real:</p>
+                            <p style="color: #14532d;">Exchange <strong>"pedidos.exchange"</strong> recibe eventos de pedidos y los distribuye según el tipo de exchange configurado.</p>
+                        </div>
+                    </div>
+
+                    <div class="drawback-item" style="border-left-color: #f093fb;">
+                        <h3 style="color: #f093fb;">🔗 Bindings</h3>
+                        <p><strong>Conexiones</strong> entre routing keys (eventos o acciones) y colas de mensajes dentro de un exchange específico. Define las reglas de enrutamiento.</p>
+                        <div style="background: #fdf4ff; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                            <p style="color: #a21caf; font-weight: 600;">Ejemplo Real:</p>
+                            <p style="color: #701a75;">Binding que conecta routing key <strong>"pedido.creado"</strong> con la cola <strong>"inventario.cola"</strong>.</p>
+                        </div>
+                    </div>
+
+                    <div class="drawback-item" style="border-left-color: #fa709a;">
+                        <h3 style="color: #fa709a;">📬 Message Queues</h3>
+                        <p><strong>Almacenan mensajes</strong> hasta que sean consumidos. Garantizan que los mensajes no se pierdan si el consumer está temporalmente offline.</p>
+                        <div style="background: #fff7ed; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                            <p style="color: #c2410c; font-weight: 600;">Ejemplo Real:</p>
+                            <p style="color: #7c2d12;">Cola <strong>"inventario.cola"</strong> almacena todos los eventos de pedidos que el servicio de inventario debe procesar.</p>
+                        </div>
+                    </div>
+
+                    <div class="drawback-item" style="border-left-color: #667eea;">
+                        <h3 style="color: #667eea;">📥 Consumer Microservices</h3>
+                        <p><strong>Consumen (leen)</strong> mensajes de las colas y los procesan. Pueden procesar mensajes a su propio ritmo sin afectar al producer.</p>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                            <p style="color: #6d28d9; font-weight: 600;">Ejemplo Real:</p>
+                            <p style="color: #4c1d95;">Servicio de <strong>Inventario</strong> consume eventos "PedidoCreado" y actualiza el stock disponible automáticamente.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Tipos de Exchange -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Tipos de RabbitMQ Exchanges</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">RabbitMQ ofrece <strong>4 tipos de exchanges</strong> que determinan cómo se enrutan los mensajes a las colas:</p>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">📡</div>
+                        <h3>Fanout Exchange</h3>
+                        <p>Enruta mensajes a <strong>TODAS las colas</strong> vinculadas al exchange. Ignora routing keys.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🎯</div>
+                        <h3>Direct Exchange</h3>
+                        <p>Enruta mensajes basándose en <strong>coincidencia exacta</strong> entre routing key del mensaje y binding key de la cola.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🏷️</div>
+                        <h3>Headers Exchange</h3>
+                        <p>Enruta mensajes basándose en <strong>headers del mensaje</strong> (metadata), en lugar del routing key.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <div style="font-size: 2.5em; margin-bottom: 10px;">🔍</div>
+                        <h3>Topic Exchange</h3>
+                        <p>Enruta mensajes usando <strong>patrones con wildcards</strong> (* para una palabra, # para cero o más palabras).</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; text-align: center;">
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">🎓 <strong>Elegir el exchange correcto</strong> depende de tu patrón de comunicación: broadcast (fanout), específico (direct), flexible (topic) o basado en metadatos (headers)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Fanout Exchange -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Fanout Exchange</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📡</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Broadcast a Todas las Colas</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Enruta mensajes a <strong>TODAS las colas</strong> vinculadas al exchange, ignorando completamente el routing key</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de Fanout Exchange</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1.1em; line-height: 2; color: #2d3748; text-align: center;">
+📤 <strong>Producer</strong> publica mensaje
+         ↓
+📦 <strong>Fanout Exchange</strong> (ignora routing key)
+         ↓
+    ┌────┴────┬────┴────┬────┴────┐
+    ↓         ↓         ↓         ↓
+📬 Cola 1  📬 Cola 2  📬 Cola 3  📬 Cola 4
+    ↓         ↓         ↓         ↓
+📥 Service1 📥 Service2 📥 Service3 📥 Service4
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>✅ Ventaja</h3>
+                        <p>Ideal para notificar a múltiples servicios simultáneamente del mismo evento</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>💡 Caso de Uso</h3>
+                        <p>Actualización de caché, logging distribuido, notificaciones push masivas</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #fef5e7; border-radius: 15px; border-left: 5px solid #f39c12;">
+                    <h3 style="color: #7d6608; margin-bottom: 10px;">🏪 Ejemplo Real: Sistema de E-commerce</h3>
+                    <p style="color: #7d6608; font-size: 1.1em; line-height: 1.8;">Cuando un producto se agota, el servicio de Inventario publica "ProductoAgotado" a un <strong>fanout exchange</strong>. Automáticamente notifica a: servicio de Email (envía alerta), servicio de Analytics (registra métrica), servicio de Notificaciones (alerta administradores), servicio de Cache (actualiza caché).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Direct Exchange -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Direct Exchange</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🎯</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Enrutamiento Exacto</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Enruta mensajes a colas basándose en una <strong>coincidencia exacta</strong> entre el routing key del mensaje y el binding key de la cola</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de Direct Exchange</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1.05em; line-height: 2; color: #2d3748; text-align: center;">
+📤 <strong>Producer</strong> publica con routing key: <span style="color: #f59e0b;">"pedido.creado"</span>
+         ↓
+📦 <strong>Direct Exchange</strong> compara routing key
+         ↓
+    ┌────┴────┬────────────┐
+    ↓         ↓            ↓
+📬 Cola 1   📬 Cola 2    📬 Cola 3
+  (pedido   (pedido      (pago
+  .creado✅) .creado✅)   .procesado❌)
+    ↓         ↓            
+📥 Inventario 📥 Email   (No se enruta)
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>✅ Ventaja</h3>
+                        <p>Enrutamiento preciso y predecible. Solo servicios interesados reciben el mensaje</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>💡 Caso de Uso</h3>
+                        <p>Procesamiento de tareas específicas, enrutamiento por tipo de evento, priorización de mensajes</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">🏥 Ejemplo Real: Sistema de Citas Médicas</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Servicio de Citas publica eventos con routing keys específicos: <strong>"cita.confirmada"</strong> → Cola de Email (envía confirmación), <strong>"cita.cancelada"</strong> → Cola de Reembolsos (procesa devolución), <strong>"cita.recordatorio"</strong> → Cola de SMS (envía recordatorio 24h antes).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Headers Exchange -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Headers Exchange</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🏷️</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Enrutamiento por Metadatos</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Enruta mensajes basándose en <strong>matching de headers del mensaje</strong> (metadata), en lugar del routing key</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de Headers Exchange</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 1.8; color: #2d3748;">
+📤 <strong>Producer</strong> publica mensaje con headers:
+   { "formato": "pdf", "prioridad": "alta", "idioma": "es" }
+         ↓
+📦 <strong>Headers Exchange</strong> compara headers con bindings
+         ↓
+    ┌────┴────┬──────────────┐
+    ↓         ↓              ↓
+📬 Cola 1   📬 Cola 2      📬 Cola 3
+  (formato   (prioridad     (formato: xml ❌)
+  :pdf✅      :alta✅)       
+  idioma:es✅)              (No se enruta)
+    ↓         ↓            
+📥 ReportePDF 📥 Urgencias
+                        </pre>
+                    </div>
+                </div>
+
+                <div style="background: #fffbeb; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
+                    <h3 style="color: #78350f; margin-bottom: 15px;">⚙️ Modos de Matching</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid #fbbf24;">
+                            <h4 style="color: #92400e; margin-bottom: 8px;">x-match: "all"</h4>
+                            <p style="color: #78350f;">Todos los headers deben coincidir (AND lógico)</p>
+                        </div>
+                        <div style="background: white; padding: 15px; border-radius: 10px; border: 2px solid #fbbf24;">
+                            <h4 style="color: #92400e; margin-bottom: 8px;">x-match: "any"</h4>
+                            <p style="color: #78350f;">Al menos un header debe coincidir (OR lógico)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>✅ Ventaja</h3>
+                        <p>Enrutamiento complejo basado en múltiples criterios sin usar routing keys</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>💡 Caso de Uso</h3>
+                        <p>Filtrado avanzado, enrutamiento multi-criterio, procesamiento condicional</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #fdf4ff; border-radius: 15px; border-left: 5px solid #a855f7;">
+                    <h3 style="color: #581c87; margin-bottom: 10px;">📧 Ejemplo Real: Sistema de Notificaciones</h3>
+                    <p style="color: #581c87; font-size: 1.1em; line-height: 1.8;">Servicio de Notificaciones publica con headers: { "tipo": "alerta", "severidad": "crítica", "departamento": "IT", "region": "LATAM" }. Solo servicios configurados para <strong>severity=crítica</strong> Y <strong>region=LATAM</strong> reciben la notificación (x-match: all).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Topic Exchange -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Topic Exchange</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔍</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Enrutamiento con Patrones</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Enruta mensajes usando <strong>pattern matching</strong> entre routing key y binding key con wildcards: <strong>*</strong> (una palabra) y <strong>#</strong> (cero o más palabras)</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🎯 Wildcards en Topic Exchange</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h4 style="color: white; font-size: 1.5em; margin-bottom: 15px;">* (Asterisco)</h4>
+                            <p style="color: white; font-size: 1.1em; margin-bottom: 10px;">Sustituye <strong>exactamente UNA palabra</strong></p>
+                            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; margin-top: 10px;">
+                                <p style="color: white; font-weight: 600;">Ejemplos:</p>
+                                <p style="color: white; font-size: 0.95em;">pedido.*.creado</p>
+                                <p style="color: white; font-size: 0.95em;">user.*.updated</p>
+                            </div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 15px; color: white;">
+                            <h4 style="color: white; font-size: 1.5em; margin-bottom: 15px;"># (Hash)</h4>
+                            <p style="color: white; font-size: 1.1em; margin-bottom: 10px;">Sustituye <strong>CERO o MÁS palabras</strong></p>
+                            <div style="background: rgba(255,255,255,0.2); padding: 15px; border-radius: 10px; margin-top: 10px;">
+                                <p style="color: white; font-weight: 600;">Ejemplos:</p>
+                                <p style="color: white; font-size: 0.95em;">pedido.#</p>
+                                <p style="color: white; font-size: 0.95em;">log.#.error</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 25px; border-radius: 15px; margin-bottom: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Ejemplos de Matching</h3>
+                    <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748;">
+<span style="color: #10b981; font-weight: bold;">✅ Binding: "pedido.*.creado"</span>
+   pedido.<span style="color: #f59e0b;">online</span>.creado     ✅ Match
+   pedido.<span style="color: #f59e0b;">tienda</span>.creado     ✅ Match
+   pedido.<span style="color: #f59e0b;">app</span>.creado        ✅ Match
+   pedido.online.modificado  ❌ No match (última palabra)
+   pedido.online.web.creado  ❌ No match (2 palabras en medio)
+
+<span style="color: #3b82f6; font-weight: bold;">✅ Binding: "log.#"</span>
+   log.<span style="color: #f59e0b;">error</span>              ✅ Match
+   log.<span style="color: #f59e0b;">info.database</span>      ✅ Match
+   log.<span style="color: #f59e0b;">warn.auth.login</span>    ✅ Match
+   error.log                ❌ No match (orden)
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>✅ Ventaja</h3>
+                        <p>Enrutamiento flexible y escalable. Permite suscripciones granulares o amplias</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>💡 Caso de Uso</h3>
+                        <p>Logging por niveles, eventos jerárquicos, filtrado multi-nivel, pub/sub selectivo</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e0f2fe; border-radius: 15px; border-left: 5px solid #0284c7;">
+                    <h3 style="color: #075985; margin-bottom: 10px;">🌐 Ejemplo Real: Sistema de Logs Distribuido</h3>
+                    <p style="color: #075985; font-size: 1.1em; line-height: 1.8; margin-bottom: 15px;">Servicios publican logs con routing keys jerárquicos:</p>
+                    <div style="background: white; padding: 15px; border-radius: 10px;">
+                        <p style="color: #0c4a6e; margin-bottom: 8px;">• <strong>"log.#"</strong> → Cola de Almacenamiento (recibe TODOS los logs)</p>
+                        <p style="color: #0c4a6e; margin-bottom: 8px;">• <strong>"log.error.#"</strong> → Cola de Alertas (solo errores de cualquier servicio)</p>
+                        <p style="color: #0c4a6e; margin-bottom: 8px;">• <strong>"log.*.database"</strong> → Cola de DBA (logs de BD de cualquier nivel)</p>
+                        <p style="color: #0c4a6e;">• <strong>"log.critical.#"</strong> → Cola de PagerDuty (alertas críticas inmediatas)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Comparación de Exchanges -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Comparación de Exchanges</h2>
+            </div>
+            <div class="content">
+                <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                        <thead>
+                            <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                <th style="padding: 20px; text-align: left; font-size: 1.2em;">Exchange</th>
+                                <th style="padding: 20px; text-align: left; font-size: 1.2em;">Comportamiento</th>
+                                <th style="padding: 20px; text-align: left; font-size: 1.2em;">Routing Key</th>
+                                <th style="padding: 20px; text-align: left; font-size: 1.2em;">Caso de Uso</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 2px solid #e2e8f0;">
+                                <td style="padding: 20px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.8em;">📡</span>
+                                        <strong style="color: #667eea; font-size: 1.1em;">Fanout</strong>
+                                    </div>
+                                </td>
+                                <td style="padding: 20px; color: #4a5568;">Broadcast a todas las colas</td>
+                                <td style="padding: 20px; color: #718096;">Ignorado</td>
+                                <td style="padding: 20px; color: #4a5568;">Notificaciones masivas, cache updates</td>
+                            </tr>
+                            <tr style="border-bottom: 2px solid #e2e8f0; background: #f7fafc;">
+                                <td style="padding: 20px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.8em;">🎯</span>
+                                        <strong style="color: #4facfe; font-size: 1.1em;">Direct</strong>
+                                    </div>
+                                </td>
+                                <td style="padding: 20px; color: #4a5568;">Match exacto</td>
+                                <td style="padding: 20px; color: #718096;">Exacto: "pedido.creado"</td>
+                                <td style="padding: 20px; color: #4a5568;">Enrutamiento por tipo de evento</td>
+                            </tr>
+                            <tr style="border-bottom: 2px solid #e2e8f0;">
+                                <td style="padding: 20px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.8em;">🏷️</span>
+                                        <strong style="color: #43e97b; font-size: 1.1em;">Headers</strong>
+                                    </div>
+                                </td>
+                                <td style="padding: 20px; color: #4a5568;">Match por headers</td>
+                                <td style="padding: 20px; color: #718096;">No usado, usa headers</td>
+                                <td style="padding: 20px; color: #4a5568;">Filtrado multi-criterio avanzado</td>
+                            </tr>
+                            <tr style="background: #f7fafc;">
+                                <td style="padding: 20px;">
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.8em;">🔍</span>
+                                        <strong style="color: #fa709a; font-size: 1.1em;">Topic</strong>
+                                    </div>
+                                </td>
+                                <td style="padding: 20px; color: #4a5568;">Pattern matching</td>
+                                <td style="padding: 20px; color: #718096;">Con wildcards: "log.*.error"</td>
+                                <td style="padding: 20px; color: #4a5568;">Logging, eventos jerárquicos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; text-align: center;">
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">💡 <strong>Regla práctica:</strong> Usa Fanout para broadcast, Direct para específico, Topic para flexible, Headers para complejo</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Ejemplo Real Completo -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Ejemplo Real: Sistema de E-commerce con RabbitMQ</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white; margin-bottom: 25px; text-align: center;">
+                    <h3 style="color: white; font-size: 1.6em; margin-bottom: 15px;">🛒 Flujo de Pedido Completo</h3>
+                    <p style="color: white; font-size: 1.1em;">Cuando un cliente realiza un pedido, múltiples servicios deben reaccionar de forma asíncrona</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 25px; border-radius: 15px; margin-bottom: 20px;">
+                    <div style="background: white; padding: 20px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 0.95em; line-height: 1.8; color: #2d3748;">
+<span style="color: #10b981; font-weight: bold;">1️⃣ PRODUCER - Servicio de Pedidos</span>
+   Cliente hace pedido → Publica evento "pedido.creado"
+   Routing Key: <span style="color: #f59e0b;">"pedido.online.creado"</span>
+   Headers: { "prioridad": "alta", "monto": "500" }
+         ↓
+<span style="color: #3b82f6; font-weight: bold;">2️⃣ EXCHANGE - Topic Exchange "pedidos.exchange"</span>
+   Analiza routing key y enruta a colas correspondientes
+         ↓
+    ┌────┴─────┬──────────┬───────────┬──────────┐
+    ↓          ↓          ↓           ↓          ↓
+<span style="color: #f59e0b; font-weight: bold;">3️⃣ QUEUES (Colas)</span>
+📬 inventario.queue    (Binding: "pedido.#")
+📬 email.queue         (Binding: "pedido.*.creado")
+📬 facturacion.queue   (Binding: "pedido.#")
+📬 analytics.queue     (Binding: "#")
+📬 shipping.queue      (Binding: "pedido.online.#")
+         ↓
+<span style="color: #8b5cf6; font-weight: bold;">4️⃣ CONSUMERS (Microservicios)</span>
+📥 Inventario   → Reduce stock del producto
+📥 Email        → Envía confirmación al cliente
+📥 Facturación  → Genera factura PDF
+📥 Analytics    → Registra venta en dashboard
+📥 Shipping     → Crea orden de envío
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>⚡ Asíncrono</h3>
+                        <p>El cliente recibe respuesta inmediata sin esperar a que todos los servicios procesen</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔄 Desacoplado</h3>
+                        <p>Servicio de Pedidos no conoce ni depende de los consumers</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📈 Escalable</h3>
+                        <p>Puedes agregar más consumers sin modificar el producer</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 20px; background: #d1fae5; border-radius: 12px; border-left: 5px solid #10b981;">
+                    <p style="color: #065f46; font-size: 1em; line-height: 1.7;"><strong>✨ Beneficio Clave:</strong> Si el servicio de Email está caído, el pedido se procesa igual. El mensaje queda en la cola hasta que Email vuelva a estar disponible.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Ventajas de RabbitMQ -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Ventajas de Usar RabbitMQ</h2>
+            </div>
+            <div class="content">
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🔄 Desacoplamiento Total</h3>
+                        <p>Los servicios no necesitan conocerse entre sí. El producer no sabe quién consume sus mensajes.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>⚡ Asíncrono</h3>
+                        <p>Mejora el rendimiento al no bloquear operaciones. Los servicios procesan a su propio ritmo.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>📈 Escalabilidad</h3>
+                        <p>Fácil agregar o quitar consumers sin afectar al producer. Múltiples instancias pueden consumir de la misma cola.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>💾 Persistencia</h3>
+                        <p>Los mensajes se guardan en disco si el consumer está offline. No se pierden datos.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🎯 Enrutamiento Flexible</h3>
+                        <p>4 tipos de exchanges permiten patrones de comunicación simples o complejos según necesidad.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🛡️ Tolerancia a Fallos</h3>
+                        <p>Si un servicio falla, los mensajes esperan en la cola. Sistema continúa funcionando.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>⚖️ Balanceo de Carga</h3>
+                        <p>Múltiples consumers pueden procesar mensajes de una cola en paralelo, distribuyendo la carga.</p>
+                    </div>
+
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔁 Retry Automático</h3>
+                        <p>Puede configurar reintentos automáticos si el procesamiento del mensaje falla.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; text-align: center;">
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">🎓 RabbitMQ es ideal para arquitecturas de microservicios que requieren comunicación confiable, desacoplada y escalable</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección 11: Azure -->
+        <div class="slide">
+            <div class="intro-content">
+                <div class="logo">☁️</div>
+                <h1>Azure</h1>
+                <p class="subtitle">Computación en la Nube para Microservicios</p>
+                <p style="margin-top: 40px; color: #718096; font-size: 1.2em;">Sección 11</p>
+            </div>
+        </div>
+
+        <!-- Slide: Introducción a Cloud Computing -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Introducción a Cloud Computing</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">La <strong>computación en la nube</strong> se refiere a la entrega de servicios informáticos — incluyendo servidores, almacenamiento, bases de datos, redes, software y análisis — a través de internet.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">☁️ Servicios en la Nube</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Accede a recursos informáticos bajo demanda, pagando solo por lo que usas, sin necesidad de mantener infraestructura física</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🖥️ Servidores</h3>
+                        <p>Máquinas virtuales escalables sin comprar hardware físico</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>💾 Almacenamiento</h3>
+                        <p>Espacio de almacenamiento ilimitado y seguro en la nube</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🗄️ Bases de Datos</h3>
+                        <p>Bases de datos gestionadas con alta disponibilidad</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🌐 Redes</h3>
+                        <p>Infraestructura de red global y segura</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>📊 Análisis</h3>
+                        <p>Herramientas de análisis y machine learning</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔧 Software</h3>
+                        <p>Aplicaciones y servicios gestionados listos para usar</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo del Mundo Real</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">En lugar de comprar servidores físicos para tu aplicación, puedes usar Azure para crear máquinas virtuales que escalan automáticamente según la demanda. Si tu app tiene un pico de tráfico en Navidad, Azure añade más servidores automáticamente.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: On-premises vs Cloud - Escalabilidad -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>On-premises vs Cloud - Escalabilidad</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📈</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Escalabilidad: La Diferencia Clave</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Comparación entre infraestructura local y en la nube</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                    <div style="background: #fff5f5; padding: 30px; border-radius: 15px; border: 2px solid #fc8181;">
+                        <h3 style="color: #c53030; margin-bottom: 20px; text-align: center;">🏢 On-Premises</h3>
+                        <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+                            <pre style="font-size: 1em; line-height: 1.8; color: #2d3748; text-align: center;">
+📦 Compra servidores físicos
+         ↓
+⏳ Espera semanas/meses
+         ↓
+💰 Pago fijo alto
+         ↓
+📊 Capacidad limitada
+         ↓
+❌ No escala automáticamente
+                            </pre>
+                        </div>
+                        <div style="background: #fed7d7; padding: 15px; border-radius: 10px;">
+                            <p style="color: #742a2a; font-size: 0.95em; line-height: 1.6;"><strong>Problema:</strong> Si necesitas más capacidad, debes comprar más hardware. Si no la usas, pagas igual.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #f0fff4; padding: 30px; border-radius: 15px; border: 2px solid #68d391;">
+                        <h3 style="color: #22543d; margin-bottom: 20px; text-align: center;">☁️ Cloud (Azure)</h3>
+                        <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+                            <pre style="font-size: 1em; line-height: 1.8; color: #2d3748; text-align: center;">
+🖱️ Clic para crear servidor
+         ↓
+⚡ Disponible en minutos
+         ↓
+💵 Pago por uso
+         ↓
+♾️ Capacidad ilimitada
+         ↓
+✅ Escala automáticamente
+                            </pre>
+                        </div>
+                        <div style="background: #c6f6d5; padding: 15px; border-radius: 10px;">
+                            <p style="color: #22543d; font-size: 0.95em; line-height: 1.6;"><strong>Ventaja:</strong> Escalas hacia arriba o abajo según demanda. Pagas solo por lo que usas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">🏪 Ejemplo Real: E-commerce en Black Friday</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;"><strong>On-Premises:</strong> Compras servidores para el pico máximo (Black Friday), pero el resto del año están subutilizados. Pagas $10,000/mes siempre.</p>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8; margin-top: 10px;"><strong>Cloud:</strong> Azure escala automáticamente de 2 servidores a 50 durante Black Friday, luego vuelve a 2. Pagas $500/mes normalmente y $2,000 solo en Black Friday.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: On-premises vs Cloud - Seguridad -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>On-premises vs Cloud - Seguridad</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🔒</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Seguridad: Responsabilidad Compartida</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">¿Quién es responsable de qué en cada modelo?</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                    <div style="background: #fff5f5; padding: 30px; border-radius: 15px; border: 2px solid #fc8181;">
+                        <h3 style="color: #c53030; margin-bottom: 20px; text-align: center;">🏢 On-Premises</h3>
+                        <div style="background: white; padding: 20px; border-radius: 12px;">
+                            <div style="margin-bottom: 15px;">
+                                <h4 style="color: #c53030; margin-bottom: 10px;">✅ Tu Responsabilidad (100%)</h4>
+                                <ul style="color: #2d3748; font-size: 0.95em; line-height: 1.8;">
+                                    <li>🔧 Mantenimiento de hardware</li>
+                                    <li>🛡️ Firewall y seguridad física</li>
+                                    <li>🔄 Actualizaciones de sistema</li>
+                                    <li>💾 Backups y recuperación</li>
+                                    <li>👥 Gestión de accesos</li>
+                                    <li>📊 Monitoreo y logs</li>
+                                </ul>
+                            </div>
+                            <div style="background: #fed7d7; padding: 15px; border-radius: 10px;">
+                                <p style="color: #742a2a; font-size: 0.9em; line-height: 1.6;"><strong>Desventaja:</strong> Necesitas un equipo completo de IT para mantener todo seguro.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #f0fff4; padding: 30px; border-radius: 15px; border: 2px solid #68d391;">
+                        <h3 style="color: #22543d; margin-bottom: 20px; text-align: center;">☁️ Cloud (Azure)</h3>
+                        <div style="background: white; padding: 20px; border-radius: 12px;">
+                            <div style="margin-bottom: 15px;">
+                                <h4 style="color: #22543d; margin-bottom: 10px;">☁️ Azure se Encarga</h4>
+                                <ul style="color: #2d3748; font-size: 0.95em; line-height: 1.8;">
+                                    <li>🔧 Mantenimiento de infraestructura</li>
+                                    <li>🛡️ Seguridad física de datacenters</li>
+                                    <li>🔄 Actualizaciones de plataforma</li>
+                                    <li>💾 Redundancia y alta disponibilidad</li>
+                                    <li>🌐 Seguridad de red global</li>
+                                    <li>📊 Monitoreo de infraestructura</li>
+                                </ul>
+                            </div>
+                            <div style="background: #c6f6d5; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                                <h4 style="color: #22543d; margin-bottom: 8px; font-size: 0.95em;">✅ Tu Responsabilidad</h4>
+                                <ul style="color: #2d3748; font-size: 0.85em; line-height: 1.6;">
+                                    <li>🔐 Configuración de acceso</li>
+                                    <li>💻 Seguridad de aplicaciones</li>
+                                    <li>📝 Gestión de datos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">🏦 Ejemplo Real: Banco Digital</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;"><strong>On-Premises:</strong> Debes contratar seguridad 24/7, mantener certificaciones ISO, actualizar hardware cada 3 años. Costo: $500,000/año en seguridad.</p>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8; margin-top: 10px;"><strong>Cloud:</strong> Azure ya tiene certificaciones ISO, SOC2, PCI-DSS. Datacenters con seguridad militar. Tú solo te enfocas en tu aplicación. Costo: $50,000/año + servicios Azure.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Modelos de Servicio Cloud -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Modelos de Servicio Cloud</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Los servicios en la nube se clasifican en <strong>3 modelos principales</strong> según el nivel de control y gestión que ofrecen:</p>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">🖥️</div>
+                            <h3 style="color: white; margin-bottom: 15px;">IaaS</h3>
+                            <p style="color: white; font-size: 0.95em; line-height: 1.6;"><strong>Infrastructure as a Service</strong><br/>Máxima flexibilidad, gestionas todo</p>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">🔧</div>
+                            <h3 style="color: white; margin-bottom: 15px;">PaaS</h3>
+                            <p style="color: white; font-size: 0.95em; line-height: 1.6;"><strong>Platform as a Service</strong><br/>Plataforma lista, enfócate en código</p>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">📱</div>
+                            <h3 style="color: white; margin-bottom: 15px;">SaaS</h3>
+                            <p style="color: white; font-size: 0.95em; line-height: 1.6;"><strong>Software as a Service</strong><br/>Aplicación lista para usar</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">📊 Comparación de Responsabilidades</h3>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.95em;">
+                            <thead>
+                                <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                    <th style="padding: 12px; text-align: left; border: 1px solid #ddd;">Componente</th>
+                                    <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">IaaS</th>
+                                    <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">PaaS</th>
+                                    <th style="padding: 12px; text-align: center; border: 1px solid #ddd;">SaaS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background: #f7fafc;">
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">Aplicación</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">✅ Tú</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">✅ Tú</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">Datos</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">✅ Tú</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">✅ Tú</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                </tr>
+                                <tr style="background: #f7fafc;">
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">Runtime</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">✅ Tú</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">Middleware</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">✅ Tú</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                </tr>
+                                <tr style="background: #f7fafc;">
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">OS</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">✅ Tú</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">Virtualización</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                </tr>
+                                <tr style="background: #f7fafc;">
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">Servidores</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">Almacenamiento</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                </tr>
+                                <tr style="background: #f7fafc;">
+                                    <td style="padding: 10px; border: 1px solid #e2e8f0;">Red</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                    <td style="padding: 10px; text-align: center; border: 1px solid #e2e8f0;">☁️ Proveedor</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Startup de E-commerce</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;"><strong>IaaS (Azure VM):</strong> Tienes control total, instalas tu propio servidor web, base de datos, etc. Más trabajo pero máxima flexibilidad.</p>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8; margin-top: 10px;"><strong>PaaS (Azure App Service):</strong> Subes tu código .NET y Azure gestiona el servidor, escalado, parches. Te enfocas solo en tu aplicación.</p>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8; margin-top: 10px;"><strong>SaaS (Office 365):</strong> Usas Outlook, Word, Excel sin instalar nada. Todo está en la nube y listo para usar.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Introducción a Azure -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Introducción a Azure</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Azure</strong> es la plataforma en la nube de Microsoft que ofrece una amplia gama de servicios para construir, desplegar y gestionar aplicaciones globalmente, establecida como proveedor líder desde su lanzamiento en 2010.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 40px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 4em; margin-bottom: 15px;">☁️</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Microsoft Azure</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Más de 200 servicios en la nube disponibles en más de 60 regiones globales</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🌍 Global</h3>
+                        <p>60+ regiones en todo el mundo para baja latencia</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔒 Seguro</h3>
+                        <p>Certificaciones ISO, SOC2, PCI-DSS, HIPAA</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📈 Escalable</h3>
+                        <p>Escala automáticamente según demanda</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>💰 Flexible</h3>
+                        <p>Pago por uso, sin compromisos a largo plazo</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🔧 Integrado</h3>
+                        <p>Integración perfecta con herramientas Microsoft</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🚀 Innovador</h3>
+                        <p>IA, Machine Learning, IoT, Blockchain</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo del Mundo Real</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Netflix usa Azure para streaming global. Tu aplicación puede estar en Azure y servir usuarios en México, España y Argentina simultáneamente con baja latencia gracias a las regiones globales de Azure.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure CLI -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure CLI</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">El <strong>Azure CLI</strong> es una herramienta multiplataforma para gestionar recursos de Azure mediante la línea de comandos.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">💻</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Gestiona Azure desde la Terminal</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Permite crear, configurar y automatizar tareas de Azure usando comandos simples en Windows, macOS y Linux</p>
+                </div>
+
+                <div style="background: #1e1e1e; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #00ff00; margin-bottom: 20px; font-family: 'Courier New', monospace;">📝 Comandos Principales</h3>
+                    <div style="color: #d4d4d4; font-family: 'Courier New', monospace; font-size: 1em; line-height: 2;">
+                        <div style="margin-bottom: 15px;">
+                            <span style="color: #569cd6;"># Iniciar sesión en Azure</span><br/>
+                            <span style="color: #ce9178;">az login</span>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <span style="color: #569cd6;"># Crear un grupo de recursos</span><br/>
+                            <span style="color: #ce9178;">az group create --name mi-grupo --location eastus</span>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <span style="color: #569cd6;"># Crear una App Service</span><br/>
+                            <span style="color: #ce9178;">az webapp create --resource-group mi-grupo --name mi-app --runtime "DOTNET|6.0"</span>
+                        </div>
+                        <div style="margin-bottom: 15px;">
+                            <span style="color: #569cd6;"># Listar todos los recursos</span><br/>
+                            <span style="color: #ce9178;">az resource list --output table</span>
+                        </div>
+                        <div>
+                            <span style="color: #569cd6;"># Eliminar un recurso</span><br/>
+                            <span style="color: #ce9178;">az group delete --name mi-grupo --yes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>⚡ Rápido</h3>
+                        <p>Comandos simples para operaciones complejas</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔄 Automatizable</h3>
+                        <p>Perfecto para scripts y CI/CD</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🌐 Multiplataforma</h3>
+                        <p>Funciona en Windows, macOS y Linux</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo Real: Automatización de Deployment</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">En lugar de hacer clic en el portal web 20 veces para crear recursos, puedes crear un script que ejecuta <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">az webapp create</code> y en 30 segundos tienes tu aplicación desplegada. Perfecto para pipelines de CI/CD.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure Resource Groups -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure Resource Groups</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;">Un <strong>Azure Resource Group</strong> es un contenedor lógico para agrupar recursos relacionados de Azure, simplificando la gestión y el despliegue.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📦</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Organización Lógica</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Agrupa recursos relacionados para gestionarlos como una unidad</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Ejemplo de Resource Group</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748;">
+📦 Resource Group: "ecommerce-prod"
+    ├── 🖥️ App Service: "api-ecommerce"
+    ├── 🗄️ SQL Database: "db-ecommerce"
+    ├── 📦 Storage Account: "storage-ecommerce"
+    ├── 🔐 Key Vault: "secrets-ecommerce"
+    └── 🌐 CDN: "cdn-ecommerce"
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🗑️ Eliminación en Lote</h3>
+                        <p>Elimina todos los recursos de un proyecto con un solo comando</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔐 Control de Acceso</h3>
+                        <p>Aplica permisos a todo el grupo de una vez</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📊 Organización</h3>
+                        <p>Agrupa recursos por proyecto, entorno o aplicación</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🚀 Deployment</h3>
+                        <p>Despliega todos los recursos juntos como una unidad</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo Real: Gestión de Entornos</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes 3 entornos: desarrollo, staging y producción. Cada uno tiene su Resource Group: <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">rg-ecommerce-dev</code>, <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">rg-ecommerce-staging</code>, <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">rg-ecommerce-prod</code>. Si quieres eliminar el entorno de desarrollo completo, solo eliminas el Resource Group y todos los recursos se borran juntos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure Container Registry -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure Container Registry (ACR)</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Azure Container Registry (ACR)</strong> es un servicio gestionado para almacenar, gestionar y desplegar imágenes de contenedores de forma privada dentro de Azure.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📦</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Registro Privado de Contenedores</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Almacena tus imágenes Docker de forma segura y privada en Azure</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de Trabajo con ACR</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+💻 Desarrollador construye imagen
+         ↓
+🐳 docker build -t mi-app:1.0
+         ↓
+📤 docker push acr.azurecr.io/mi-app:1.0
+         ↓
+📦 ACR almacena imagen privada
+         ↓
+🚀 Azure App Service / AKS descarga
+         ↓
+✅ Contenedor desplegado
+                        </pre>
+                    </div>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🔒 Privado y Seguro</h3>
+                        <p>Tus imágenes no son públicas, solo accesibles desde Azure</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>⚡ Integración</h3>
+                        <p>Se integra perfectamente con App Service, AKS, Container Apps</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔄 Versionado</h3>
+                        <p>Gestiona múltiples versiones de tus imágenes</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo Real: CI/CD Pipeline</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Cuando haces push a GitHub, Azure DevOps construye tu imagen Docker, la sube a ACR con tag <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">v1.2.3</code>, y luego Azure App Service la descarga automáticamente y despliega tu nueva versión. Todo automatizado y privado.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: ACR - Cómo Funciona -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>ACR – ¿Cómo Funciona?</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">⚙️</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Proceso Completo de ACR</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Desde la construcción hasta el despliegue</p>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                        <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #4facfe; text-align: center;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">🔨</div>
+                            <h4 style="color: #4facfe; margin-bottom: 15px;">1. Construcción</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Desarrollador construye imagen Docker localmente o en CI/CD</p>
+                            <div style="background: #1e1e1e; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                                <code style="color: #ce9178; font-size: 0.85em;">docker build -t mi-app</code>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #43e97b; text-align: center;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">📤</div>
+                            <h4 style="color: #43e97b; margin-bottom: 15px;">2. Push a ACR</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Imagen se sube al registro privado de Azure</p>
+                            <div style="background: #1e1e1e; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                                <code style="color: #ce9178; font-size: 0.85em;">docker push acr.azurecr.io/mi-app:v1.0</code>
+                            </div>
+                        </div>
+
+                        <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #fa709a; text-align: center;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">🚀</div>
+                            <h4 style="color: #fa709a; margin-bottom: 15px;">3. Despliegue</h4>
+                            <p style="color: #2d3748; font-size: 0.95em; line-height: 1.6;">Azure App Service / AKS descarga y ejecuta la imagen</p>
+                            <div style="background: #1e1e1e; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                                <code style="color: #ce9178; font-size: 0.85em;">az webapp config container set</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo Detallado</h3>
+                    <div style="background: #f7fafc; padding: 20px; border-radius: 10px;">
+                        <pre style="font-size: 0.95em; line-height: 2; color: #2d3748;">
+💻 Local: docker build -t mi-app:latest
+         ↓
+🔐 az acr login --name mi-registry
+         ↓
+📤 docker tag mi-app:latest mi-registry.azurecr.io/mi-app:v1.0
+         ↓
+📤 docker push mi-registry.azurecr.io/mi-app:v1.0
+         ↓
+📦 ACR almacena imagen de forma segura
+         ↓
+🔍 Azure App Service consulta ACR
+         ↓
+⬇️ Descarga imagen automáticamente
+         ↓
+🚀 Contenedor ejecutándose en producción
+                        </pre>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Actualización de Producción</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes una nueva versión de tu microservicio. Construyes la imagen, la subes a ACR con tag <code style="background: #d1fae5; padding: 2px 6px; border-radius: 4px;">v2.1.0</code>. Luego, desde Azure Portal o CLI, actualizas App Service para usar la nueva imagen. En 2 minutos, tu nueva versión está en producción sin downtime.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: ACR - Por Qué Usarlo -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>ACR – ¿Por Qué Usarlo?</h2>
+            </div>
+            <div class="content">
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">✨</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Ventajas de Azure Container Registry</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Razones para elegir ACR para tus contenedores</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 30px;">
+                    <div style="background: #f0fff4; padding: 30px; border-radius: 15px; border: 2px solid #68d391;">
+                        <h3 style="color: #22543d; margin-bottom: 20px; text-align: center;">🔒 Seguridad y Control de Acceso</h3>
+                        <ul style="color: #2d3748; font-size: 1em; line-height: 1.8;">
+                            <li>✅ Imágenes privadas, no públicas en Docker Hub</li>
+                            <li>✅ Control de acceso basado en roles (RBAC)</li>
+                            <li>✅ Integración con Azure Active Directory</li>
+                            <li>✅ Escaneo de vulnerabilidades automático</li>
+                            <li>✅ Encriptación en reposo y en tránsito</li>
+                        </ul>
+                        <div style="background: #c6f6d5; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                            <p style="color: #22543d; font-size: 0.9em; line-height: 1.6;"><strong>Ejemplo:</strong> Solo el equipo de DevOps puede subir imágenes a producción. Los desarrolladores solo pueden leer.</p>
+                        </div>
+                    </div>
+
+                    <div style="background: #f0f9ff; padding: 30px; border-radius: 15px; border: 2px solid #60a5fa;">
+                        <h3 style="color: #1e40af; margin-bottom: 20px; text-align: center;">⚡ Rendimiento</h3>
+                        <ul style="color: #2d3748; font-size: 1em; line-height: 1.8;">
+                            <li>✅ Red privada de Azure (más rápido que internet)</li>
+                            <li>✅ Replicación geográfica para baja latencia</li>
+                            <li>✅ Cache local en regiones cercanas</li>
+                            <li>✅ Sin límites de rate limiting</li>
+                            <li>✅ Optimizado para servicios Azure</li>
+                        </ul>
+                        <div style="background: #dbeafe; padding: 15px; border-radius: 10px; margin-top: 15px;">
+                            <p style="color: #1e40af; font-size: 0.9em; line-height: 1.6;"><strong>Ejemplo:</strong> Descargar imagen desde ACR a App Service tarda 10 segundos. Desde Docker Hub público, 2 minutos.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #fef3c7; padding: 30px; border-radius: 15px; border: 2px solid #fbbf24; margin-bottom: 25px;">
+                    <h3 style="color: #78350f; margin-bottom: 20px; text-align: center;">🔗 Integración con Otros Recursos Azure</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px;">
+                        <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 2em; margin-bottom: 8px;">🚀</div>
+                            <h4 style="color: #78350f; font-size: 1em;">App Service</h4>
+                            <p style="color: #2d3748; font-size: 0.85em;">Despliegue directo desde ACR</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 2em; margin-bottom: 8px;">⚓</div>
+                            <h4 style="color: #78350f; font-size: 1em;">AKS</h4>
+                            <p style="color: #2d3748; font-size: 0.85em;">Kubernetes usa ACR nativamente</p>
+                        </div>
+                        <div style="background: white; padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 2em; margin-bottom: 8px;">📦</div>
+                            <h4 style="color: #78350f; font-size: 1em;">Container Apps</h4>
+                            <p style="color: #2d3748; font-size: 0.85em;">Integración seamless</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Empresa Fintech</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Una empresa fintech no puede tener sus imágenes de contenedores en Docker Hub público por seguridad. Usa ACR para almacenar imágenes privadas, con escaneo automático de vulnerabilidades. Cuando despliega a AKS, las imágenes se descargan por la red privada de Azure (más rápido y seguro). Todo integrado en un solo ecosistema.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: AppService vs Container Apps vs AKS -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>AppService vs Azure Container Apps vs AKS</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Comparación de las <strong>3 opciones principales</strong> de Azure para desplegar aplicaciones y microservicios:</p>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 30px;">
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">🚀</div>
+                            <h3 style="color: white; margin-bottom: 15px;">App Service</h3>
+                            <p style="color: white; font-size: 0.9em; line-height: 1.6;">Web Apps y APIs<br/>Código compilado o contenedores<br/>Escalado fácil<br/>❌ No para microservicios</p>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">📦</div>
+                            <h3 style="color: white; margin-bottom: 15px;">Container Apps</h3>
+                            <p style="color: white; font-size: 0.9em; line-height: 1.6;">Serverless<br/>Auto-scaling<br/>Stateless y stateful<br/>✅ Microservicios simples</p>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 25px; border-radius: 15px; color: white; text-align: center;">
+                            <div style="font-size: 2.5em; margin-bottom: 10px;">⚓</div>
+                            <h3 style="color: white; margin-bottom: 15px;">AKS</h3>
+                            <p style="color: white; font-size: 0.9em; line-height: 1.6;">Kubernetes completo<br/>Alta complejidad<br/>Escalabilidad total<br/>✅ Microservicios complejos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0; margin-bottom: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">📊 Tabla Comparativa</h3>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.9em;">
+                            <thead>
+                                <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">Característica</th>
+                                    <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">App Service</th>
+                                    <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">Container Apps</th>
+                                    <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">AKS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background: #f7fafc;">
+                                    <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Complejidad</strong></td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">⭐ Baja</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">⭐⭐ Media</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">⭐⭐⭐ Alta</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Microservicios</strong></td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">❌ No</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">✅ Simples</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">✅ Complejos</td>
+                                </tr>
+                                <tr style="background: #f7fafc;">
+                                    <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Escalado</strong></td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Manual/Auto</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Auto (Serverless)</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Manual/Auto</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Control</strong></td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Limitado</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Medio</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">Total</td>
+                                </tr>
+                                <tr style="background: #f7fafc;">
+                                    <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Costo</strong></td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">$$</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">$ (Pay-per-use)</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">$$$</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 8px; border: 1px solid #e2e8f0;"><strong>Orquestación</strong></td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">❌ No</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">✅ Básica</td>
+                                    <td style="padding: 8px; text-align: center; border: 1px solid #e2e8f0;">✅ Kubernetes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: Startup vs Empresa Grande</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;"><strong>Startup pequeña:</strong> Usa <strong>App Service</strong> para su API REST simple. Fácil de configurar, bajo costo, sin necesidad de microservicios.</p>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8; margin-top: 10px;"><strong>Startup mediana:</strong> Usa <strong>Container Apps</strong> para 5 microservicios simples. Serverless, auto-scaling, paga solo por uso.</p>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8; margin-top: 10px;"><strong>Empresa grande:</strong> Usa <strong>AKS</strong> para 50+ microservicios complejos con service mesh, auto-scaling avanzado, y control total de Kubernetes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: App Service -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure App Service</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Azure App Service</strong> es una oferta de plataforma-como-servicio (PaaS) completamente gestionada que permite a los desarrolladores construir, desplegar y escalar aplicaciones web sin gestionar la infraestructura subyacente.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">🚀</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">PaaS Completamente Gestionado</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Proporciona un entorno escalable, seguro y confiable para alojar aplicaciones web y APIs RESTful (código fuente compilado directamente o contenedores)</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>🌐 Web Apps</h3>
+                        <p>Soporta aplicaciones web tradicionales (.NET, Node.js, Python, PHP, Java)</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>🔌 Web APIs</h3>
+                        <p>Ideal para APIs RESTful y servicios backend</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>📦 Contenedores</h3>
+                        <p>También soporta despliegue de contenedores Docker</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>📈 Escalado</h3>
+                        <p>Escalado vertical (más recursos) y horizontal (más instancias) fácil</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>🔒 Seguridad</h3>
+                        <p>HTTPS, autenticación integrada, integración con Azure AD</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔄 CI/CD</h3>
+                        <p>Integración con GitHub, Azure DevOps, Bitbucket</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 15px;">💡 Ejemplo Real: API de E-commerce</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes una API .NET 6.0. Haces push a GitHub, y App Service automáticamente construye y despliega tu aplicación. Si tienes un pico de tráfico, escalas de 1 a 10 instancias con un clic. Todo gestionado por Azure, sin tocar servidores.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Limitaciones de App Service -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Limitaciones de App Service</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.2em; line-height: 1.8; margin-bottom: 30px;">Aunque App Service es excelente para aplicaciones web tradicionales, tiene <strong>limitaciones importantes</strong> para arquitecturas de microservicios:</p>
+
+                <div style="background: #fff5f5; padding: 30px; border-radius: 15px; border: 2px solid #fc8181; margin-bottom: 30px;">
+                    <h3 style="color: #c53030; margin-bottom: 20px; text-align: center;">⚠️ Limitaciones Clave</h3>
+                    <div class="drawback-list">
+                        <div class="drawback-item" style="border-left-color: #fc8181;">
+                            <h3 style="color: #c53030;">📦 Soporte Limitado de Contenedores</h3>
+                            <p>Aunque soporta contenedores Docker, no está optimizado para ellos. No tienes control total sobre el entorno del contenedor.</p>
+                            <div style="background: #fed7d7; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                                <p style="color: #742a2a; font-size: 0.95em; line-height: 1.6;"><strong>Ejemplo:</strong> No puedes configurar recursos específicos de Kubernetes como ConfigMaps, Secrets avanzados, o service mesh.</p>
+                            </div>
+                        </div>
+
+                        <div class="drawback-item" style="border-left-color: #fc8181;">
+                            <h3 style="color: #c53030;">❌ Sin Soporte para Orquestación</h3>
+                            <p>No soporta orquestación de contenedores como Kubernetes. Cada App Service es independiente, sin gestión centralizada de múltiples contenedores.</p>
+                            <div style="background: #fed7d7; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                                <p style="color: #742a2a; font-size: 0.95em; line-height: 1.6;"><strong>Ejemplo:</strong> Si tienes 10 microservicios, necesitas 10 App Services separados. No hay forma de gestionarlos como un grupo coordinado.</p>
+                            </div>
+                        </div>
+
+                        <div class="drawback-item" style="border-left-color: #fc8181;">
+                            <h3 style="color: #c53030;">🚫 No Amigable para Microservicios</h3>
+                            <p>Diseñado para aplicaciones monolíticas o APIs simples. No tiene características nativas para comunicación entre microservicios, service discovery, o gestión de configuración distribuida.</p>
+                            <div style="background: #fed7d7; padding: 15px; border-radius: 10px; margin-top: 10px;">
+                                <p style="color: #742a2a; font-size: 0.95em; line-height: 1.6;"><strong>Ejemplo:</strong> Para conectar microservicios, debes usar API Gateway externo o configurar manualmente cada comunicación. No hay integración nativa.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 ¿Cuándo NO Usar App Service?</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Si necesitas orquestar múltiples contenedores, gestionar configuraciones complejas, usar service mesh (Istio, Linkerd), o tener control granular sobre el networking entre microservicios, App Service no es la mejor opción. Mejor usa <strong>Container Apps</strong> o <strong>AKS</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide: Azure Container Apps -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>Azure Container Apps</h2>
+            </div>
+            <div class="content">
+                <p style="font-size: 1.3em; line-height: 1.8; margin-bottom: 40px;"><strong>Azure Container Apps</strong> es una plataforma serverless para ejecutar aplicaciones containerizadas sin gestionar la infraestructura subyacente. Ofrece escalado automático, uso eficiente de recursos y despliegue simplificado para aplicaciones cloud-native modernas.</p>
+
+                <div style="background: linear-gradient(135deg, #0078d4 0%, #00bcf2 100%); padding: 30px; border-radius: 20px; color: white; margin-bottom: 30px; text-align: center;">
+                    <div style="font-size: 3em; margin-bottom: 15px;">📦</div>
+                    <h3 style="color: white; font-size: 1.8em; margin-bottom: 20px;">Serverless para Contenedores</h3>
+                    <p style="color: white; font-size: 1.2em; line-height: 1.8;">Ejecuta contenedores sin preocuparte por servidores, escalado manual o gestión de infraestructura</p>
+                </div>
+
+                <div class="principle-grid">
+                    <div class="principle-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>⚡ Serverless</h3>
+                        <p>No gestionas servidores. Azure maneja todo automáticamente</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>📈 Auto-Scaling</h3>
+                        <p>Escala automáticamente de 0 a N réplicas según demanda</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔄 Stateless y Stateful</h3>
+                        <p>Soporta contenedores sin estado y con estado (con volúmenes)</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>🎯 Microservicios Simples</h3>
+                        <p>Diseñado específicamente para arquitecturas de microservicios simples</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>💰 Pay-per-Use</h3>
+                        <p>Pagas solo por los recursos que realmente usas</p>
+                    </div>
+                    <div class="principle-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                        <h3>🔗 Integración</h3>
+                        <p>Se integra con ACR, Log Analytics, Application Insights</p>
+                    </div>
+                </div>
+
+                <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-bottom: 25px;">
+                    <h3 style="color: #4a5568; margin-bottom: 20px; text-align: center;">🔄 Flujo de Container Apps</h3>
+                    <div style="background: white; padding: 25px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        <pre style="font-size: 1em; line-height: 2; color: #2d3748; text-align: center;">
+📦 Imagen en ACR
+         ↓
+🚀 Container App Environment
+         ↓
+📊 Auto-scaling (0 → 10 réplicas)
+         ↓
+🌐 Tráfico distribuido automáticamente
+         ↓
+💰 Pago solo por uso real
+                        </pre>
+                    </div>
+                </div>
+
+                <div style="margin-top: 25px; padding: 25px; background: #e6fffa; border-radius: 15px; border-left: 5px solid #38b2ac;">
+                    <h3 style="color: #234e52; margin-bottom: 10px;">💡 Ejemplo Real: API de Microservicios</h3>
+                    <p style="color: #234e52; font-size: 1.1em; line-height: 1.8;">Tienes 5 microservicios en contenedores Docker. Los despliegas en Container Apps. Durante el día, cada uno escala automáticamente de 1 a 5 réplicas según tráfico. Por la noche, escala a 0 (no pagas nada). Si un microservicio falla, Container Apps lo reinicia automáticamente. Todo sin gestionar Kubernetes ni servidores.</p>
+                </div>
+            </div>
+        </div>
+
         <div class="slide-counter">
             <select id="sectionNav" class="nav-select" onchange="jumpToSection(this.value)">
                 <option value="0">Inicio</option>
@@ -5224,7 +6744,7 @@ dotnet add package Ocelot
             <input type="number" id="slideInput" class="nav-input" min="1" value="1"
                 onchange="jumpToSlideInput(this.value)">
             <span style="color: #a0aec0;">/</span>
-            <span id="total">73</span>
+            <span id="total">85</span>
         </div>
 
         <div class="controls">
